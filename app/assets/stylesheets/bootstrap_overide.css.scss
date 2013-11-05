@@ -1,0 +1,198 @@
+@import "variables";
+
+html,body {
+  height: 100%;
+}
+
+/* Wrapper for page content to push down footer - no padding or margin */
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto $footer-height-neg;
+  padding: 0 0 $footer-height;
+}
+
+#wrap > .container {
+  padding: 60px 15px 0;
+}
+
+#footer {
+  height: $footer-height;
+  background-color: $main-color;
+  color: $main-color-bg;
+}
+
+#footer > .container {
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+.container .credit {
+  margin: 20px 0;
+}
+
+.credit {
+  font-size: x-small;
+  text-align: right;
+  color: $main-color-medium;
+}
+
+.navbar-custom {
+  background-color: $main-color;
+  border-color: $main-color-dark;
+  background-image: -webkit-gradient(linear, left 0%, left 100%, from($main-color-mdark), to($main-color));
+  background-image: -webkit-linear-gradient(top, $main-color-mdark, 0%, $main-color, 100%);
+  background-image: -moz-linear-gradient(top, $main-color-mdark 0%, $main-color 100%);
+  background-image: linear-gradient(to bottom, $main-color-mdark 0%, $main-color 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0b65ba', endColorstr='#ff084b8a', GradientType=0);
+}
+.navbar-custom .navbar-brand {
+  color: $main-color-light;
+}
+.navbar-custom .navbar-brand:hover,
+.navbar-custom .navbar-brand:focus {
+  color: white;
+  background-color: transparent;
+}
+.navbar-custom .navbar-text {
+  color: $main-color-light;
+}
+.navbar-custom .navbar-nav > li:last-child > a {
+  border-right: 1px solid $main-color-dark;
+}
+.navbar-custom .navbar-nav > li > a {
+  color: $main-color-light;
+  border-left: 1px solid $main-color-dark;
+}
+.navbar-custom .navbar-nav > li > a:hover,
+.navbar-custom .navbar-nav > li > a:focus {
+  color: white;
+  background-color: transparent;
+}
+.navbar-custom .navbar-nav > .active > a,
+.navbar-custom .navbar-nav > .active > a:hover,
+.navbar-custom .navbar-nav > .active > a:focus {
+  color: #ffffff;
+  background-color: $main-color-dark;
+  background-image: -webkit-gradient(linear, left 0%, left 100%, from($main-color-dark), to($main-color-mdark));
+  background-image: -webkit-linear-gradient(top, $main-color-dark, 0%, $main-color-mdark, 100%);
+  background-image: -moz-linear-gradient(top, $main-color-dark 0%, $main-color-mdark 100%);
+  background-image: linear-gradient(to bottom, $main-color-dark 0%, $main-color-mdark 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff063a6b', endColorstr='#ff09549b', GradientType=0);
+}
+.navbar-custom .navbar-nav > .disabled > a,
+.navbar-custom .navbar-nav > .disabled > a:hover,
+.navbar-custom .navbar-nav > .disabled > a:focus {
+  color: #cccccc;
+  background-color: transparent;
+}
+.navbar-custom .navbar-toggle {
+  border-color: $main-color-medium;
+}
+.navbar-custom .navbar-toggle:hover,
+.navbar-custom .navbar-toggle:focus {
+  background-color: $main-color-dark;
+}
+.navbar-custom .navbar-toggle .icon-bar {
+  background-color: $main-color-light;
+}
+.navbar-custom .navbar-collapse,
+.navbar-custom .navbar-form {
+  border-color: $main-color-dark;
+}
+.navbar-custom .navbar-nav > .dropdown > a:hover .caret,
+.navbar-custom .navbar-nav > .dropdown > a:focus .caret {
+  border-top-color: #ffffff;
+  border-bottom-color: #ffffff;
+}
+.navbar-custom .navbar-nav > .open > a,
+.navbar-custom .navbar-nav > .open > a:hover,
+.navbar-custom .navbar-nav > .open > a:focus {
+  background-color: $main-color-dark;
+  color: #ffffff;
+}
+.navbar-custom .navbar-nav > .open > a .caret,
+.navbar-custom .navbar-nav > .open > a:hover .caret,
+.navbar-custom .navbar-nav > .open > a:focus .caret {
+  border-top-color: #ffffff;
+  border-bottom-color: #ffffff;
+}
+.navbar-custom .navbar-nav > .dropdown > a .caret {
+  border-top-color: $main-color-light;
+  border-bottom-color: $main-color-light;
+}
+@media (max-width: 767) {
+  .navbar-custom .navbar-nav .open .dropdown-menu > li > a {
+    color: $main-color-light;
+  }
+  .navbar-custom .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-custom .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #ffffff;
+    background-color: transparent;
+  }
+  .navbar-custom .navbar-nav .open .dropdown-menu > .active > a,
+  .navbar-custom .navbar-nav .open .dropdown-menu > .active > a:hover,
+  .navbar-custom .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #ffffff;
+    background-color: $main-color-dark;
+  }
+  .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a,
+  .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a:hover,
+  .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a:focus {
+    color: #cccccc;
+    background-color: transparent;
+  }
+}
+.navbar-custom .navbar-link {
+  color: $main-color-light;
+}
+.navbar-custom .navbar-link:hover {
+  color: #ffffff;
+}
+
+.btn-primary {
+  color: $main-color;
+  background-color: $main-color-light;
+  border-color: $main-color-medium;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  color: $main-color;
+  background-color: $main-color-medium;
+  border-color: $main-color;
+}
+
+.btn-primary.disabled,
+.btn-primary[disabled],
+fieldset[disabled] .btn-primary,
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled:active,
+.btn-primary[disabled]:active,
+fieldset[disabled] .btn-primary:active,
+.btn-primary.disabled.active,
+.btn-primary[disabled].active,
+fieldset[disabled] .btn-primary.active {
+  background-color: $main-color-bg;
+  border-color: $main-color-medium;
+  color: $main-color;
+}
+
+:focus {
+  outline: thin dotted $main-color-medium;
+  outline: 5px auto $main-color-medium;
+  outline-offset: -2px;
+}

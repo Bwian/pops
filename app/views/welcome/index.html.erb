@@ -1,0 +1,5 @@
+<h1>Welcome to POPS - Purchase Order Processing System</h1>
+
+<% @forms.each do |fname| %>
+  <div><%= link_to "#{fname.capitalize}", "/#{fname}" %></div>
+<% end %>

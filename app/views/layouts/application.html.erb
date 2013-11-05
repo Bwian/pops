@@ -1,14 +1,69 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Pops</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+<html lang="en">
+  <head>
+    <title>POPS - Purchase Order Processing System</title>
+    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  
+  <body>   
+    <div id="wrap"><!-- Wrap all page content here -->
+      <div class="navbar navbar-custom navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">POPS - Purchase Order Processing System</a>
+          </div>
+          <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+              <!--li class="active"><a href="#">Home</a></li-->
+              <li><a href="/round">Tips</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ladder<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/ladder">Basic</a></li>
+                  <li><a href="/ladder/full">Full</a></li>
+                  <li><a href="/ladder/results">Results</a></li>
+                </ul>
+              </li>
+              
+              <li><a href="/rank">Rank</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/teams">Teams</a></li>
+                  <li><a href="/users">Users</a></li>
+                  <li><a href="/venues">Venues</a></li>
+                  <li><a href="/matches">Matches</a></li>
+                  <li><a href="/results">Results</a></li>
+                  <li class="divider"></li>
+                  <!--li class="dropdown-header">Nav header</li-->
+                  <li><a href="/admin">Admin</a></li>
+                </ul>
+              </li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+              <li><%= log_link %></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
 
-<%= yield %>
+      <!-- Begin page content -->
+      <div class="container">
+        <%= yield %>
+      </div>
+    </div>
 
-</body>
+    <div id="footer">
+      <div class="container credit">&copy; Pyrrho Pty Ltd - 2013</div>
+    </div>
+
+  </body>
+  
 </html>

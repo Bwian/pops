@@ -1,0 +1,156 @@
+@import "variables";
+
+code {
+  font-size: 80%;
+}
+
+body { 
+  background-color: white; color: $main-color; 
+}
+
+body, p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size:   13px;
+  line-height: 18px;
+}
+
+a { color: $main-color; }
+//a:visited { color:$main-color; }
+a:hover { color: white; background-color:$main-color; }
+
+div.field, div.actions {
+  margin-bottom: 10px;
+}
+
+fieldset {
+  background: $main-color-bg;
+  border: 1px solid $main-color;
+  margin-top: 15px;
+}
+
+legend {
+  width: inherit;
+  color: $main-color-bg;
+  background: $main-color;
+  font-family: sans-serif;
+  font-size: medium;
+  padding: 0.2em 1em;
+  margin-left: 1em;
+}
+
+label {
+  width: 30%;
+  float: left;
+  font-weight: normal;
+  text-align: right;
+  padding-top: 0.2em;
+  margin-right: 0.1em;
+  display: block;
+}
+
+select, textarea, input {
+  margin-left: 0.5em;
+  color: $main-color;
+}
+
+h1 {
+  font:  150% sans-serif;
+  color: $main-color;
+  border-bottom: 2px dotted $main-color;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td {
+  padding: 0.5em;
+}
+
+th {
+  padding: 0.5em;
+  text-align: center;
+  background: $main-color-medium;
+}
+
+#error_explanation {
+  width: 450px;
+  border: 1px solid $error-color;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  margin-left: 15px;
+  background-color: $error-color-bg;
+  color: $error-color;
+}
+
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: small;
+  margin: -7px;
+  margin-bottom: 0px;
+  background-color: $error-color;
+  color: white;
+}
+
+.notice {
+  color: $notice-color;
+}
+
+.error {
+  color: $error-color;
+}
+
+.list_line_even {
+	background: $main-color-bg;
+  height: 2em;
+}
+
+.list_line_odd {
+	background: $main-color-light;
+  height: 2em;
+}
+
+.list_actions {
+	font-size:    x-small;
+	text-align:   right;
+	padding-left: 1em;
+}
+
+.tiny {
+  font-size: xx-small;
+  color: $main-color;
+}
+
+td.win, td.draw, td.loss, td.bye, td.pending {
+  border: 2px solid $main-color-bg;
+}
+
+.bye {
+  color: #610B0B;
+}
+
+.pending {
+
+}
+
+.win {
+  background: #04B404;
+  color: white;
+}
+
+.draw {
+  background: #FF8000;
+  color: white;
+}
+
+.loss {
+  background: #DF0101;
+  color: white;
+}
+
+.actions {
+  margin-top: 2em;
+}
