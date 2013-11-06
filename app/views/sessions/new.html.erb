@@ -1,0 +1,29 @@
+<div class="admin_form" >
+	<%= form_tag do %>
+		<fieldset>
+			<legend>Please Log In</legend>			
+			
+      <div class="field">
+				<label for="code" >Login:</label>
+				<%= text_field_tag :code, params[:code], autofocus: true %>
+			</div>
+			
+			<div class="field">
+				<label for="password" >Password:</label>
+				<%= password_field_tag :password, params[:password] %>
+			</div>
+			
+			<div class="actions">
+				<label>&nbsp;</label>        
+				<%= submit_tag "Login", class: "btn btn-primary" %>
+			</div>
+      
+      
+      <div>
+        <label>&nbsp;</label>
+        <div class="notice"> <%= notice %></div>
+        <div class="error"> <%= flash[:alert] %></div>
+      </div>
+		</fieldset>
+	<% end %>
+</div>

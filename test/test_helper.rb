@@ -12,4 +12,12 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  
+  def setup_admin_session
+    user = users(:brian)
+    session[:user_id] = user.id
+    session[:tip_entry_id] = user.id
+    session[:admin] = user.admin
+    session[:timeout] = Time.now.to_i + 300 
+  end
 end

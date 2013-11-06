@@ -6,6 +6,14 @@ Pops::Application.routes.draw do
     get 'welcome' => :index
   end
   
+  controller :sessions do
+    get 'login' => :new
+    post 'login' => :create
+    get 'logout' => :destroy
+  end
+  
+  resources :users
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,0 +1,56 @@
+<div class="admin_form">
+<%= form_for(@user) do |f| %>
+  <fieldset>
+    <legend><%= legend("User Details", @readonly) %></legend>
+    <% if @user.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+        <ul>
+          <% @user.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+	
+    <div class="field">
+      <%= f.label :code, 'Code:' %>
+      <%= f.text_field :code, readonly: @readonly, autofocus: true %>
+    </div>
+    <div class="field">
+      <%= f.label :name, 'Name:' %>
+      <%= f.text_field :name, readonly: @readonly %>
+    </div>
+    <div class="field">
+      <%= f.label :password, 'Password:' %>
+      <%= f.password_field :password, size: 40, readonly: @readonly %>
+    </div>
+    <div class="field">
+      <%= f.label :password_confirmation, 'Confirm:' %>
+      <%= f.password_field :password_confirmation, size: 40, readonly: @readonly %>
+    </div>
+    <div class="field">
+      <%= f.label :email, 'Email:' %>
+      <%= f.text_field :email, readonly: @readonly %>
+    </div>
+    <div class="field">
+      <%= f.label :admin, 'Admin:' %>
+      <%= f.check_box :admin, {disabled: @readonly} %>
+    </div>
+  
+    <div class="actions">
+      <label> </label>
+  		<% if @readonly %>
+        <%= link_edit(@user) %>
+      <% else %>
+        <%= f.submit nil, class: "btn btn-primary" %>
+      <% end %>
+    </div>
+	
+  	<div class="notice">
+      <label for="notice" > </label>
+      <%= notice %>
+    </div>
+  </fieldset>
+<% end %>
+</div>
