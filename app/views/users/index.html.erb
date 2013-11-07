@@ -1,21 +1,17 @@
-<div class="admin_form">
-  <h1>Users</h1>
-  
+<div class="admin_form">  
   <% if notice %>
     <p class="notice" ><%= notice %></p>
   <% end %>
 
   <table>
+    <%= index_header('user',4)%>
     <% @users.each do |user| %>
       <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-        <td><b><%= user.code %></b></td>
+        <td><b><%= link_to(user.code, user) %></b></td>
         <td><%= user.name %></td>
         <td><%= user.email %></td>
         <td><%= admin(user) %></td>
-        <td class="list_actions"><%= show_edit_destroy(user) %></td>
       </tr>
     <% end %>
   </table>
-  <br/>
-  <%= link_new('user') %>
 </div>

@@ -16,7 +16,7 @@ body, p, ol, ul, td {
 
 a { color: $main-color; }
 //a:visited { color:$main-color; }
-a:hover { color: white; background-color:$main-color; }
+a:hover { color: green; background-color:transparent; }
 
 div.field, div.actions {
   margin-bottom: 10px;
@@ -153,4 +153,12 @@ td.win, td.draw, td.loss, td.bye, td.pending {
 
 .actions {
   margin-top: 2em;
+}
+
+.header {
+  padding:        5px 0px;
+  font:           150% sans-serif;
+  color:          $main-color;
+  border-bottom:  2px solid $main-color;
+  margin-bottom:  5px;
 }

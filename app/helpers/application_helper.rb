@@ -1,5 +1,7 @@
 module ApplicationHelper
   
+  LINK_STYLE = "btn btn-primary btn-sm"
+  
   # This routine returns html links to be used to show, edit or delete data from a model.
   # It relies on the class being passed in conforming to the rails model naming conventions
   def show_edit_destroy(model)
@@ -14,13 +16,23 @@ module ApplicationHelper
     actions
   end
 
+  def link_new(name)
+    session[:admin] ? link_to("New #{name.titleize}", "/#{name.pluralize}/new", class: LINK_STYLE) : ""
+  end
+  
   def link_edit(model)
     name = model.class.name.downcase
-    session[:admin] ? link_to('Edit', "/#{name.pluralize}/#{model.id}/edit") : ""
+    session[:admin] ? link_to('Edit', "/#{name.pluralize}/#{model.id}/edit", class: LINK_STYLE) : ""
   end
 
-  def link_new(name)
-    session[:admin] ? link_to("New #{name.titleize}", "/#{name.pluralize}/new") : ""
+  def link_delete(model)
+    session[:admin] ? link_to('Delete', model, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" ) : ""
+  end
+  
+  def index_header(name,columns)
+    link = session[:admin] ? link_to("New #{name.titleize}", "/#{name.pluralize}/new", class: LINK_STYLE) : ""
+    header = "<tr><td colspan=\"#{columns - 1}\" class=\"header\">#{name.pluralize.titleize}</td><td align=\"right\" class=\"header\">#{link}</td></tr><tr><td></td></tr>"
+    header.html_safe
   end
   
   def legend(name,disabled)

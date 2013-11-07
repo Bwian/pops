@@ -23,11 +23,11 @@
     </div>
     <div class="field">
       <%= f.label :password, 'Password:' %>
-      <%= f.password_field :password, size: 40, readonly: @readonly %>
+      <%= f.password_field :password, readonly: @readonly %>
     </div>
     <div class="field">
       <%= f.label :password_confirmation, 'Confirm:' %>
-      <%= f.password_field :password_confirmation, size: 40, readonly: @readonly %>
+      <%= f.password_field :password_confirmation, readonly: @readonly %>
     </div>
     <div class="field">
       <%= f.label :email, 'Email:' %>
@@ -41,9 +41,9 @@
     <div class="actions">
       <label> </label>
   		<% if @readonly %>
-        <%= link_edit(@user) %>
+        <%= link_edit(@user) %>&nbsp;<%= link_delete(@user) %>
       <% else %>
-        <%= f.submit nil, class: "btn btn-primary" %>
+        <%= f.submit nil, class: "btn btn-primary btn-sm" %>
       <% end %>
     </div>
 	
