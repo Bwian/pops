@@ -20,10 +20,10 @@ ActiveRecord::Schema.define(version: 20131105000001) do
     t.string   "salt"
     t.string   "email"
     t.integer  "approver_id"
-    t.boolean  "creator"
-    t.boolean  "approver"
-    t.boolean  "processor"
-    t.boolean  "admin"
+    t.boolean  "creator",         default: true
+    t.boolean  "approver",        default: false
+    t.boolean  "processor",       default: false
+    t.boolean  "admin",           default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

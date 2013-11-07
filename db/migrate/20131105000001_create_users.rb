@@ -8,10 +8,10 @@ class CreateUsers < ActiveRecord::Migration
       t.string :email
       t.integer :approver_id
       
-      t.boolean :creator
-      t.boolean :approver
-      t.boolean :processor
-      t.boolean :admin
+      t.boolean :creator, default: true
+      t.boolean :approver, default: false
+      t.boolean :processor, default: false
+      t.boolean :admin, default: false
 
       t.timestamps
     end
