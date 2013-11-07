@@ -1,19 +1,21 @@
-== README
+== POPS - Purchase Order Processing System
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The Purchase Order Processing System (POPS) is a web-based application designed to interface with MYOB Exo to produce and track purchase orders throughout the approval process, culminating in the production of creditor invoices in the Exo database.
 
-Things you may want to cover:
+Although technically a public project, POPS is being developed for a specific Not-For-Profit organisation and is unlikely to be useful in other contexts. However, if any of the code is useful to anyone, feel free to use it!
 
-* Ruby version
-* System dependencies
-* Configuration
-* Database creation
-* Database initialization
-* How to run the test suite
-* Services (job queues, cache servers, search engines, etc.)
-* Deployment instructions
-* ...
+POPS is built on the Ruby on Rails web framework and uses Twitter Bootstrap as the UI framework.
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+=== Dependencies
+* Ruby 2.0.0
+* Rails 4.0.0
+* Bootstrap 3.0
+
+=== Deployment
+[TODO]
+Run _bundle install_ to update third-party gems.
+
+==== Database Creation
+[TODO]
+To allow initial access to the system, running _rake db:seed_ which will create and _admin_ user with the password _password_.  This user should be used to set up another admin user, then deleted.
+
