@@ -1,5 +1,4 @@
 == POPS - Purchase Order Processing System
-
 The Purchase Order Processing System (POPS) is a web-based application designed to interface with MYOB Exo to produce and track purchase orders throughout the approval process, culminating in the production of creditor invoices in the Exo database.
 
 Although technically a public project, POPS is being developed for a specific Not-For-Profit organisation and is unlikely to be useful in other contexts. However, if any of the code is useful to anyone, feel free to use it!
@@ -12,10 +11,8 @@ POPS is built on the Ruby on Rails web framework and uses Twitter Bootstrap as t
 * Bootstrap 3.0
 
 === Deployment
-[TODO]
-Run _bundle install_ to update third-party gems.
+* Run _bundle_ _install_ to update third-party gems.
 
 ==== Database Creation
-[TODO]
-To allow initial access to the system, running _rake db:seed_ which will create and _admin_ user with the password _password_.  This user should be used to set up another admin user, then deleted.
+* To allow initial access to the system, running _rake_ _db:seed_ which will create an _admin_ user with the password _password_.  This user should be used to set up another admin user, then deleted.
 
