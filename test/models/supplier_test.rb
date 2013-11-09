@@ -14,4 +14,8 @@ class SupplierTest < ActiveSupport::TestCase
     assert_equal(3, Supplier.selection.count)
   end
   
+  test "address" do
+    supplier = suppliers(:zero)
+    assert_equal('105 Dana Street, Ballarat  Vic  3350',supplier.address)
+  end
 end

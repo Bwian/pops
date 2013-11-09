@@ -12,4 +12,18 @@ class Supplier < ActiveRecord::Base
   def self.reset_selection
     @@selection = nil  # force reload
   end
+  
+  # Return address as one string with spaces in each line set to &nbsp
+  def address
+    address = to_nbsp(address1)
+    address += ', ' + to_nbsp(address2) if !address2.blank?
+    address += ', ' + to_nbsp(address3) if !address3.blank?
+    address.html_safe
+  end
+  
+  private
+  
+  def to_nbsp(name)
+    name.blank? ? '' : name.gsub(/\W/,'&nbsp;')
+  end
 end
