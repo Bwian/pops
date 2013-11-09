@@ -16,6 +16,8 @@ class SupplierTest < ActiveSupport::TestCase
   
   test "address" do
     supplier = suppliers(:zero)
-    assert_equal('105 Dana Street, Ballarat  Vic  3350',supplier.address)
+    assert_equal('105&nbsp;Dana&nbsp;Street, Ballarat&nbsp;Vic&nbsp;3350',supplier.address)
   end
+  
+  
 end

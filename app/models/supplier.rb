@@ -24,6 +24,6 @@ class Supplier < ActiveRecord::Base
   private
   
   def to_nbsp(name)
-    name.blank? ? '' : name.gsub(/\W/,'&nbsp;')
+    name.blank? ? '' : name.gsub(/\s+/,'&nbsp;')
   end
 end

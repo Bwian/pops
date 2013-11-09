@@ -5,12 +5,17 @@
 
   <table>
     <%= index_header('supplier',5)%>
+    <th>Name</th>
+    <th>Address</th>
+    <th>Phone</th>
+    <th>Fax</th>
+    <th>Email</th>
     <% @suppliers.each do |supplier| %>
       <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
         <td><%= supplier.name %></td>
 				<td><%= supplier.address %></td>
-				<td><%= supplier.phone %></td>
-				<td><%= supplier.fax %></td>
+				<td white-space: nowrap><%= supplier.phone %></td>
+				<td white-space: nowrap><%= supplier.fax %></td>
         <td><%= supplier.email %></td>
       </tr>
     <% end %>
