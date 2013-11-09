@@ -12,6 +12,10 @@ Pops::Application.routes.draw do
     get 'logout' => :destroy
   end
   
+  controller :suppliers do
+    get 'suppliers' => :index
+  end
+  
   resources :users
   
   # The priority is based upon order of creation: first created -> highest priority.

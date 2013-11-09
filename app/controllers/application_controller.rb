@@ -36,7 +36,8 @@ class ApplicationController < ActionController::Base
   NONE  = 'none'
 
   AUTHORISE = {
-    'users'   => [INDEX, SHOW]
+    'users'     => [INDEX, SHOW],
+    'suppliers' => [INDEX]
   }
 
   def authorised_action

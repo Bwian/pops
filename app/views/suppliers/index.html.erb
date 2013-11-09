@@ -1,0 +1,15 @@
+<div class="admin_form">  
+  <% if notice %>
+    <p class="notice" ><%= notice %></p>
+  <% end %>
+
+  <table>
+    <%= index_header('supplier',2)%>
+    <% @suppliers.each do |supplier| %>
+      <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+        <td><%= supplier.name %></td>
+        <td><%= supplier.email %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

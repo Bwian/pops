@@ -1,21 +1,21 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  name: MyString
-  address1: MyString
-  address2: MyString
-  address3: MyString
-  phone: MyString
-  fax: MyString
-  email: MyString
-  tax_rate_id: 1
+zero:
+  name: MISC PURCHASES
+  address1: 105 Dana Street
+  address2: Ballarat  Vic  3350
+  address3: 
+  phone: 
+  fax: 
+  email: 
+  tax_rate_id: -1
 
-two:
-  name: MyString
-  address1: MyString
-  address2: MyString
-  address3: MyString
-  phone: MyString
-  fax: MyString
-  email: MyString
-  tax_rate_id: 1
+one:
+  name: COLES ONLINE
+  address1: 
+  address2: 
+  address3: 
+  phone: 
+  fax: 
+  email: 
+  tax_rate_id: -1
