@@ -45,6 +45,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        User.reset_selection
         format.html { redirect_to(users_url, notice: "User #{@user.name} was successfully created.") }
         format.xml { render xml: @user, status: :created, location: @user }
       else
@@ -61,6 +62,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(user_params)
+        User.reset_selection
         format.html { redirect_to(users_url, notice: "User #{@user.name} was successfully updated.") }
         format.xml { head :ok }
       else
@@ -75,6 +77,7 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
+    User.reset_selection
 
     respond_to do |format|
       format.html { redirect_to(users_url) }

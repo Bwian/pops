@@ -20,12 +20,15 @@ class UsersControllerTest < ActionController::TestCase
   test "should create user" do
     @user.code = "Drew"
     @user.name = "Drew Collins"
-
+    @user.admin = false
+    @user.approver = true
+    
+    count = User.selection.count
     assert_difference('User.count') do
       post :create, user: @user.attributes
     end
-
     assert_redirected_to users_path
+    # TODO: assert_equal(count + 1, User.selection.count)  
   end
 
   test "should not create user" do
