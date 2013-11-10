@@ -33,13 +33,35 @@
       <%= f.label :email, 'Email:' %>
       <%= f.text_field :email, readonly: @readonly %>
     </div>
+	  <div class="field">
+	    <%= f.label :approver_id, 'Default Approver:' %>
+	    <%= f.select :approver_id, User.selection, { prompt: 'Select a default approver' },
+                   { disabled: @readonly, class: "btn btn-primary" } %>
+	  </div>
     <div class="field">
-      <%= f.label :admin, 'Admin:' %>
-      <%= f.check_box :admin, {disabled: @readonly} %>
+      <label>Permissions:</label>
+      <div class="ck-button">
+        <label>
+          <%= f.check_box :admin, {disabled: @readonly} %>
+          <span>Administrator</span>
+        </label>
+        <label>
+          <%= f.check_box :processor, {disabled: @readonly} %>
+          <span>Processor</span>
+        </label>
+        <label>
+          <%= f.check_box :approver, {disabled: @readonly} %>
+          <span>Approver</span>
+        </label>
+        <label>
+          <%= f.check_box :creator, {disabled: @readonly} %>
+          <span>Creator</span>
+        </label>
+      </div>
     </div>
-  
+    </br>
     <div class="actions">
-      <label> </label>
+      <label></label>
   		<% if @readonly %>
         <%= link_edit(@user) %>&nbsp;<%= link_delete(@user) %>
       <% else %>

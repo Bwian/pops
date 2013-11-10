@@ -127,31 +127,9 @@ td.win, td.draw, td.loss, td.bye, td.pending {
   border: 2px solid $main-color-bg;
 }
 
-.bye {
-  color: #610B0B;
-}
-
-.pending {
-
-}
-
-.win {
-  background: #04B404;
-  color: white;
-}
-
-.draw {
-  background: #FF8000;
-  color: white;
-}
-
-.loss {
-  background: #DF0101;
-  color: white;
-}
-
 .actions {
   margin-top: 2em;
+  margin-left: 0.5em;
 }
 
 .header {
@@ -160,4 +138,37 @@ td.win, td.draw, td.loss, td.bye, td.pending {
   color:          $main-color;
   border-bottom:  2px solid $main-color;
   margin-bottom:  5px;
+}
+
+.ck-button {
+    height:           2.0em;
+    margin-left:      0.5em;
+    background-color: $main-color-light;
+    border-radius:    4px;
+    border:           1px solid $main-color-dark;
+    overflow:         auto;
+    float:            left;
+}
+
+.ck-button label {
+    margin: 0, 0.2em;
+    float: left;
+    width: 10em;
+}
+
+.ck-button label span {
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+    display: block;
+}
+
+.ck-button label input {
+    position: absolute;
+    opacity: 0;
+}
+
+.ck-button input:checked + span {
+    background-color: $main-color;
+    color: $main-color-bg;
 }

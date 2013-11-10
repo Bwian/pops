@@ -8,6 +8,9 @@ brian:
   salt: <%= SALT %>
   email: brian.pyrrho@bigpond.com
   admin: true
+  approver: true
+  processor: true
+  creator: true
 
 sean:
   code: sean
@@ -16,6 +19,9 @@ sean:
   salt: MyString
   email: sean@somewhere.com
   admin: false
+  approver: false
+  processor: false
+  creator: true
 
 invalid:
   code: frank
@@ -24,3 +30,6 @@ invalid:
   salt: rambo
   email: frank@stallone.com
   admin: false
+  approver: false
+  processor: false
+  creator: true
