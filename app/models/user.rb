@@ -8,14 +8,22 @@ class User < ActiveRecord::Base
   
   default_scope { order(:name) }
 
-  SELECTION = User.all.map { |u| [u.name, u.id] }  # .insert(0, ["--Select user", 0])
-
 # TODO: should also be validating presence of :admin but fails unit test
   validates :name, :code, presence: true
   validates :name, :code, uniqueness: true
   validates :password, confirmation: true
   validate :password_must_be_present
 
+  @@selection = nil
+  
+  def self.selection
+    @@selection ||= User.where(approver: true).map { |s| [s.name, s.id] }
+  end
+  
+  def self.reset_selection
+    @@selection = nil  # force reload
+  end
+  
   def password=(password)
     @password = password
     if password.present?

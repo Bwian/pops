@@ -34,12 +34,6 @@ class UserTest < ActiveSupport::TestCase
     assert_equal "has already been taken", @user2.errors[:code].join('; ')
   end
 
-  # TODO: SELECTION works OK in browser but not in test
-  # test "build SELECTION" do
-  #   assert_equal "Brian Collins", User::SELECTION[1][0]
-  #   assert_equal 4, User::SELECTION.count
-  # end
-
   test "password=" do
     user = users(:invalid)
     salt = user.salt
@@ -65,5 +59,21 @@ class UserTest < ActiveSupport::TestCase
   test "authenticate invalid user" do
     user = User.authenticate('drew','SECRET')
     assert_nil(user)
+  end
+  
+  test "selection and reset" do
+    count = User.selection.count
+    
+    user = User.new
+    user.code = 'test'
+    user.name = 'Test Name'
+    user.password = 'secret'
+    user.admin = false
+    user.approver = true
+    user.save
+    
+    assert_equal(count, User.selection.count)
+    User.reset_selection
+    assert_equal(count + 1, User.selection.count)
   end
 end
