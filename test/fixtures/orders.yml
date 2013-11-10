@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  supplier: zero
+  supplier_name: Joe's Miscellaneous Oddments
+  invoice_no: 
+  invoice_date: 
+  payment_date: 
+  reference: 
+  creator: brian
+  created_at: 2013-11-10 21:15:18
+  approver: 
+  approved_at: 
+  processor: 
+  processed_at: 
+
+two:
+  supplier: one
+  supplier_name: 
+  invoice_no: 
+  invoice_date: 
+  payment_date: 
+  reference: 
+  creator: sean 
+  created_at: 2013-11-09 10:15:18
+  approver: brian
+  approved_at: 2013-11-09 21:19:18
+  processor: 
+  processed_at: 

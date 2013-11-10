@@ -11,7 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131108132100) do
+ActiveRecord::Schema.define(version: 20131110101918) do
+
+  create_table "orders", force: true do |t|
+    t.integer  "supplier_id"
+    t.string   "supplier_name"
+    t.string   "invoice_no"
+    t.date     "invoice_date"
+    t.date     "payment_date"
+    t.string   "reference"
+    t.integer  "creator"
+    t.datetime "created_at"
+    t.integer  "approver"
+    t.datetime "approved_at"
+    t.integer  "processor"
+    t.datetime "processed_at"
+    t.datetime "updated_at"
+  end
 
   create_table "suppliers", force: true do |t|
     t.string  "name"

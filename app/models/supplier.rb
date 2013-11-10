@@ -1,5 +1,6 @@
 class Supplier < ActiveRecord::Base
-  # has_many :orders
+  
+  has_many :orders
 
   default_scope { order(:name) }
   
