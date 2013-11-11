@@ -36,6 +36,7 @@ class ApplicationController < ActionController::Base
   NONE  = 'none'
 
   AUTHORISE = {
+    'orders'    => [ALL],
     'users'     => [INDEX, SHOW],
     'suppliers' => [INDEX]
   }

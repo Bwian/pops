@@ -3,8 +3,6 @@ require 'digest/sha2'
 class User < ActiveRecord::Base
   attr_accessor :password_confirmation
   attr_reader :password
-
-  # has_many :tips
   
   default_scope { order(:name) }
 

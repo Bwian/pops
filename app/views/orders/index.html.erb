@@ -1,0 +1,15 @@
+<div class="admin_form">  
+  <% if notice %>
+    <p class="notice" ><%= notice %></p>
+  <% end %>
+
+  <table>
+    <%= index_header('order',4)%>
+    <% @orders.each do |order| %>
+      <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+        <td><b><%= link_to(order.id, order) %></b></td>
+        <td><%= order.supplier.name %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

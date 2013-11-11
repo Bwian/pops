@@ -16,6 +16,7 @@ Pops::Application.routes.draw do
     get 'suppliers' => :index
   end
   
+  resources :orders
   resources :users
   
   # The priority is based upon order of creation: first created -> highest priority.
