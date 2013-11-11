@@ -1,23 +1,1 @@
-"STATUSNO","STATUSDESC","CREDIT_FACTOR","ACTIVE_DR","ACTIVE_CR","BAL_WARNING_SQL","WARNING_TEXT"
-0,"Cash Only",0,"Y","Y","AGEDBAL3>10","OVERDUE"
-1,"Net 7 Days",7,"Y","Y","AGEDBAL3>10","OVERDUE"
-2,"20th of Month",-20,"Y","Y","AGEDBAL3>10","OVERDUE"
-4,"30th of Month",-30,"Y","Y","AGEDBAL3>10","OVERDUE"
-5,"Net 14 Days",14,"Y","Y","AGEDBAL3>10","OVERDUE"
-6,"Net 21 Days",21,"Y","Y","AGEDBAL3>10","OVERDUE"
-7,"Net 30 Days",30,"Y","Y","AGEDBAL3>10","OVERDUE"
-8,"Net 60 Days",60,"Y","Y","AGEDBAL3>10","OVERDUE"
-9,"Net 90 Days",90,"Y","Y","AGEDBAL3>10","OVERDUE"
-10,"Net 120 Days",120,"Y","Y","AGEDBAL3>10","OVERDUE"
-11,"Net 180 Days",180,"Y","Y","AGEDBAL3>10","OVERDUE"
-12,"Net 5 days",5,"Y","Y","AGEDBAL3>10",
-13,"Net 16",16,"Y","Y","AGEDBAL3>10",
-14,"Net 17 days",17,"Y","Y","AGEDBAL3>10",
-15,"IMMEDIATE",0,"Y","Y","AGEDBAL3>10",
-16,"Net 15 days",15,"Y","Y","AGEDBAL3>10",
-17,"Net 18 days",18,"Y","Y","AGEDBAL3>10",
-18,"Net 50 days",50,"Y","Y","AGEDBAL3>10",
-19,"Net 28 days",28,"Y","Y","AGEDBAL3>10",
-20,"10th of month",-10,"Y","Y","AGEDBAL3>10",
-21,"14th of month",-14,"Y","Y","AGEDBAL3>10",
-22,"21 days EOM",-21,"Y","Y","AGEDBAL3>10",
+STATUSNO,STATUSDESC,CREDIT_FACTOR0,Cash Only,01,Net 7 Days,72,20th of Month,-204,30th of Month,-305,Net 14 Days,146,Net 21 Days,217,Net 30 Days,308,Net 60 Days,609,Net 90 Days,9010,Net 120 Days,12011,Net 180 Days,18012,Net 5 days,513,Net 16,1614,Net 17 days,1715,IMMEDIATE,016,Net 15 days,1517,Net 18 days,1818,Net 50 days,5019,Net 28 days,2820,10th of month,-1021,14th of month,-1422,21 days EOM,-21
