@@ -35,6 +35,9 @@ module ApplicationHelper
     disabled ? name : "Enter #{name}"
   end
 
+  def format_date(datetime)
+    datetime ? datetime.strftime('%d/%m/%Y') : ''
+  end
 end
 
 

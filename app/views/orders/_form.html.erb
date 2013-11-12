@@ -22,8 +22,27 @@
 	    <%= f.select :supplier_id, Supplier.selection, { prompt: 'Select a supplier' },
                    { disabled: @readonly, class: "btn btn-primary" } %>
 	  </div>
-    
-    </br>
+    <div class="field">
+      <%= f.label :invoice_no, 'Invoice Number:' %>
+      <%= f.text_field :invoice_no, readonly: @readonly %>
+    </div>
+    <div class="field">
+      <%= f.label :invoice_date, 'Invoice Date:' %>
+      <%= f.text_field :invoice_date, readonly: @readonly %>
+    </div>
+    <div class="field">
+      <%= f.label :payment_date, 'Payment Date:' %>
+      <%= f.text_field :payment_date, readonly: @readonly %>
+    </div>
+    <div class="field">
+      <%= f.label :reference, 'Reference:' %>
+      <%= f.text_field :reference, readonly: @readonly %>
+    </div>
+	  <div class="field">
+	    <%= f.label :approver_id, 'Approver:' %>
+	    <%= f.select :approver_id, User.selection, { prompt: 'Select an approver' },
+                   { disabled: @readonly, class: "btn btn-primary" } %>
+	  </div>
     <div class="actions">
       <label></label>
   		<% if @readonly %>

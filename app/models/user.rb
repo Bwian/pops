@@ -4,6 +4,10 @@ class User < ActiveRecord::Base
   attr_accessor :password_confirmation
   attr_reader :password
   
+  has_many :creators, :class_name => 'User'
+  has_many :approvers, :class_name => 'User'
+  has_many :processors, :class_name => 'User'
+  
   default_scope { order(:name) }
 
 # TODO: should also be validating presence of :admin but fails unit test

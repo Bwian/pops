@@ -9,9 +9,9 @@ draft:
   reference: 
   creator: brian
   created_at: 2013-11-10 21:15:18
-  approver: 
+  approver: nil 
   approved_at: 
-  processor: 
+  processor: nil
   processed_at: 
   status: D
 
@@ -22,10 +22,10 @@ invalid:
   invoice_date: 
   payment_date: 
   reference: 
-  creator: brian
+  creator: nil
   created_at: 2013-11-10 21:15:18
-  approver: 
+  approver: nil
   approved_at: 
-  processor: 
+  processor: nil
   processed_at: 
   status: 

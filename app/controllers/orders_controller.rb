@@ -42,7 +42,8 @@ class OrdersController < ApplicationController
   # POST /orders.xml
   def create
     @order = Order.new(order_params)
-    @order.status = OrderStatus.draft
+    @order.status = OrderStatus::DRAFT
+    @order.creator_id = session[:user_id]
 
     respond_to do |format|
       if @order.save
@@ -93,11 +94,11 @@ class OrdersController < ApplicationController
       :invoice_date, 
       :payment_date, 
       :reference, 
-      :creator, 
+      :creator_id, 
       :created_at,
-      :approver,
+      :approver_id,
       :approved_at, 
-      :processor, 
+      :processor_id, 
       :processed_at) 
   end
 end

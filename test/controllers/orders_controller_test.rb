@@ -5,6 +5,7 @@ class OrdersControllerTest < ActionController::TestCase
     setup_admin_session
     @supplier = suppliers(:zero)
     @order = orders(:draft)
+    @user = users(:brian)
   end
 
   test "should get index" do
@@ -19,19 +20,22 @@ class OrdersControllerTest < ActionController::TestCase
   end
 
   test "should create order" do
-    @order.supplier_id = @supplier.id
+    order = Order.new
+    order.supplier = @supplier
+    order.status = OrderStatus::DRAFT
+    order.creator = @creator
     
     assert_difference('Order.count') do
-      post :create, order: @order.attributes
+      post :create, order: order.attributes
     end
     assert_redirected_to orders_path  
   end
 
   test "should not create order" do
-    @order.supplier_id = nil
+    order = Order.new
 
     assert_no_difference('Order.count') do
-      post :create, order: @order.attributes
+      post :create, order: order.attributes
     end
     assert_response :success
   end
