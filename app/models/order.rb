@@ -5,5 +5,9 @@ class Order < ActiveRecord::Base
   # belongs_to :approver, :foreign_key => :approver, :class_name => 'User'
   # belongs_to :processor, :foreign_key => :processor, :class_name => 'User'
   
-  validates :supplier_id, presence: true
+  validates :supplier_id, :status, presence: true
+    
+  def status_name
+    OrderStatus.status(status)
+  end
 end

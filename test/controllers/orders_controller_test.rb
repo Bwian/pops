@@ -4,7 +4,7 @@ class OrdersControllerTest < ActionController::TestCase
   setup do
     setup_admin_session
     @supplier = suppliers(:zero)
-    @order = orders(:one)
+    @order = orders(:draft)
   end
 
   test "should get index" do

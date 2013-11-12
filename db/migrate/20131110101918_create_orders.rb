@@ -13,6 +13,7 @@ class CreateOrders < ActiveRecord::Migration
       t.datetime :approved_at
       t.integer :processor
       t.datetime :processed_at
+      t.string :status
 
       t.timestamps
     end

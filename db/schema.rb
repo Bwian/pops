@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20131110101918) do
     t.datetime "approved_at"
     t.integer  "processor"
     t.datetime "processed_at"
+    t.string   "status"
     t.datetime "updated_at"
   end
 

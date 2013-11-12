@@ -42,6 +42,7 @@ class OrdersController < ApplicationController
   # POST /orders.xml
   def create
     @order = Order.new(order_params)
+    @order.status = OrderStatus.draft
 
     respond_to do |format|
       if @order.save
