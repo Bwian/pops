@@ -2,6 +2,7 @@
 <%= form_for(@order) do |f| %>
   <fieldset>
     <legend><%= legend("Order Details", @readonly) %></legend>
+
     <% if @order.errors.any? %>
       <div id="error_explanation">
         <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
@@ -13,14 +14,20 @@
       </div>
     <% end %>
 	
+    <% if @order.id %>    
+      <div>
+        <p class="atby"><%= @order.atby %></p>
+      </div>
+      <div class="field">
+        <%= f.label :id, 'Order:' %>
+        <div class="po-header">&nbsp;<%= @order.id %> - <%= @order.status_name %></div>
+      </div>
+    <% end %>
+
     <div class="field">
-      <%= f.label :id, 'Order Number:' %>
-      <%= f.text_field :id, readonly: true, autofocus: true %>
-    </div>
-	  <div class="field">
 	    <%= f.label :supplier_id, 'Supplier:' %>
 	    <%= f.select :supplier_id, Supplier.selection, { prompt: 'Select a supplier' },
-                   { disabled: @readonly, class: "btn btn-primary" } %>
+            { disabled: @readonly, class: "btn btn-primary", autofocus: true } %>
 	  </div>
     <div class="field">
       <%= f.label :invoice_no, 'Invoice Number:' %>
@@ -28,11 +35,13 @@
     </div>
     <div class="field">
       <%= f.label :invoice_date, 'Invoice Date:' %>
-      <%= f.text_field :invoice_date, readonly: @readonly %>
+      <%= f.date_select :invoice_date, {}, 
+            { disabled: @readonly, class: "btn btn-primary" } %>
     </div>
     <div class="field">
       <%= f.label :payment_date, 'Payment Date:' %>
-      <%= f.text_field :payment_date, readonly: @readonly %>
+      <%= f.date_select :payment_date, {}, 
+            { disabled: @readonly, class: "btn btn-primary" } %>
     </div>
     <div class="field">
       <%= f.label :reference, 'Reference:' %>
@@ -41,7 +50,7 @@
 	  <div class="field">
 	    <%= f.label :approver_id, 'Approver:' %>
 	    <%= f.select :approver_id, User.selection, { prompt: 'Select an approver' },
-                   { disabled: @readonly, class: "btn btn-primary" } %>
+            { disabled: @readonly, class: "btn btn-primary" } %>
 	  </div>
     <div class="actions">
       <label></label>

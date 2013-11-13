@@ -16,5 +16,9 @@ class OrderTest < ActiveSupport::TestCase
   
   test 'status_name invalid' do
     assert_equal('Invalid status - nil',orders(:invalid).status_name)
+  end
+  
+  test 'atby' do
+    assert_equal('created on 11/11/2013 at 08:15 by brian', @draft.atby)
   end 
 end

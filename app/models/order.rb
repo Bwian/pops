@@ -10,4 +10,17 @@ class Order < ActiveRecord::Base
   def status_name
     OrderStatus.status(status)
   end
+  
+  def atby
+    rval = "created #{build_atby(created_at,creator)}"
+    rval += "<br/>approved #{build_atby(approveded_at,approver)}" if approved_at
+    rval += "<br/>processed #{build_atby(processed_at,processor)}" if processed_at  
+    rval.html_safe
+  end
+  
+  private
+  
+  def build_atby(onat,by)
+    "on #{onat.strftime('%d/%m/%Y')} at #{onat.strftime('%H:%M')} by #{by.code}"
+  end
 end

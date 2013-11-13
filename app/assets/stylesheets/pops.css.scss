@@ -25,7 +25,7 @@ div.field, div.actions {
 fieldset {
   background: $main-color-bg;
   border: 1px solid $main-color;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 legend {
@@ -138,6 +138,21 @@ td.win, td.draw, td.loss, td.bye, td.pending {
   color:          $main-color;
   border-bottom:  2px solid $main-color;
   margin-bottom:  5px;
+}
+
+.po-header {
+  font-size: large;
+  color: $error-color;
+  margin-bottom: 1.0em;
+}
+
+.atby {
+  float: right;
+  align: right;
+  font-size: xx-small;
+  padding: 0px;
+  margin: 0px;
+  margin-right: 2.0em;
 }
 
 .ck-button {
