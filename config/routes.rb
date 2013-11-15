@@ -18,6 +18,7 @@ Pops::Application.routes.draw do
   resources :tax_rates, :only => [:index, :new]
   
   resources :orders
+  resources :items
   resources :users
   
   # The priority is based upon order of creation: first created -> highest priority.

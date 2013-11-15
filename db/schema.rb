@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131115002045) do
+ActiveRecord::Schema.define(version: 20131115035934) do
 
   create_table "accounts", force: true do |t|
     t.string  "name"
@@ -20,19 +20,19 @@ ActiveRecord::Schema.define(version: 20131115002045) do
 
   add_index "accounts", ["tax_rate_id"], name: "index_accounts_on_tax_rate_id"
 
-  create_table "order_items", force: true do |t|
+  create_table "items", force: true do |t|
     t.integer  "order_id"
     t.integer  "program_id"
     t.integer  "account_id"
+    t.integer  "tax_rate_id"
     t.string   "description"
     t.integer  "quantity"
     t.decimal  "price"
-    t.integer  "tax_rate_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "order_items", ["order_id"], name: "index_order_items_on_order_id"
+  add_index "items", ["order_id"], name: "index_items_on_order_id"
 
   create_table "orders", force: true do |t|
     t.integer  "supplier_id"
