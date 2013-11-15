@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: Account One
+  tax_rate_id: 
+
+two:
+  name: Account Two
+  tax_rate_id: 

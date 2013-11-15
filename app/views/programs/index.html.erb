@@ -1,0 +1,17 @@
+<div class="admin_form">  
+  <% if notice %>
+    <p class="notice" ><%= notice %></p>
+  <% end %>
+
+  <table>
+    <%= index_header_refresh('program',2)%>
+    <th>Name</th>
+    <th>Code</th>
+    <% @programs.each do |program| %>
+      <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+        <td><%= program.name %></td>
+				<td><%= program.code %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

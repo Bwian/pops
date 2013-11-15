@@ -1,12 +1,12 @@
-class SuppliersController < ApplicationController
+class TaxRatesController < ApplicationController
   # GET /users
   # GET /users.xml
   def index
-    @suppliers = Supplier.all
+    @tax_rates = TaxRate.all
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml { render xml: @suppliers }
+      format.xml { render xml: @tax_rates }
     end
   end
   
@@ -14,7 +14,7 @@ class SuppliersController < ApplicationController
   # GET /orders/new.xml
   def new
     respond_to do |format|
-      format.html { redirect_to(suppliers_url, notice: "Refresh Suppliers option not yet implemented") }
+      format.html { redirect_to(tax_rates_url, notice: "Refresh Tax Rates option not yet implemented") }
       format.xml { head :ok }
     end
   end

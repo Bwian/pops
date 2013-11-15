@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: Program One
+  code: 0001
+
+two:
+  name: Program Two
+  code: 0002

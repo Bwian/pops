@@ -12,9 +12,10 @@ Pops::Application.routes.draw do
     get 'logout' => :destroy
   end
   
-  controller :suppliers do
-    get 'suppliers' => :index
-  end
+  resources :suppliers, :only => [:index, :new]
+  resources :programs,  :only => [:index, :new]
+  resources :accounts,  :only => [:index, :new]
+  resources :tax_rates, :only => [:index, :new]
   
   resources :orders
   resources :users

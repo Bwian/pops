@@ -26,9 +26,11 @@ module ApplicationHelper
   end
     
   def index_header(name,columns)
-    link = session[:admin] ? link_to("New #{name.titleize}", "/#{name.pluralize}/new", class: LINK_STYLE) : ""
-    header = "<tr><td colspan=\"#{columns - 1}\" class=\"header\">#{name.pluralize.titleize}</td><td align=\"right\" class=\"header\">#{link}</td></tr><tr><td></td></tr>"
-    header.html_safe
+    build_header('New',name,columns)
+  end
+  
+  def index_header_refresh(name,columns)
+    build_header('Refresh',name,columns)
   end
   
   def legend(name,disabled)
@@ -37,6 +39,14 @@ module ApplicationHelper
 
   def format_date(datetime)
     datetime ? datetime.strftime('%d/%m/%Y') : ''
+  end
+
+  private
+  
+  def build_header(type,name,columns)
+    link = session[:admin] ? link_to("#{type} #{name.titleize}", "/#{name.pluralize}/new", class: LINK_STYLE) : ""
+    header = "<tr><td colspan=\"#{columns - 1}\" class=\"header\">#{name.pluralize.titleize}</td><td align=\"right\" class=\"header\">#{link}</td></tr><tr><td></td></tr>"
+    header.html_safe
   end
 end
 

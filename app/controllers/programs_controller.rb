@@ -1,12 +1,12 @@
-class SuppliersController < ApplicationController
+class ProgramsController < ApplicationController
   # GET /users
   # GET /users.xml
   def index
-    @suppliers = Supplier.all
+    @programs = Program.all
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml { render xml: @suppliers }
+      format.xml { render xml: @programs }
     end
   end
   
@@ -14,7 +14,7 @@ class SuppliersController < ApplicationController
   # GET /orders/new.xml
   def new
     respond_to do |format|
-      format.html { redirect_to(suppliers_url, notice: "Refresh Suppliers option not yet implemented") }
+      format.html { redirect_to(programs_url, notice: "Refresh Programs option not yet implemented") }
       format.xml { head :ok }
     end
   end

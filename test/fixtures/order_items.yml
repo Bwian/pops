@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  order_id: 
+  program_id: 
+  account_id: 
+  description: MyString
+  quantity: 1
+  tax_rate_id: 
+
+two:
+  order_id: 
+  program_id: 
+  account_id: 
+  description: MyString
+  quantity: 1
+  tax_rate_id: 

@@ -1,0 +1,19 @@
+<div class="admin_form">  
+  <% if notice %>
+    <p class="notice" ><%= notice %></p>
+  <% end %>
+
+  <table>
+    <%= index_header_refresh('tax_rate',3)%>
+    <th>Name</th>
+    <th>Short Name</th>
+    <th style="text-align:right">Rate</th>
+    <% @tax_rates.each do |tax_rate| %>
+      <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+        <td><%= tax_rate.name %></td>
+				<td><%= tax_rate.short_name %></td>
+        <td align="right"><%= tax_rate.rate %>%</td>
+      </tr>
+    <% end %>
+  </table>
+</div>

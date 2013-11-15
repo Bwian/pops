@@ -38,7 +38,10 @@ class ApplicationController < ActionController::Base
   AUTHORISE = {
     'orders'    => [ALL],
     'users'     => [INDEX, SHOW],
-    'suppliers' => [INDEX]
+    'suppliers' => [INDEX],
+    'programs'  => [INDEX],
+    'accounts'  => [INDEX],
+    'tax_rates' => [INDEX]
   }
 
   def authorised_action

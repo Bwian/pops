@@ -11,7 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131110101918) do
+ActiveRecord::Schema.define(version: 20131115002045) do
+
+  create_table "accounts", force: true do |t|
+    t.string  "name"
+    t.integer "tax_rate_id"
+  end
+
+  add_index "accounts", ["tax_rate_id"], name: "index_accounts_on_tax_rate_id"
+
+  create_table "order_items", force: true do |t|
+    t.integer  "order_id"
+    t.integer  "program_id"
+    t.integer  "account_id"
+    t.string   "description"
+    t.integer  "quantity"
+    t.decimal  "price"
+    t.integer  "tax_rate_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "order_items", ["order_id"], name: "index_order_items_on_order_id"
 
   create_table "orders", force: true do |t|
     t.integer  "supplier_id"
@@ -30,6 +51,16 @@ ActiveRecord::Schema.define(version: 20131110101918) do
     t.datetime "updated_at"
   end
 
+  add_index "orders", ["approver_id"], name: "index_orders_on_approver_id"
+  add_index "orders", ["creator_id"], name: "index_orders_on_creator_id"
+  add_index "orders", ["processor_id"], name: "index_orders_on_processor_id"
+  add_index "orders", ["supplier_id"], name: "index_orders_on_supplier_id"
+
+  create_table "programs", force: true do |t|
+    t.string "name"
+    t.string "code"
+  end
+
   create_table "suppliers", force: true do |t|
     t.string  "name"
     t.string  "address1"
@@ -39,6 +70,12 @@ ActiveRecord::Schema.define(version: 20131110101918) do
     t.string  "fax"
     t.string  "email"
     t.integer "tax_rate_id"
+  end
+
+  create_table "tax_rates", force: true do |t|
+    t.string  "name"
+    t.string  "short_name"
+    t.decimal "rate"
   end
 
   create_table "users", force: true do |t|
