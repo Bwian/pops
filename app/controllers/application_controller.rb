@@ -37,6 +37,7 @@ class ApplicationController < ActionController::Base
 
   AUTHORISE = {
     'orders'    => [ALL],
+    'items'     => [ALL],
     'users'     => [INDEX, SHOW],
     'suppliers' => [INDEX],
     'programs'  => [INDEX],

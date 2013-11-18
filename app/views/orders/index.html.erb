@@ -17,9 +17,9 @@
     <% @orders.each do |order| %>
       <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
         <td><b><%= link_to(order.id, order) %></b></td>
-        <td><%= order.supplier.name %></td>
+        <td><%= order.supplier_desc %></td>
         <td><%= order.invoice_no %></td>
-        <td align="right">$0.00</td>
+        <td align="right"><%= sprintf('%.2f', order.grandtotal) %></td>
         <td><%= format_date(order.created_at) %></td>
         <td><%= order.creator ? order.creator.code : '' %></td>
         <td><%= format_date(order.approved_at) %></td>

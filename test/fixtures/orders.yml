@@ -1,7 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 draft:
-  supplier: zero
+  supplier_id: 0
   supplier_name: Joe's Miscellaneous Oddments
   invoice_no: 
   invoice_date: 
@@ -16,8 +16,8 @@ draft:
   status: D
 
 invalid:
-  supplier: zero
-  supplier_name: Joe's Miscellaneous Oddments
+  supplier: one
+  supplier_name:
   invoice_no: 
   invoice_date: 
   payment_date: 

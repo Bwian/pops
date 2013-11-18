@@ -17,10 +17,16 @@ Pops::Application.routes.draw do
   resources :accounts,  :only => [:index, :new]
   resources :tax_rates, :only => [:index, :new]
   
-  resources :orders
-  resources :items
   resources :users
+  resources :orders do
+    resources :items, :only => [:new]
+  end 
+  resources :items, :except => [:index, :new]
   
+  # resources :items, :except => :new
+  
+ 
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

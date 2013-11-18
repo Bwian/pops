@@ -15,10 +15,27 @@ class OrderTest < ActiveSupport::TestCase
   end 
   
   test 'status_name invalid' do
-    assert_equal('Invalid status - nil',orders(:invalid).status_name)
+    assert_equal('Invalid status - nil', orders(:invalid).status_name)
   end
   
   test 'atby' do
     assert_equal('created on 11/11/2013 at 08:15 by brian', @draft.atby)
   end 
+  
+  test 'supplier_desc' do
+    assert_equal("Joe's Miscellaneous Oddments", @draft.supplier_desc)
+    assert_equal("COLES ONLINE", orders(:invalid).supplier_desc)
+  end
+  
+  test 'subtotal' do
+    assert_equal(19.89,@draft.subtotal)
+  end
+  
+  test 'gst' do
+    assert_equal(0.99,@draft.gst)
+  end
+  
+  test 'grandtotal' do
+    assert_equal('20.88',sprintf('%.2f',@draft.grandtotal))
+  end
 end

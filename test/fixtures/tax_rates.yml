@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
+none:
   name: No GST
   short_name: No GST
   rate: 0
 
-two:
+gst:
   name: Normal GST
   short_name: GST
   rate: 10.00

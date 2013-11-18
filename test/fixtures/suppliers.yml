@@ -1,6 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 zero:
+  id: 0
   name: MISC PURCHASES
   address1: 105 Dana Street
   address2: Ballarat  Vic  3350
@@ -12,6 +13,16 @@ zero:
 
 one:
   name: COLES ONLINE
+  address1: 
+  address2: 
+  address3: 
+  phone: 
+  fax: 
+  email: 
+  tax_rate_id: -1
+  
+two:
+  name: ANZ BANK
   address1: 
   address2: 
   address3: 

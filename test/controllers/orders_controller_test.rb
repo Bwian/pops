@@ -3,7 +3,7 @@ require 'test_helper'
 class OrdersControllerTest < ActionController::TestCase
   setup do
     setup_admin_session
-    @supplier = suppliers(:zero)
+    @supplier = suppliers(:two)
     @order = orders(:draft)
     @user = users(:brian)
   end
