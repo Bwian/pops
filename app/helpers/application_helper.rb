@@ -7,6 +7,11 @@ module ApplicationHelper
     link_to('List', "/#{name.pluralize}", class: LINK_STYLE)
   end
   
+  def link_model(model)
+    name = model.class.name.camelcase
+    link_to(name, model, class: LINK_STYLE)
+  end
+  
   def link_new(name)
     session[:admin] ? link_to("New #{name.titleize}", "/#{name.pluralize}/new", class: LINK_STYLE) : ""
   end

@@ -28,14 +28,14 @@ class OrderTest < ActiveSupport::TestCase
   end
   
   test 'subtotal' do
-    assert_equal(19.89,@draft.subtotal)
+    assert_in_delta(14.49,@draft.subtotal,0.001)
   end
   
   test 'gst' do
-    assert_equal(0.99,@draft.gst)
+    assert_in_delta(0.45,@draft.gst,0.001)
   end
   
   test 'grandtotal' do
-    assert_equal('20.88',sprintf('%.2f',@draft.grandtotal))
+    assert_in_delta(14.94,@draft.grandtotal,0.001)
   end
 end

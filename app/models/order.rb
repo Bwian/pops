@@ -24,11 +24,7 @@ class Order < ActiveRecord::Base
   end
   
   def subtotal
-    total = 0.0
-    items.each do |item|
-      total += item.subtotal 
-    end
-    total
+    grandtotal - gst
   end
   
   def gst
@@ -42,7 +38,7 @@ class Order < ActiveRecord::Base
   def grandtotal
     total = 0.0
     items.each do |item|
-      total += item.total 
+      total += item.price 
     end
     total
   end

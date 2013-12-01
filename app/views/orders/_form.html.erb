@@ -77,37 +77,32 @@
   <% if @order.items.any? %>
     <div class="itemlist">
       <table width="100%">
+        <th>Description</th>
         <th>Account</th>
         <th style="text-align: center">Program</th>
-        <th>Description</th>
-        <th>#</th>
-        <th style="text-align: right">Price</th>
         <th style="text-align: center">GST</th>
         <th style="text-align: right">Total</th>
         <% @order.items.each do |item| %>
           <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+            <td><b><%= link_to(item.description,item) %></b></td>
             <td><%= item.account.name %></td>
             <td align="center"><%= item.program.code %></td>
-            <td><%= link_to(item.description,item) %></td>
-            <td><%= item.quantity %></td>
-            <td align="right"><%= sprintf('%.2f',item.price) %></td>
             <td align="center"><%= item.tax_rate.short_name %></td>
-            <td align="right"><%= sprintf('%.2f',item.total) %></td>
+            <td align="right"><%= sprintf('%.2f',item.price) %></td>
           </tr>
         <% end %>
-        <tr><td colspan="7"> </td></tr>
         <tr>
-          <td colspan="5"></td>
+          <td colspan="3"></td>
           <td class="subtotals">Subtotal:</td>
-          <td class="subtotals"><%= sprintf('%.2f',@order.subtotal) %></td>
+          <td class="subtotals"><%= sprintf('%.2f', @order.subtotal) %></td>
         </tr>
         <tr>
-          <td colspan="5"></td>
+          <td colspan="3"></td>
           <td class="gst">GST:</td>
-          <td class="gst"><%= sprintf('%.2f',@order.gst) %></td>
+          <td class="gst"><%= sprintf('%.2f', @order.gst) %></td>
         </tr>
         <tr>
-          <td colspan="5"></td>
+          <td colspan="3"></td>
           <td class="totals">Total:</td>
           <td class="totals"><%= sprintf('%.2f', @order.grandtotal) %></td>
         </tr>

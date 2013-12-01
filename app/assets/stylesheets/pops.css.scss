@@ -172,6 +172,7 @@ td.win, td.draw, td.loss, td.bye, td.pending {
   padding-bottom: 0;
   text-align: right;
   background: $main-color-bg;
+  border-top:  2px solid $main-color;
 }
 
 .gst {

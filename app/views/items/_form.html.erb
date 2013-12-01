@@ -49,11 +49,7 @@
       <%= f.text_field :description, readonly: @readonly %>
     </div>
     <div class="field">
-      <%= f.label :quantity, 'Quantity:' %>
-      <%= f.text_field :quantity, readonly: @readonly %>
-    </div>
-    <div class="field">
-      <%= f.label :price, 'Price:' %>
+      <%= f.label :price, 'Price (incl tax):' %>
       <%= f.text_field :price, readonly: @readonly %>
     </div>
     
@@ -65,7 +61,7 @@
       <% else %>
         <%= f.submit nil, class: "btn btn-primary btn-sm" %>
       <% end %>
-      <%= link_list(@order) %>
+      <%= link_model(@order) %>
     </div>
 	
   	<div class="notice">

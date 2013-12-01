@@ -16,12 +16,9 @@ class ItemTest < ActiveSupport::TestCase
     assert(!orders(:invalid).items.any?)
   end
   
-  test 'total with gst' do
-    assert_equal(10.89, @item1.total)
-  end
-  
-  test 'total without gst' do
-    assert_equal(9.99, @item2.total)
+  test 'gst' do
+    assert_in_delta(0.45,@item1.gst,0.001)
+    assert_in_delta(0.00,@item2.gst,0.001)
   end
   
 end
