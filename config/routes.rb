@@ -21,12 +21,16 @@ Pops::Application.routes.draw do
   resources :orders do
     resources :items, :only => [:new]
   end 
-  resources :items, :except => [:index, :new]
   
-  # resources :items, :except => :new
+  resources :items, :except => [:index, :new] 
   
- 
-
+  # AJAX routes
+  
+  post 'orders/:id/items/gst' => 'items#gst'
+  post 'items/:id/gst' => 'items#gst'
+  patch 'items/:id/gst' => 'items#gst'
+  post 'items/gst' => 'items#gst'
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

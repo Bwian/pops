@@ -77,6 +77,15 @@ class ItemsController < ApplicationController
     end
   end
   
+  def gst
+    @gst_item = Item.new(item_params)
+    puts '=========== gst =========='
+    puts @gst_item.inspect
+    respond_to do |format|
+      format.js
+    end
+  end
+  
   private
   
   def item_params

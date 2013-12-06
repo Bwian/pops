@@ -16,7 +16,12 @@ class Item < ActiveRecord::Base
   
   def gst
     rate = tax_rate_id ? tax_rate.rate : 0.0
-    price * rate.to_f / (100.0 + rate.to_f)
+    p = price ? price : 0.0
+    p * rate.to_f / (100.0 + rate.to_f)
+  end
+  
+  def formatted_gst
+    sprintf('%.2f',gst)
   end
   
 end
