@@ -28,7 +28,6 @@
       <%= f.label :id, 'Supplier:' %>
       <div class="text">&nbsp;<%= @order.supplier_desc %></div>
     </div>
-
 	  <div class="field">
 	    <%= f.label :program_id, 'Program:' %>
 	    <%= f.select :program_id, Program.selection, { prompt: 'Select a program' },
@@ -37,13 +36,15 @@
 	  <div class="field">
 	    <%= f.label :account_id, 'Account:' %>
 	    <%= f.select :account_id, Account.selection, { prompt: 'Select an account' },
-            { disabled: @readonly, class: "btn btn-primary" } %>
+            { disabled: @readonly, onchange: "javascript:tax_rate()", class: "btn btn-primary" } %>
 	  </div>
 	  <div class="field">
 	    <%= f.label :tax_rate_id, 'Tax Rate:' %>
-	    <%= f.select :tax_rate_id, TaxRate.selection, { prompt: 'Select a tax rate', selected: default_tax_rate(@item) },
+	    <div id="tax_rate">
+        <%= f.select :tax_rate_id, TaxRate.selection, { prompt: 'Select a tax rate', selected: default_tax_rate(@item) },
             { disabled: @readonly, class: "btn btn-primary" } %>
-	  </div>
+      </div>
+    </div>
     <div class="field">
       <%= f.label :description, 'Description:' %>
       <%= f.text_field :description, readonly: @readonly %>

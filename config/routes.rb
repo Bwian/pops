@@ -31,6 +31,11 @@ Pops::Application.routes.draw do
   patch 'items/:id/gst' => 'items#gst'
   post 'items/gst' => 'items#gst'
   
+  post 'orders/:id/items/tax_rate' => 'items#tax_rate'
+  post 'items/:id/tax_rate' => 'items#tax_rate'
+  patch 'items/:id/tax_rate' => 'items#tax_rate'
+  post 'items/tax_rate' => 'items#tax_rate'
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

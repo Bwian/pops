@@ -79,8 +79,13 @@ class ItemsController < ApplicationController
   
   def gst
     @gst_item = Item.new(item_params)
-    puts '=========== gst =========='
-    puts @gst_item.inspect
+    respond_to do |format|
+      format.js
+    end
+  end
+  
+  def tax_rate
+    @tax_item = Item.new(item_params)
     respond_to do |format|
       format.js
     end
