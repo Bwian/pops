@@ -29,3 +29,18 @@ invalid:
   processor: nil
   processed_at: 
   status: 
+    
+submitted:
+  supplier: two
+  supplier_name: 
+  invoice_no: 
+  invoice_date: 
+  payment_date: 
+  reference: 
+  creator: sean
+  created_at: 2013-11-10 21:15:18
+  approver: brian 
+  approved_at: 
+  processor: nil
+  processed_at: 
+  status: S

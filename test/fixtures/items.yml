@@ -1,10 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+# Note: Can't use 
 
 one:
   order: draft
   program: one
   account: one
-  tax_rate: gst 
+  tax_rate_id: 32 
   description: First Draft Item
   quantity: 1
   price: 4.95
@@ -13,7 +14,7 @@ two:
   order: draft
   program: two
   account: two
-  tax_rate: none
+  tax_rate_id: 34
   description: Second Draft Item
   quantity: 1
   price: 9.99

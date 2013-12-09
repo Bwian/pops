@@ -21,4 +21,8 @@ class ItemTest < ActiveSupport::TestCase
     assert_in_delta(0.00,@item2.gst,0.001)
   end
   
+  test 'formatted_gst' do
+    assert_equal('0.45',@item1.formatted_gst)
+  end
+  
 end
