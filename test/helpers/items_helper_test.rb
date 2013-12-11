@@ -30,4 +30,11 @@ class ItemsHelperTest < ActionView::TestCase
     assert_equal(33,default_tax_rate(item))
   end
   
+  test 'tax rate select' do
+    item = Item.new
+    item.order = orders(:draft)
+    item.account = accounts(:two)
+    assert tax_rate_select(item,true).include?("selected=\"selected\" value=\"33\"")
+  end
+  
 end

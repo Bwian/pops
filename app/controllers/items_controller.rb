@@ -86,6 +86,7 @@ class ItemsController < ApplicationController
   
   def tax_rate
     @tax_item = Item.new(item_params)
+    @tax_item.tax_rate_id = nil
     respond_to do |format|
       format.js
     end

@@ -41,8 +41,7 @@
 	  <div class="field">
 	    <%= f.label :tax_rate_id, 'Tax Rate:' %>
 	    <div id="tax_rate">
-        <%= f.select :tax_rate_id, TaxRate.selection, { prompt: 'Select a tax rate', selected: default_tax_rate(@item) },
-            { disabled: @readonly, class: "btn btn-primary" } %>
+        <%= tax_rate_select(@item,@readonly) %>
       </div>
     </div>
     <div class="field">

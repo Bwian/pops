@@ -1,1 +1,1 @@
-$("#tax_rate").html("What next?");
+$("#tax_rate").html("<%= escape_javascript(tax_rate_select(@tax_item,@readonly)) %>");

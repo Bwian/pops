@@ -6,6 +6,12 @@ module ItemsHelper
     item && item.tax_rate_id ? item.tax_rate_id : get_tax_rate(item)
   end
   
+  def tax_rate_select(item,readonly)
+    select :item, :tax_rate_id, TaxRate.selection, 
+      { prompt: 'Select a tax rate', selected: default_tax_rate(item) },
+      { disabled: readonly, class: "btn btn-primary" }
+  end
+  
   private
   
   def get_tax_rate(item)
@@ -16,7 +22,7 @@ module ItemsHelper
     if item.account && item.account.tax_rate_id != AUTO_TAX_RATE
       return item.account.tax_rate_id
     end
-      
+ 
     DEFAULT_TAX_RATE    
   end
 end
