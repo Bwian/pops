@@ -19,7 +19,8 @@ class OrderTest < ActiveSupport::TestCase
   end
   
   test 'atby' do
-    assert_equal('created on 11/11/2013 at 08:15 by brian', @draft.atby)
+    assert_equal(1,@draft.atby.size)
+    assert_equal('created on 11/11/2013 at 08:15 by brian', @draft.atby[0])
   end 
   
   test 'supplier_desc' do

@@ -7,16 +7,21 @@ class Order < ActiveRecord::Base
   has_many :items
   
   validates :supplier_id, :status, presence: true
+  validate :approver_present
+  
+  def approver_present
+    errors.add(:approver_id, "must be present") if approver_id.nil? && status == OrderStatus::SUBMITTED
+  end
     
   def status_name
     OrderStatus.status(status)
   end
   
   def atby
-    rval = "created #{build_atby(created_at,creator)}"
-    rval += "<br/>approved #{build_atby(approveded_at,approver)}" if approved_at
-    rval += "<br/>processed #{build_atby(processed_at,processor)}" if processed_at  
-    rval.html_safe
+    notes = [ "created #{build_atby(created_at,creator)}" ]
+    notes << "approved #{build_atby(approved_at,approver)}" if approved_at
+    notes << "processed #{build_atby(processed_at,processor)}" if processed_at  
+    notes
   end
   
   def supplier_desc

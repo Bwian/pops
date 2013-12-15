@@ -7,9 +7,9 @@ Pops::Application.routes.draw do
   end
   
   controller :sessions do
-    get 'login' => :new
-    post 'login' => :create
-    get 'logout' => :destroy
+    get  'login'  => :new
+    post 'login'  => :create
+    get  'logout' => :destroy
   end
   
   resources :suppliers, :only => [:index, :new]
@@ -22,19 +22,24 @@ Pops::Application.routes.draw do
     resources :items, :only => [:new]
   end 
   
+  post 'orders/:id/draft'    => 'orders#draft'
+  post 'orders/:id/submit'   => 'orders#submit'
+  post 'orders/:id/approve'  => 'orders#approve'
+  post 'orders/:id/complete' => 'orders#complete'
+  
   resources :items, :except => [:index, :new] 
   
   # AJAX routes
   
-  post 'orders/:id/items/gst' => 'items#gst'
-  post 'items/:id/gst' => 'items#gst'
-  patch 'items/:id/gst' => 'items#gst'
-  post 'items/gst' => 'items#gst'
+  post  'orders/:id/items/gst'  => 'items#gst'
+  post  'items/:id/gst'         => 'items#gst'
+  patch 'items/:id/gst'         => 'items#gst'
+  post  'items/gst'             => 'items#gst'
   
-  post 'orders/:id/items/tax_rate' => 'items#tax_rate'
-  post 'items/:id/tax_rate' => 'items#tax_rate'
-  patch 'items/:id/tax_rate' => 'items#tax_rate'
-  post 'items/tax_rate' => 'items#tax_rate'
+  post  'orders/:id/items/tax_rate' => 'items#tax_rate'
+  post  'items/:id/tax_rate'        => 'items#tax_rate'
+  patch 'items/:id/tax_rate'        => 'items#tax_rate'
+  post  'items/tax_rate'            => 'items#tax_rate'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -26,6 +26,7 @@ class OrdersController < ApplicationController
   # GET /orders/new.xml
   def new
     @order = Order.new
+    @order.approver_id = User.find(session[:user_id]).approver_id
 
     respond_to do |format|
       format.html # new.html.erb
@@ -81,6 +82,77 @@ class OrdersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(orders_url) }
       format.xml { head :ok }
+    end
+  end
+  
+  def draft
+    @order = Order.find(params[:id])
+    @order.status = OrderStatus::DRAFT
+    
+    respond_to do |format|
+      if @order.save
+        format.html { redirect_to(@order, notice: "Order #{@order.id} set to Draft.") }
+        format.xml { head :ok }
+      else
+        format.html { render action: "edit" }
+        format.xml { render xml: @order.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+  
+  def submit
+    @order = Order.find(params[:id])
+    @order.status = OrderStatus::SUBMITTED
+    
+    respond_to do |format|
+      if @order.save
+        format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Submitted.") }
+        format.xml { head :ok }
+      else
+        @order.status = OrderStatus::DRAFT
+        format.html { render action: "edit" }
+        format.xml { render xml: @order.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+  
+  def approve
+    @order = Order.find(params[:id])
+    @order.status = OrderStatus::APPROVED
+    @order.approver_id = session[:user_id]
+    @order.approved_at = Time.now
+    
+    respond_to do |format|
+      if @order.save
+        format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Approved.") }
+        format.xml { head :ok }
+      else
+        @order.status = OrderStatus::SUBMITTED
+        @order.approver_id = nil
+        @order.approved_at = nil
+        format.html { render action: "edit" }
+        format.xml { render xml: @order.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+  
+  def complete
+    @order = Order.find(params[:id])
+    @order.status = OrderStatus::PROCESSED
+    @order.processor_id = session[:user_id]
+    @order.processed_at = Time.now
+    
+    respond_to do |format|
+      if @order.save
+        format.html { redirect_to(@order, notice: "Order #{@order.id} set to Processed.") }
+        format.xml { head :ok }
+      else
+        @order.status = OrderStatus::APPROVED
+        @order.processor_id = nil
+        @order.processed_at = nil
+        format.html { render action: "edit" }
+        format.xml { render xml: @order.errors, status: :unprocessable_entity }
+      end
     end
   end
   
