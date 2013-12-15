@@ -14,11 +14,14 @@
         </ul>
       </div>
     <% end %>
-	   
-    
+	     
     <%= f.hidden_field(:order_id) %>
     <div>
-      <p class="atby"><%= @order.atby %></p>
+      <p class="atby">
+        <% @order.atby.each do |note| %>
+          <%= note %><br/>
+        <% end %>
+      </p>
     </div>
     <div class="field">
       <%= f.label :id, 'Order:' %>

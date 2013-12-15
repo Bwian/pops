@@ -16,7 +16,11 @@
 	
     <% if @order.id %>    
       <div>
-        <p class="atby"><%= @order.atby %></p>
+        <p class="atby">
+          <% @order.atby.each do |note| %>
+            <%= note %><br/>
+          <% end %>
+        </p>
       </div>
       <div class="field">
         <%= f.label :id, 'Order:' %>
@@ -58,14 +62,9 @@
 	  </div>
     <div class="actions">
       <label></label>
-  		<% if @readonly %>
-        <%= link_item_new(@order) %>&nbsp;
-        <%= link_edit(@order) %>&nbsp;
-        <%= link_delete(@order) %>
-      <% else %>
-        <%= f.submit nil, class: "btn btn-primary btn-sm" %>
+      <% order_actions(@order,@readonly).each do |link| %>
+        <%= link %>
       <% end %>
-      <%= link_list(@order) %>
     </div>
 	
   	<div class="notice">
