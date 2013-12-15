@@ -18,6 +18,8 @@ class ItemsController < ApplicationController
   def new
     @item = Item.new
     @item.order_id = params[:order_id]
+    @item.program_id = session[:program_id]
+    @item.account_id = session[:account_id]
     @order = @item.order
 
     respond_to do |format|
@@ -37,7 +39,9 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
     @order = @item.order
-
+    session[:program_id] = @item.program_id
+    session[:account_id] = @item.account_id
+    
     respond_to do |format|
       if @item.save
         format.html { redirect_to(order_url :id => @order.id) }
