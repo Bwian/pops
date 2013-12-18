@@ -37,6 +37,10 @@ module OrdersHelper
     actions << link_list(order)
   end
   
+  def roles
+    User.find(session[:user_id]).roles
+  end
+
   private
   
   def action_label(action)

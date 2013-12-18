@@ -13,6 +13,7 @@ class SessionsController < ApplicationController
     if user = User.authenticate(params[:code], params[:password])
       session[:user_id] = user.id
       session[:admin] = user.admin
+      session[:role] = user.roles[0]
       update_timeout
       redirect_to session[:return_to]
     else

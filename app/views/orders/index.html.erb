@@ -4,7 +4,7 @@
   <% end %>
 
   <%= form_tag("/orders/refresh", method: :post) do %>
-    <%= select(:refresh, :role, ['','Creator','Approver','Processor'], {}, {onchange: "this.form.submit()"} )%>
+    <%= select(:refresh, :role, roles(), { selected: session[:role] }, { onchange: "this.form.submit()" } )%>
   
     <table width="100%">
       <%= index_header('order',9)%>

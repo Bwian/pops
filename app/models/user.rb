@@ -34,6 +34,16 @@ class User < ActiveRecord::Base
     end
   end
 
+  def roles
+    role_array = [] 
+        
+    role_array << 'Processor' if processor
+    role_array << 'Approver' if approver
+    role_array << 'Creator' if creator
+    
+    role_array
+  end
+  
   def User.encrypt_password(password, salt)
     Digest::SHA2.hexdigest(password + "pops" + salt)
   end

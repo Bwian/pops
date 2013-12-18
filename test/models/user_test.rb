@@ -76,4 +76,11 @@ class UserTest < ActiveSupport::TestCase
     User.reset_selection
     assert_equal(count + 1, User.selection.count)
   end
+  
+  test "roles" do
+    assert_equal(3,@user1.roles.size)
+    assert_equal('Processor',@user1.roles[0])
+    assert_equal(1,@user2.roles.size)
+    assert_equal('Processor',@user1.roles[0])
+  end
 end
