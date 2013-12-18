@@ -22,6 +22,7 @@ Pops::Application.routes.draw do
     resources :items, :only => [:new]
   end 
   
+  post 'orders/refresh'      => 'orders#refresh'
   post 'orders/:id/draft'    => 'orders#draft'
   post 'orders/:id/submit'   => 'orders#submit'
   post 'orders/:id/approve'  => 'orders#approve'

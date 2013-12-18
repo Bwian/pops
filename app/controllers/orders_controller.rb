@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.xml
   def index
-    @orders = Order.all
+    @orders = Order.where(where_parameters)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -156,6 +156,16 @@ class OrdersController < ApplicationController
     end
   end
   
+  def refresh
+    refresh_params = params[:refresh]  
+    session[:role] = refresh_params[:role]
+
+    respond_to do |format|
+      format.html { redirect_to(orders_url) }
+      format.xml { head :ok }
+    end
+  end
+  
   private
   
   def order_params
@@ -172,5 +182,22 @@ class OrdersController < ApplicationController
       :approved_at, 
       :processor_id, 
       :processed_at) 
+  end
+  
+  def where_parameters
+    @orders = Order.where(creator_id: session[:user_id], status: [OrderStatus::DRAFT,OrderStatus::SUBMITTED])
+    
+    case session[:role]
+      when 'Creator'
+        { creator_id: session[:user_id],
+          status: [OrderStatus::DRAFT, OrderStatus::SUBMITTED] }
+      when 'Approver' 
+        { approver_id: session[:user_id],
+          status: [OrderStatus::SUBMITTED, OrderStatus::APPROVED] }
+      when 'Processor' 
+        { status: OrderStatus::APPROVED }
+      else
+        ''
+    end
   end
 end
