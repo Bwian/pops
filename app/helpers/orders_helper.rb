@@ -38,9 +38,10 @@ module OrdersHelper
   end
   
   def roles
-    User.find(session[:user_id]).roles
+    user = User.find(session[:user_id])
+    user ? user.roles : []
   end
-
+    
   private
   
   def action_label(action)
