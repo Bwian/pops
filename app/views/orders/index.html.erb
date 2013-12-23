@@ -3,11 +3,31 @@
     <p class="notice" ><%= notice %></p>
   <% end %>
 
-  <%= form_tag("/orders/refresh", method: :post) do %>
-    <%= select(:refresh, :role, roles(), { selected: session[:role] }, { onchange: "this.form.submit()" } )%>
-  
+  <%= form_tag("/orders/refresh", method: :post) do %>    
+    
     <table width="100%">
       <%= index_header('order',9)%>
+      <div id="toolbar">
+        <%= select(:refresh, :role, roles(), { selected: session[:role] }, { onchange: "this.form.submit()", class: "btn btn-primary" } )%>
+        <div class="ck-button">
+          <label>
+            <%= check_box :refresh, :draft, {onchange: "this.form.submit()"} %>
+            <span>Draft</span>
+          </label>
+          <label>
+            <%= check_box :refresh, :submitted, {onchange: "this.form.submit()"} %>
+            <span>Submitted</span>
+          </label>
+          <label>
+            <%= check_box :refresh, :approved, {onchange: "this.form.submit()"} %>
+            <span>Approved</span>
+          </label>
+          <label>
+            <%= check_box :refresh, :processed, {onchange: "this.form.submit()"} %>
+            <span>Processed</span>
+          </label>
+        </div>
+      </div>  
       <th>PO Number</th>
       <th>Supplier</th>
       <th>Invoice</th>
