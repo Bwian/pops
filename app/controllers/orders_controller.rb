@@ -2,8 +2,9 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.xml
   def index
+    @order_filter = session[:order_filter] ? session[:order_filter] : OrderFilter.new({})
     @orders = Order.where(where_parameters)
-
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml { render xml: @orders }
@@ -157,8 +158,7 @@ class OrdersController < ApplicationController
   end
   
   def refresh
-    refresh_params = params[:refresh]  
-    session[:role] = refresh_params[:role]
+    session[:order_filter] = OrderFilter.new(params[:order_filter])
 
     respond_to do |format|
       format.html { redirect_to(orders_url) }
@@ -185,9 +185,7 @@ class OrdersController < ApplicationController
   end
   
   def where_parameters
-    @orders = Order.where(creator_id: session[:user_id], status: [OrderStatus::DRAFT,OrderStatus::SUBMITTED])
-    
-    case session[:role]
+    case @order_filter.role
       when 'Creator'
         { creator_id: session[:user_id],
           status: [OrderStatus::DRAFT, OrderStatus::SUBMITTED] }

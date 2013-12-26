@@ -18,6 +18,8 @@ Pops::Application.routes.draw do
   resources :tax_rates, :only => [:index, :new]
   
   resources :users
+  
+  get  'orders/refresh'      => 'orders#refresh'
   resources :orders do
     resources :items, :only => [:new]
   end 

@@ -19,5 +19,6 @@ class ActiveSupport::TestCase
     session[:tip_entry_id] = user.id
     session[:admin] = user.admin
     session[:timeout] = Time.now.to_i + 300 
+    session[:order_filter] = OrderFilter.new(role: 'Creator')
   end
 end

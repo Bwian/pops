@@ -8,6 +8,15 @@ class OrdersControllerTest < ActionController::TestCase
     @user = users(:brian)
   end
 
+  test "initial order_filter setup" do
+    order_filter = session[:order_filter]
+    assert_equal('Creator', order_filter.role)
+    assert_nil(order_filter.draft)
+    assert_nil(order_filter.submitted)
+    assert_nil(order_filter.approved)
+    assert_nil(order_filter.processed)
+  end
+  
   test "should get index" do
     get :index
     assert_response :success
