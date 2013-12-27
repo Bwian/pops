@@ -5,6 +5,10 @@ class OrderStatus
   APPROVED  = 'A'
   PROCESSED = 'P'
   
+  CREATOR   = 'Creator'
+  APPROVER  = 'Approver'
+  PROCESSOR = 'Processor'
+  
   STATUS = {
     DRAFT     => 'Draft',
     SUBMITTED => 'Submitted',

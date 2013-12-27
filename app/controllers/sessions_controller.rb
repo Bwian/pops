@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
     if user = User.authenticate(params[:code], params[:password])
       session[:user_id] = user.id
       session[:admin] = user.admin
-      session[:order_filter] = OrderFilter.new(role: user.roles[0])
+      session[:order_filter] = OrderFilter.new(user.id)
       update_timeout
       redirect_to session[:return_to]
     else

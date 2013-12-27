@@ -37,9 +37,9 @@ class User < ActiveRecord::Base
   def roles
     role_array = [] 
         
-    role_array << 'Processor' if processor
-    role_array << 'Approver' if approver
-    role_array << 'Creator' if creator
+    role_array << OrderStatus::PROCESSOR  if processor
+    role_array << OrderStatus::APPROVER  if approver
+    role_array << OrderStatus::CREATOR  if creator
     
     role_array
   end

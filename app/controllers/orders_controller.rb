@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.xml
   def index
-    @order_filter = session[:order_filter] ? session[:order_filter] : OrderFilter.new({})
+    @order_filter = session[:order_filter] || OrderFilter.new(session[:user_id])
     @orders = Order.where(where_parameters)
     
     respond_to do |format|
@@ -158,7 +158,9 @@ class OrdersController < ApplicationController
   end
   
   def refresh
-    session[:order_filter] = OrderFilter.new(params[:order_filter])
+    order_filter = session[:order_filter] || OrderFilter.new(session[:user_id])
+    order_filter.update(params[:order_filter])
+    session[:order_filter] = order_filter
 
     respond_to do |format|
       format.html { redirect_to(orders_url) }
@@ -185,17 +187,25 @@ class OrdersController < ApplicationController
   end
   
   def where_parameters
-    case @order_filter.role
-      when 'Creator'
-        { creator_id: session[:user_id],
-          status: [OrderStatus::DRAFT, OrderStatus::SUBMITTED] }
-      when 'Approver' 
-        { approver_id: session[:user_id],
-          status: [OrderStatus::SUBMITTED, OrderStatus::APPROVED] }
-      when 'Processor' 
-        { status: OrderStatus::APPROVED }
+    case @order_filter.role   
+      when OrderStatus::APPROVER 
+        where = { approver_id: session[:user_id] }
+        where.merge(filters)
+      when OrderStatus::PROCESSOR 
+        where = filters
       else
-        ''
+        where = { creator_id: session[:user_id] }
+        where.merge(filters)
     end
+  end
+  
+  def filters
+    filter_array = []
+    filter_array << OrderStatus::DRAFT if @order_filter.draft?
+    filter_array << OrderStatus::SUBMITTED if @order_filter.submitted?
+    filter_array << OrderStatus::APPROVED if @order_filter.approved?
+    filter_array << OrderStatus::PROCESSED if @order_filter.processed?
+    
+    filter_array.size > 0 ? { status: filter_array} : {}
   end
 end
