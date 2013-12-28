@@ -2,7 +2,18 @@
   <% if notice %>
     <p class="notice" ><%= notice %></p>
   <% end %>
-
+  
+  <% if @order_filter.faults.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@order_filter.faults.count, "error") %> prevented orders from being displayed:</h2>
+      <ul>
+        <% @order_filter.faults.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
   <%= form_tag("/orders/refresh", method: :post) do %>    
     
     <table width="100%">
@@ -11,19 +22,19 @@
         <%= select(:order_filter, :role, roles(), {}, { onchange: "this.form.submit()", class: "btn btn-primary" } )%>
         <div class="ck-button">
           <label>
-            <%= check_box :order_filter, :draft, {onchange: "this.form.submit()"} %>
+            <%= check_box :order_filter, :draft, { onchange: "this.form.submit()" } %>
             <span>Draft</span>
           </label>
           <label>
-            <%= check_box :order_filter, :submitted, {onchange: "this.form.submit()"} %>
+            <%= check_box :order_filter, :submitted, { onchange: "this.form.submit()" } %>
             <span>Submitted</span>
           </label>
           <label>
-            <%= check_box :order_filter, :approved, {onchange: "this.form.submit()"} %>
+            <%= check_box :order_filter, :approved, { onchange: "this.form.submit()" } %>
             <span>Approved</span>
           </label>
           <label>
-            <%= check_box :order_filter, :processed, {onchange: "this.form.submit()"} %>
+            <%= check_box :order_filter, :processed, { onchange: "this.form.submit()" } %>
             <span>Processed</span>
           </label>
         </div>

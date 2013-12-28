@@ -12,6 +12,7 @@ class OrderFilterTest < ActiveSupport::TestCase
     assert_equal('0', @order_filter.submitted)
     assert_equal('1', @order_filter.approved)
     assert_equal('0', @order_filter.processed)
+    assert_equal(0, @order_filter.faults.size)
   end
   
   test "booleans" do
@@ -38,6 +39,7 @@ class OrderFilterTest < ActiveSupport::TestCase
     assert_equal('1', @order_filter.submitted)
     assert_equal('0', @order_filter.approved)
     assert_equal('0', @order_filter.processed)
+    assert_equal(0, @order_filter.faults.size)
   end
   
   test "update same role" do
@@ -52,5 +54,26 @@ class OrderFilterTest < ActiveSupport::TestCase
     assert_equal('0', @order_filter.submitted)
     assert_equal('0', @order_filter.approved)
     assert_equal('1', @order_filter.processed)
+  end
+  
+  test "update no filters and reset" do
+    @order_filter.update({
+      role: OrderStatus::PROCESSOR, 
+      draft: '0',
+      submitted: '0',
+      approved: '0',
+      processed: '0' 
+    })
+    assert_equal(1, @order_filter.faults.size)
+    assert_equal('At least one status filter must be set', @order_filter.faults[0])
+    
+    @order_filter.update({
+      role: OrderStatus::PROCESSOR, 
+      draft: '1',
+      submitted: '0',
+      approved: '0',
+      processed: '0' 
+    })
+    assert_equal(0, @order_filter.faults.size)
   end
 end

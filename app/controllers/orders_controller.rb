@@ -3,8 +3,8 @@ class OrdersController < ApplicationController
   # GET /orders.xml
   def index
     @order_filter = session[:order_filter] || OrderFilter.new(session[:user_id])
-    @orders = Order.where(where_parameters)
-    
+    @orders = @order_filter.faults.any? ? [] : Order.where(where_parameters)
+
     respond_to do |format|
       format.html # index.html.erb
       format.xml { render xml: @orders }
