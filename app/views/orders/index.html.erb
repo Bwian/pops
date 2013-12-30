@@ -18,27 +18,30 @@
     
     <table width="100%">
       <%= index_header('order',9)%>
-      <div id="toolbar">
-        <%= select(:order_filter, :role, roles(), {}, { onchange: "this.form.submit()", class: "btn btn-primary" } )%>
-        <div class="ck-button">
-          <label>
-            <%= check_box :order_filter, :draft, { onchange: "this.form.submit()" } %>
-            <span>Draft</span>
-          </label>
-          <label>
-            <%= check_box :order_filter, :submitted, { onchange: "this.form.submit()" } %>
-            <span>Submitted</span>
-          </label>
-          <label>
-            <%= check_box :order_filter, :approved, { onchange: "this.form.submit()" } %>
-            <span>Approved</span>
-          </label>
-          <label>
-            <%= check_box :order_filter, :processed, { onchange: "this.form.submit()" } %>
-            <span>Processed</span>
-          </label>
-        </div>
-      </div>  
+
+      <div id="roles">
+        <%= select(:order_filter, :role, roles(), {}, { onchange: "this.form.submit()" } )%>
+      </div>
+      
+      <div class="ck-button">
+        <label>
+          <%= check_box :order_filter, :draft, { onchange: "this.form.submit()" } %>
+          <span>Draft</span>
+        </label>
+        <label>
+          <%= check_box :order_filter, :submitted, { onchange: "this.form.submit()" } %>
+          <span>Submitted</span>
+        </label>
+        <label>
+          <%= check_box :order_filter, :approved, { onchange: "this.form.submit()" } %>
+          <span>Approved</span>
+        </label>
+        <label>
+          <%= check_box :order_filter, :processed, { onchange: "this.form.submit()" } %>
+          <span>Processed</span>
+        </label>
+      </div>
+
       <th>PO Number</th>
       <th>Supplier</th>
       <th>Invoice</th>
