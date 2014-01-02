@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
   # GET /orders.xml
   def index
     @order_filter = session[:order_filter] || OrderFilter.new(session[:user_id])
-    @orders = @order_filter.faults.any? ? [] : Order.where(where_parameters)
+    @orders = @order_filter.faults.any? ? [] : Order.where(where_parameters).order(sort_order(params[:sort]))
 
     respond_to do |format|
       format.html # index.html.erb
@@ -207,5 +207,24 @@ class OrdersController < ApplicationController
     filter_array << OrderStatus::PROCESSED if @order_filter.processed?
     
     filter_array.size > 0 ? { status: filter_array} : {}
+  end
+  
+  def sort_order(column)
+    if session[:sort_by].nil? || session[:sort_by].empty?
+      session[:sort_by]    = 'id'
+      session[:sort_order] = 'desc'
+    end
+
+    unless column.nil? || column.empty?
+      if session[:sort_by] == column
+        session[:sort_order] = session[:sort_order] == 'asc' ? 'desc' : 'asc'
+      else
+        session[:sort_by]    = column
+        session[:sort_order] = 'asc'
+      end
+    end
+    
+    puts "============== #{session[:sort_by]} #{session[:sort_order]} ================"
+    "#{session[:sort_by]} #{session[:sort_order]}"
   end
 end

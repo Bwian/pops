@@ -42,28 +42,30 @@
         </label>
       </div>
 
-      <th>PO Number</th>
-      <th>Supplier</th>
-      <th>Invoice</th>
-      <th>Amount</th>
-      <th>Created</th>
-      <th>By</th>
-      <th>Approved</th>
-      <th>By</th>
-      <th>Status</th> 
-      <% @orders.each do |order| %>
-        <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-          <td><b><%= link_to(order.id, order) %></b></td>
-          <td><%= order.supplier_desc %></td>
-          <td><%= order.invoice_no %></td>
-          <td align="right"><%= sprintf('%.2f', order.grandtotal) %></td>
-          <td><%= format_date(order.created_at) %></td>
-          <td><%= order.creator ? order.creator.code : '' %></td>
-          <td><%= format_date(order.approved_at) %></td>
-          <td><%= order.approver ? order.approver.code : '' %></td>
-          <td><%= order.status_name %></td>
-        </tr>
-      <% end %>
+      <div id="orders_list" data-no-turbolink>
+        <th><%= link_to 'PO Number &uarr;'.html_safe, orders_path(sort: :id) %></th>
+        <th><%= link_to 'Supplier', orders_path(sort: :supplier_id) %></th>
+        <th><%= link_to 'Invoice &darr;'.html_safe, orders_path(sort: :invoice_no) %></th>
+        <th>Amount</th>
+        <th><%= link_to 'Created', orders_path(sort: :created_at) %></th>
+        <th><%= link_to 'By', orders_path(sort: :creator_id) %></th>
+        <th><%= link_to 'Approved', orders_path(sort: :created_at) %></th>
+        <th><%= link_to 'By', orders_path(sort: :approver_id) %></th>
+        <th><%= link_to 'Status', orders_path(sort: :status) %></th> 
+        <% @orders.each do |order| %>
+          <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+            <td><b><%= link_to(order.id, order) %></b></td>
+            <td><%= order.supplier_desc %></td>
+            <td><%= order.invoice_no %></td>
+            <td align="right"><%= sprintf('%.2f', order.grandtotal) %></td>
+            <td><%= format_date(order.created_at) %></td>
+            <td><%= order.creator ? order.creator.code : '' %></td>
+            <td><%= format_date(order.approved_at) %></td>
+            <td><%= order.approver ? order.approver.code : '' %></td>
+            <td><%= order.status_name %></td>
+          </tr>
+        <% end %>
+      </div>
     </table>
   <% end %>
 </div>
