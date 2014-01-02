@@ -2,7 +2,6 @@ require 'test_helper'
 include ApplicationHelper
 
 class OrdersHelperTest < ActionView::TestCase
-  
   setup do
     setup_admin_session
     @order = orders(:draft)
@@ -38,5 +37,25 @@ class OrdersHelperTest < ActionView::TestCase
     session[:user_id] = users(:sean).id
     assert_equal(1,roles.size)
   end
+
+  test 'order_header no sort' do
+    session[:sort_by] = 'status'
+    assert_equal('PO Number ', order_header(:id))
+  end
   
+  test 'order_header invalid key' do
+    assert_equal(' ', order_header(:invalid))
+  end  
+  
+  test 'order_header ascending' do
+    session[:sort_by] = 'status'
+    session[:sort_order] = 'asc'   
+    assert_equal('Status &uarr;', order_header(:status))
+  end
+  
+  test 'order_header desscending' do
+    session[:sort_by] = 'status'
+    session[:sort_order] = 'desc'   
+    assert_equal('Status &darr;', order_header(:status))
+  end
 end

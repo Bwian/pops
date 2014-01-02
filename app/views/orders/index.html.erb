@@ -43,15 +43,15 @@
       </div>
 
       <div id="orders_list" data-no-turbolink>
-        <th><%= link_to 'PO Number &uarr;'.html_safe, orders_path(sort: :id) %></th>
-        <th><%= link_to 'Supplier', orders_path(sort: :supplier_id) %></th>
-        <th><%= link_to 'Invoice &darr;'.html_safe, orders_path(sort: :invoice_no) %></th>
-        <th>Amount</th>
-        <th><%= link_to 'Created', orders_path(sort: :created_at) %></th>
-        <th><%= link_to 'By', orders_path(sort: :creator_id) %></th>
-        <th><%= link_to 'Approved', orders_path(sort: :created_at) %></th>
-        <th><%= link_to 'By', orders_path(sort: :approver_id) %></th>
-        <th><%= link_to 'Status', orders_path(sort: :status) %></th> 
+        <th><%= link_to order_header(:id), orders_path(sort: :id) %></th>
+        <th><%= link_to order_header(:supplier_id), orders_path(sort: :supplier_id) %></th>
+        <th><%= link_to(order_header(:invoice_no), orders_path(sort: :invoice_no)) %></th>
+        <th><%= order_header(:amount) %></th>
+        <th><%= link_to order_header(:created_at), orders_path(sort: :created_at) %></th>
+        <th><%= link_to order_header(:creator_id), orders_path(sort: :creator_id) %></th>
+        <th><%= link_to order_header(:approved_at), orders_path(sort: :approved_at) %></th>
+        <th><%= link_to order_header(:approver_id), orders_path(sort: :approver_id) %></th>
+        <th><%= link_to order_header(:status), orders_path(sort: :status) %></th> 
         <% @orders.each do |order| %>
           <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
             <td><b><%= link_to(order.id, order) %></b></td>

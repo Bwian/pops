@@ -1,10 +1,11 @@
 class OrdersController < ApplicationController
+
   # GET /orders
   # GET /orders.xml
   def index
     @order_filter = session[:order_filter] || OrderFilter.new(session[:user_id])
     @orders = @order_filter.faults.any? ? [] : Order.where(where_parameters).order(sort_order(params[:sort]))
-
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml { render xml: @orders }
@@ -224,7 +225,7 @@ class OrdersController < ApplicationController
       end
     end
     
-    puts "============== #{session[:sort_by]} #{session[:sort_order]} ================"
     "#{session[:sort_by]} #{session[:sort_order]}"
   end
+
 end

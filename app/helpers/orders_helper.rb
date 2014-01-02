@@ -1,4 +1,22 @@
 module OrdersHelper
+  
+  COLUMN_HEADERS = {
+    id:           'PO Number',
+    supplier_id:  'Supplier',
+    invoice_no:   'Invoice',
+    amount:       'Amount',
+    created_at:   'Created',
+    creator_id:   'By',
+    approved_at:  'Approved',
+    approver_id:  'By',
+    status:       'Status'
+  }
+  
+  ARROW = {
+    'asc'      => '&uarr;',
+    'desc'     => '&darr;'
+  }
+  
   def link_item_new(order)
     session[:admin] ? link_to("Add Item", "/orders/#{order.id}/items/new", class: ApplicationHelper::LINK_STYLE) : ""
   end
@@ -40,6 +58,11 @@ module OrdersHelper
   def roles
     user = User.find(session[:user_id])
     user ? user.roles : []
+  end
+  
+  def order_header(key)
+    arrow = key.to_s == session[:sort_by] ? ARROW[session[:sort_order]] : ''
+    "#{COLUMN_HEADERS[key]} #{arrow}".html_safe
   end
     
   private
