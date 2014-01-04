@@ -4,8 +4,8 @@ class OrdersController < ApplicationController
   # GET /orders.xml
   def index
     @order_filter = session[:order_filter] || OrderFilter.new(session[:user_id])
-    @orders = @order_filter.faults.any? ? Order.none : Order.where(where_parameters).order(sort_order(params[:sort]))
-    
+    @orders = @order_filter.faults.any? ? Order.none : Order.where(where_parameters).joins(join_user(params[:sort])).order(sort_order(params[:sort]))
+   
     respond_to do |format|
       format.html # index.html.erb
       format.xml { render xml: @orders }
@@ -210,6 +210,10 @@ class OrdersController < ApplicationController
     filter_array.size > 0 ? { status: filter_array } : {}
   end
   
+  def join_user(column)
+    id_column?(column) ? "LEFT OUTER JOIN users ON users.id = orders.#{column}" : ""
+  end
+   
   def sort_order(column)
     if session[:sort_by].nil? || session[:sort_by].empty?
       session[:sort_by]    = 'id'
@@ -225,7 +229,12 @@ class OrdersController < ApplicationController
       end
     end
     
-    "#{session[:sort_by]} #{session[:sort_order]}"
+    sort_by = id_column?(column) ? 'users.name' : session[:sort_by]
+    "#{sort_by} #{session[:sort_order]}"
   end
-
+  
+  def id_column?(column)
+    return false if column.nil?
+    column =~ /_id$/
+  end
 end
