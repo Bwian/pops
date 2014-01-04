@@ -9,6 +9,8 @@ class Order < ActiveRecord::Base
   validates :supplier_id, :status, presence: true
   validate :approver_present
   
+  before_save :set_supplier
+  
   def approver_present
     errors.add(:approver_id, "must be present") if approver_id.nil? && status == OrderStatus::SUBMITTED
   end
@@ -52,5 +54,9 @@ class Order < ActiveRecord::Base
   
   def build_atby(onat,by)
     "on #{onat.strftime('%d/%m/%Y')} at #{onat.strftime('%H:%M')} by #{by.code}"
+  end
+  
+  def set_supplier
+    self.supplier_name = self.supplier.name if self.supplier_id > 0
   end
 end

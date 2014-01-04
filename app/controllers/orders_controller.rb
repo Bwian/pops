@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   # GET /orders.xml
   def index
     @order_filter = session[:order_filter] || OrderFilter.new(session[:user_id])
-    @orders = @order_filter.faults.any? ? [] : Order.where(where_parameters).order(sort_order(params[:sort]))
+    @orders = @order_filter.faults.any? ? Order.none : Order.where(where_parameters).order(sort_order(params[:sort]))
     
     respond_to do |format|
       format.html # index.html.erb
@@ -207,7 +207,7 @@ class OrdersController < ApplicationController
     filter_array << OrderStatus::APPROVED if @order_filter.approved?
     filter_array << OrderStatus::PROCESSED if @order_filter.processed?
     
-    filter_array.size > 0 ? { status: filter_array} : {}
+    filter_array.size > 0 ? { status: filter_array } : {}
   end
   
   def sort_order(column)

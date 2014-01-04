@@ -137,8 +137,8 @@ td.win, td.draw, td.loss, td.bye, td.pending {
   padding:        5px 0px;
   font:           150% sans-serif;
   color:          $main-color;
+  margin-bottom:  0.5em;
   border-bottom:  2px solid $main-color;
-  margin-bottom:  5px;
 }
 
 .po-header {
@@ -189,6 +189,10 @@ td.win, td.draw, td.loss, td.bye, td.pending {
   background: $main-color-light;
 }
 
+#orders {
+  border-bottom: 2px solid $main-color;
+}
+
 #roles {
   padding:          5px;
   line-height:      1.5;
@@ -197,7 +201,6 @@ td.win, td.draw, td.loss, td.bye, td.pending {
   border-radius:    4px;
   border:           1px solid $main-color-medium;
   overflow:         auto;
-  float:            left;
   display:          inline-block; 
 }
 
@@ -220,16 +223,15 @@ td.win, td.draw, td.loss, td.bye, td.pending {
   border-radius:    4px;
   border:           1px solid $main-color-medium;
   overflow:         auto;
-  float:            left;
   display:          inline-block;
 
 }
 
 .ck-button label {
-  margin: 0;
+  margin: 0 1px;
   padding: 0;
   float: left;
-  width: 10em;
+  width: 8em;
 }
 
 .ck-button label span {

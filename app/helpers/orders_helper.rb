@@ -1,15 +1,15 @@
 module OrdersHelper
   
   COLUMN_HEADERS = {
-    id:           'PO Number',
-    supplier_id:  'Supplier',
-    invoice_no:   'Invoice',
-    amount:       'Amount',
-    created_at:   'Created',
-    creator_id:   'By',
-    approved_at:  'Approved',
-    approver_id:  'By',
-    status:       'Status'
+    id:            'PO Number',
+    supplier_name: 'Supplier',
+    invoice_no:    'Invoice',
+    amount:        'Amount',
+    created_at:    'Created',
+    creator_id:    'By',
+    approved_at:   'Approved',
+    approver_id:   'By',
+    status:        'Status'
   }
   
   ARROW = {
