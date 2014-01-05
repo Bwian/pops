@@ -77,4 +77,19 @@ class OrdersControllerTest < ActionController::TestCase
 
     assert_redirected_to orders_path
   end
+  
+  test "should change default to submitted" do
+    assert_difference("Order.where(status: 'S').count", 1) do
+      put :submit, id: @order.to_param, order: @order.attributes
+    end
+    assert_redirected_to orders_path
+  end
+  
+  test "should change submitted to draft" do
+    @order = orders(:submitted)
+    assert_difference("Order.where(status: 'D').count", 1) do
+      put :draft, id: @order.to_param, order: @order.attributes
+    end
+    assert_redirected_to order_path
+  end
 end
