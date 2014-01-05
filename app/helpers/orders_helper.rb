@@ -64,6 +64,10 @@ module OrdersHelper
     arrow = key.to_s == session[:sort_by] ? ARROW[session[:sort_order]] : ''
     "#{COLUMN_HEADERS[key]} #{arrow}".html_safe
   end
+  
+  def order_sort_header(column)
+    link_to order_header(column), orders_path(sort: column)
+  end
     
   private
   

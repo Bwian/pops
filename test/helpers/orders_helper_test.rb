@@ -58,4 +58,8 @@ class OrdersHelperTest < ActionView::TestCase
     session[:sort_order] = 'desc'   
     assert_equal('Status &darr;', order_header(:status))
   end
+  
+  test 'order_sort_header' do
+    assert_includes(order_sort_header(:id), 'orders?sort=id')
+  end
 end

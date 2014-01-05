@@ -48,15 +48,15 @@
 
       <div>        
         <tr><td></td></tr>
-        <th><%= link_to order_header(:id), orders_path(sort: :id) %></th>
-        <th><%= link_to order_header(:supplier_name), orders_path(sort: :supplier_name) %></th>
-        <th><%= link_to(order_header(:invoice_no), orders_path(sort: :invoice_no)) %></th>
+        <th><%= order_sort_header(:id) %></th>
+        <th><%= order_sort_header(:supplier_name) %></th>
+        <th><%= order_sort_header(:invoice_no) %></th>
         <th><%= order_header(:amount) %></th>
-        <th><%= link_to order_header(:created_at), orders_path(sort: :created_at) %></th>
-        <th><%= link_to order_header(:creator_id), orders_path(sort: :creator_id) %></th>
-        <th><%= link_to order_header(:approved_at), orders_path(sort: :approved_at) %></th>
-        <th><%= link_to order_header(:approver_id), orders_path(sort: :approver_id) %></th>
-        <th><%= link_to order_header(:status), orders_path(sort: :status) %></th> 
+        <th><%= order_sort_header(:created_at) %></th>
+        <th><%= order_sort_header(:creator_id) %></th>
+        <th><%= order_sort_header(:approved_at) %></th>
+        <th><%= order_sort_header(:approver_id) %></th>
+        <th><%= order_sort_header(:status) %></th> 
         <% @orders.each do |order| %>
           <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
             <td><b><%= link_to(order.id, order) %></b></td>
