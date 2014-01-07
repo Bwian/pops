@@ -12,22 +12,22 @@ class Order < ActiveRecord::Base
   before_save :set_supplier
   
   def approver_present
-    errors.add(:approver_id, "must be present") if approver_id.nil? && status == OrderStatus::SUBMITTED
+    errors.add(:approver_id, "must be present") if self.approver_id.nil? && self.status == OrderStatus::SUBMITTED
   end
     
   def status_name
-    OrderStatus.status(status)
+    OrderStatus.status(self.status)
   end
   
   def atby
-    notes = [ "created #{build_atby(created_at,creator)}" ]
-    notes << "approved #{build_atby(approved_at,approver)}" if approved_at
-    notes << "processed #{build_atby(processed_at,processor)}" if processed_at  
+    notes = [ "created #{build_atby(self.created_at,self.creator)}" ]
+    notes << "approved #{build_atby(self.approved_at,self.approver)}" if self.approved_at
+    notes << "processed #{build_atby(self.processed_at,self.processor)}" if self.processed_at  
     notes
   end
   
   def supplier_desc
-    supplier_id && supplier_id > 1 ? supplier.name : supplier_name
+    self.supplier_id && self.supplier_id > 1 ? self.supplier.name : self.supplier_name
   end
   
   def subtotal
@@ -36,7 +36,7 @@ class Order < ActiveRecord::Base
   
   def gst
     total = 0.0
-    items.each do |item|
+    self.items.each do |item|
       total += item.gst 
     end
     total
@@ -44,10 +44,33 @@ class Order < ActiveRecord::Base
   
   def grandtotal
     total = 0.0
-    items.each do |item|
+    self.items.each do |item|
       total += item.price 
     end
     total
+  end
+  
+  def to_draft
+    self.status       = OrderStatus::DRAFT
+  end
+  
+  def to_submitted
+    self.approved_at  = nil
+    self.status       = OrderStatus::SUBMITTED
+  end
+  
+  def to_approved(user_id) 
+    self.approver_id  = user_id if status == OrderStatus::SUBMITTED
+    self.approved_at  = Time.now
+    self.processor_id = nil
+    self.processed_at = nil
+    self.status       = OrderStatus::APPROVED
+  end
+  
+  def to_processed(user_id)
+    self.processor_id = user_id
+    self.processed_at = Time.now
+    self.status       = OrderStatus::PROCESSED
   end
   
   private

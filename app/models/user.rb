@@ -37,9 +37,9 @@ class User < ActiveRecord::Base
   def roles
     role_array = [] 
         
-    role_array << OrderStatus::PROCESSOR  if processor
-    role_array << OrderStatus::APPROVER  if approver
-    role_array << OrderStatus::CREATOR  if creator
+    role_array << OrderStatus::PROCESSOR  if self.processor
+    role_array << OrderStatus::APPROVER  if self.approver
+    role_array << OrderStatus::CREATOR  if self.creator
     
     role_array
   end
@@ -59,7 +59,7 @@ class User < ActiveRecord::Base
   private
 
   def password_must_be_present
-    errors.add(:password, "Missing password") unless hashed_password.present?
+    errors.add(:password, "Missing password") unless self.hashed_password.present?
   end
 
   def generate_salt

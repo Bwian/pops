@@ -16,9 +16,9 @@ class Supplier < ActiveRecord::Base
   
   # Return address as one string with spaces in each line set to &nbsp
   def address
-    address = to_nbsp(address1)
-    address += ', ' + to_nbsp(address2) if !address2.blank?
-    address += ', ' + to_nbsp(address3) if !address3.blank?
+    address = to_nbsp(self.address1)
+    address += ', ' + to_nbsp(self.address2) if !self.address2.blank?
+    address += ', ' + to_nbsp(self.address3) if !self.address3.blank?
     address.html_safe
   end
   

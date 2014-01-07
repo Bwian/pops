@@ -89,7 +89,7 @@ class OrdersController < ApplicationController
   
   def draft
     @order = Order.find(params[:id])
-    @order.status = OrderStatus::DRAFT
+    @order.to_draft
     
     respond_to do |format|
       if @order.save
@@ -104,8 +104,8 @@ class OrdersController < ApplicationController
   
   def submit
     @order = Order.find(params[:id])
-    @order.status = OrderStatus::SUBMITTED
-    
+    @order.to_submitted
+
     respond_to do |format|
       if @order.save
         format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Submitted.") }
@@ -120,9 +120,7 @@ class OrdersController < ApplicationController
   
   def approve
     @order = Order.find(params[:id])
-    @order.status = OrderStatus::APPROVED
-    @order.approver_id = session[:user_id]
-    @order.approved_at = Time.now
+    @order.to_approved(session[:user_id])
     
     respond_to do |format|
       if @order.save
@@ -130,7 +128,6 @@ class OrdersController < ApplicationController
         format.xml { head :ok }
       else
         @order.status = OrderStatus::SUBMITTED
-        @order.approver_id = nil
         @order.approved_at = nil
         format.html { render action: "edit" }
         format.xml { render xml: @order.errors, status: :unprocessable_entity }
@@ -140,9 +137,7 @@ class OrdersController < ApplicationController
   
   def complete
     @order = Order.find(params[:id])
-    @order.status = OrderStatus::PROCESSED
-    @order.processor_id = session[:user_id]
-    @order.processed_at = Time.now
+    @order.to_processed(session[:user_id])
     
     respond_to do |format|
       if @order.save

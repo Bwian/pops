@@ -15,13 +15,13 @@ class Item < ActiveRecord::Base
             presence: true
   
   def gst
-    rate = tax_rate_id ? tax_rate.rate : 0.0
-    p = price ? price : 0.0
+    rate = self.tax_rate_id ? self.tax_rate.rate : 0.0
+    p = self.price ? self.price : 0.0
     p * rate.to_f / (100.0 + rate.to_f)
   end
   
   def formatted_gst
-    sprintf('%.2f',gst)
+    sprintf('%.2f', self.gst)
   end
   
 end
