@@ -5,6 +5,7 @@ class WelcomeController < ApplicationController
   EXCLUDE_FORMS = [
     '.',
     '..',
+    'items',
     'layouts',
     'sessions',
     'welcome'
