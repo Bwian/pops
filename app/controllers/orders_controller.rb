@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   # GET /orders.xml
   def index
     @order_filter = session[:order_filter] || OrderFilter.new(session[:user_id])
-    @orders = @order_filter.faults.any? ? Order.none : Order.where(where_parameters).joins(join_user(params[:sort])).order(sort_order(params[:sort]))
+    @orders = @order_filter.faults.any? ? Order.none : Order.where(where_parameters).limit(100).joins(join_user(params[:sort])).order(sort_order(params[:sort]))
    
     respond_to do |format|
       format.html # index.html.erb

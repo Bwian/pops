@@ -4,12 +4,15 @@
   <% end %>
 
   <table>
-    <%= index_header('user',4)%>
+    <%= index_header('user',7)%>
     <% @users.each do |user| %>
       <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
         <td><b><%= link_to(user.code, user) %></b></td>
         <td><%= user.name %></td>
         <td><%= user.email %></td>
+        <td><%= creator(user) %></td>
+        <td><%= approver(user) %></td>
+        <td><%= processor(user) %></td>
         <td><%= admin(user) %></td>
       </tr>
     <% end %>
