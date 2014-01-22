@@ -225,7 +225,7 @@ class OrdersController < ApplicationController
     end
     
     sort_by = id_column?(column) ? 'users.name' : session[:sort_by]
-    "#{sort_by} #{session[:sort_order]}"
+    "#{sort_by} #{session[:sort_order]}, created_at desc"
   end
   
   def id_column?(column)
