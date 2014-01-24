@@ -50,7 +50,7 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
-        format.html { redirect_to(orders_url, notice: "Order #{@order.id} was successfully created.") }
+        format.html { redirect_to new_order_item_path(@order) }
         format.xml { render xml: @order, status: :created, location: @order }
       else
         format.html { render action: "new" }
@@ -66,7 +66,7 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.update_attributes(order_params)
-        format.html { redirect_to(orders_url, notice: "Order #{@order.id} was successfully updated.") }
+        format.html { redirect_to(@order, notice: "Order #{@order.id} was successfully updated.") }
         format.xml { head :ok }
       else
         format.html { render action: "edit" }

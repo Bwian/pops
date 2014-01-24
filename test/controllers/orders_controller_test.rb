@@ -37,7 +37,7 @@ class OrdersControllerTest < ActionController::TestCase
     assert_difference('Order.count') do
       post :create, order: order.attributes
     end
-    assert_redirected_to orders_path  
+    assert_redirected_to new_order_item_path(Order.last)
   end
 
   test "should not create order" do
@@ -61,7 +61,7 @@ class OrdersControllerTest < ActionController::TestCase
 
   test "should update order" do
     put :update, id: @order.to_param, order: @order.attributes
-    assert_redirected_to orders_path
+    assert_redirected_to order_path(@order)
   end
 
   test "should not update order" do
