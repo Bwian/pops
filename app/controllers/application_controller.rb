@@ -5,19 +5,18 @@ class ApplicationController < ActionController::Base
   
   before_filter :authorise
   before_filter :timeout
-
+  
   protected
 
-  def authorise
+  def authorise    
+    session[:return_to] = request.fullpath if request.get?
     unless User.find_by_id(session[:user_id]) && authorised_action
-      session[:return_to] = request.fullpath
       redirect_to login_url, notice: "Please log in to access this feature"
     end
   end
 
   def timeout
-    if session[:timeout] < Time.now.to_i
-      session[:return_to] = request.fullpath
+    if session[:timeout] < Time.now.to_i 
       redirect_to login_url, notice: "Session timed out - please log in"
     else
       update_timeout
@@ -25,7 +24,7 @@ class ApplicationController < ActionController::Base
   end
    
   def update_timeout
-    session[:timeout] = Time.now.to_i + 300
+    session[:timeout] = Time.now.to_i + 10
   end
   
   private

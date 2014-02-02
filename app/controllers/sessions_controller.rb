@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   
   skip_before_filter :authorise, :timeout
-
+  
   def new
   end
 
@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
       session[:admin] = user.admin
       session[:order_filter] = OrderFilter.new(user.id)
       update_timeout
-      redirect_to session[:return_to]
+      redirect_to return_to
     else
       redirect_to login_url, alert: "Invalid user/password combination"
     end
