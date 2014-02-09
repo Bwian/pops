@@ -161,6 +161,12 @@ html,body {
   border-color: $main-color-medium;
 }
 
+.btn-sm {
+  line-height:      2em;
+  padding:          0.1em 1em;
+  margin:           0em;
+}
+
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active,
