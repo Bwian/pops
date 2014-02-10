@@ -95,6 +95,10 @@ th {
   color: white;
 }
 
+.right {
+  float: right;
+}
+
 .notice {
   color: $notice-color;
 }
@@ -104,13 +108,13 @@ th {
 }
 
 .list_line_even {
-	background: $main-color-bg;
-  height: 2em;
+	background:   $main-color-bg;
+  height:       2em;
 }
 
 .list_line_odd {
-	background: $main-color-light;
-  height: 2em;
+	background:   $main-color-light;
+  height:       2em;
 }
 
 .list_actions {
@@ -120,25 +124,37 @@ th {
 }
 
 .tiny {
-  font-size: xx-small;
-  color: $main-color;
+  font-size:    xx-small;
+  color:        $main-color;
 }
 
 td.win, td.draw, td.loss, td.bye, td.pending {
-  border: 2px solid $main-color-bg;
+  border:       2px solid $main-color-bg;
 }
 
 .actions {
-  margin-top: 2em;
-  margin-left: 0.5em;
+  margin-top:   2em;
+  margin-left:  0.5em;
 }
 
 .header {
-  padding:        5px 0px;
+  width:          100%;
+  margin-bottom:  0.5em;
+  padding-bottom: 0.5em;
+  border-bottom:  2px solid $main-color;
+  overflow:       hidden; 
+  vertical-align: bottom;
+  display:        table;
+}
+
+.header-title {
   font:           150% sans-serif;
   color:          $main-color;
-  margin-bottom:  0.5em;
-  border-bottom:  2px solid $main-color;
+}
+
+.header-cells {
+  display:        table-cell; 
+  vertical-align: bottom; 
 }
 
 .po-header {
@@ -194,9 +210,9 @@ td.win, td.draw, td.loss, td.bye, td.pending {
 }
 
 #roles {
-  padding:          5px;
-  line-height:      1.5;
+  line-height:      2em;
   width:            8em;
+  margin: 0em;
   background:       $main-color-light url("data:image/png;base64,R0lGODlhDwAUAIABAAAAAP///yH5BAEAAAEALAAAAAAPABQAAAIXjI+py+0Po5wH2HsXzmw//lHiSJZmUAAAOw==") no-repeat 90% 50%;
   border-radius:    4px;
   border:           1px solid $main-color-medium;
@@ -208,6 +224,7 @@ td.win, td.draw, td.loss, td.bye, td.pending {
   border: none;
   box-shadow: none;
   background: transparent;
+  margin-left: 1em;
   -webkit-appearance: none; 
 }
 
@@ -217,26 +234,26 @@ td.win, td.draw, td.loss, td.bye, td.pending {
 
 .ck-button {
   margin-left:      0.5em;
-  padding:          5px;
-  line-height:      1.5;
+  padding:          0em;
+  line-height:      2em;
   background:       $main-color-light;
   border-radius:    4px;
   border:           1px solid $main-color-medium;
   overflow:         auto;
   display:          inline-block;
-
+  vertical-align:   bottom;
 }
 
 .ck-button label {
-  margin: 0 1px;
-  padding: 0;
+  margin: 0em;
+  padding: 0em;
   float: left;
   width: 8em;
 }
 
 .ck-button label span {
-  margin: 0px;
-  padding: 0px;
+  margin: 0em;
+  padding: 0em;
   text-align: center;
   display: block;
 }

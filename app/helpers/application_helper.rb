@@ -25,6 +25,10 @@ module ApplicationHelper
     session[:admin] ? link_to('Delete', model, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" ) : ""
   end
   
+  def link_refresh(name)
+    session[:admin] ? link_to("Refresh #{name.titleize.pluralize}", "/#{name.pluralize}/new", class: LINK_STYLE) : ""
+  end
+  
   def link_logoutin
     return '' if request.fullpath == '/login'
     session[:user_id] ? link_to('Logout','/logout') : link_to('Login', '/login')
@@ -44,14 +48,6 @@ module ApplicationHelper
 
   def format_date(datetime)
     datetime ? datetime.strftime('%d/%m/%Y') : ''
-  end
-
-  private
-  
-  def build_header(type,name,columns)
-    link = session[:admin] ? link_to("#{type} #{name.titleize}", "/#{name.pluralize}/new", class: LINK_STYLE) : ""
-    header = "<tr><td colspan=\"#{columns - 1}\" class=\"header\">#{name.pluralize.titleize}</td><td align=\"right\" class=\"header\">#{link}</td></tr><tr><td></td></tr>"
-    header.html_safe
   end
 end
 

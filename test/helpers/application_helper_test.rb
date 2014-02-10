@@ -19,6 +19,10 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_match(/New Order/,link_new('order'))
   end
   
+  test "link_refresh" do
+    assert_match(/Refresh Suppliers/,link_refresh('supplier'))
+  end
+  
   test "link_edit" do
     assert_match(/orders(.*)edit/,link_edit(@order))
   end
@@ -26,14 +30,6 @@ class ApplicationHelperTest < ActionView::TestCase
   test "link_delete" do
     assert_match(/orders/,link_delete(@order))
     assert_match(/delete/,link_delete(@order))
-  end
-  
-  test "index_header" do
-    assert_match(/Orders(.*)New Order/,index_header('order',7))
-  end
-  
-  test "index_header_refresh" do
-    assert_match(/Orders(.*)Refresh/,index_header_refresh('order',7))
   end
   
   test "legend edit" do
