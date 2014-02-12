@@ -4,7 +4,7 @@ module ApplicationHelper
   
   def link_list(model)
     name = model.class.name.downcase
-    link_to('List', "/#{name.pluralize}", class: LINK_STYLE)
+    link_to("List #{name.titleize.pluralize}", "/#{name.pluralize}", class: LINK_STYLE)
   end
   
   def link_model(model)
@@ -28,18 +28,11 @@ module ApplicationHelper
   def link_refresh(name)
     session[:admin] ? link_to("Refresh #{name.titleize.pluralize}", "/#{name.pluralize}/new", class: LINK_STYLE) : ""
   end
+  mores stuff here
   
   def link_logoutin
     return '' if request.fullpath == '/login'
     session[:user_id] ? link_to('Logout','/logout') : link_to('Login', '/login')
-  end
-    
-  def index_header(name,columns)
-    build_header('New',name,columns)
-  end
-  
-  def index_header_refresh(name,columns)
-    build_header('Refresh',name,columns)
   end
   
   def legend(name,disabled)
