@@ -28,7 +28,6 @@ module ApplicationHelper
   def link_refresh(name)
     session[:admin] ? link_to("Refresh #{name.titleize.pluralize}", "/#{name.pluralize}/new", class: LINK_STYLE) : ""
   end
-  mores stuff here
   
   def link_logoutin
     return '' if request.fullpath == '/login'

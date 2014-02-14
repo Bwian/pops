@@ -1,5 +1,7 @@
 class OrdersController < ApplicationController
 
+  before_filter :find_order, except: %w[index new create refresh]
+  
   # GET /orders
   # GET /orders.xml
   def index
@@ -15,7 +17,6 @@ class OrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.xml
   def show
-    @order = Order.find(params[:id])
     @readonly = true
 
     respond_to do |format|
@@ -38,7 +39,6 @@ class OrdersController < ApplicationController
 
   # GET /orders/1/edit
   def edit
-    @order = Order.find(params[:id])
   end
 
   # POST /orders
@@ -62,8 +62,6 @@ class OrdersController < ApplicationController
   # PUT /orders/1
   # PUT /orders/1.xml
   def update
-    @order = Order.find(params[:id])
-
     respond_to do |format|
       if @order.update_attributes(order_params)
         format.html { redirect_to(@order, notice: "Order #{@order.id} was successfully updated.") }
@@ -78,7 +76,6 @@ class OrdersController < ApplicationController
   # DELETE /orders/1
   # DELETE /orders/1.xml
   def destroy
-    @order = Order.find(params[:id])
     @order.destroy
 
     respond_to do |format|
@@ -88,7 +85,6 @@ class OrdersController < ApplicationController
   end
   
   def draft
-    @order = Order.find(params[:id])
     @order.to_draft
     
     respond_to do |format|
@@ -103,7 +99,6 @@ class OrdersController < ApplicationController
   end
   
   def submit
-    @order = Order.find(params[:id])
     @order.to_submitted
 
     respond_to do |format|
@@ -119,7 +114,6 @@ class OrdersController < ApplicationController
   end
   
   def approve
-    @order = Order.find(params[:id])
     @order.to_approved(session[:user_id])
     
     respond_to do |format|
@@ -136,7 +130,6 @@ class OrdersController < ApplicationController
   end
   
   def complete
-    @order = Order.find(params[:id])
     @order.to_processed(session[:user_id])
     
     respond_to do |format|
@@ -231,5 +224,9 @@ class OrdersController < ApplicationController
   def id_column?(column)
     return false if column.nil?
     column =~ /_id$/
+  end
+  
+  def find_order
+    @order = Order.find(params[:id])
   end
 end

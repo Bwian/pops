@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
   ALL   = 'all'
   NONE  = 'none'
 
-  AUTHORISE = {
+  ADMIN = {
     'orders'    => [ALL],
     'items'     => [ALL],
     'users'     => [INDEX, SHOW],
@@ -45,8 +45,8 @@ class ApplicationController < ActionController::Base
   }
 
   def authorised_action
-    valid_actions = AUTHORISE[request.filtered_parameters['controller']]
-    if valid_actions.include?(ALL) || valid_actions.include?(request.filtered_parameters['action'])
+    valid_actions = ADMIN[params[:controller]]
+    if valid_actions.include?(ALL) || valid_actions.include?(params[:action])
       return true
     else
       return session[:admin]

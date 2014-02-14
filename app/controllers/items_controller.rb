@@ -76,7 +76,7 @@ class ItemsController < ApplicationController
     @item.destroy
 
     respond_to do |format|
-      format.html { redirect_to(items_url) }
+      format.html { redirect_to(order_url(:id => @item.order_id, notice: "Item was successfully deleted.")) }
       format.xml { head :ok }
     end
   end
