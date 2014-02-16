@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
 
   before_filter :find_order, except: %w[index new create refresh]
+  before_filter :authorised_action, only: %w[new edit]
   
   # GET /orders
   # GET /orders.xml
@@ -228,5 +229,9 @@ class OrdersController < ApplicationController
   
   def find_order
     @order = Order.find(params[:id])
+  end
+  
+  def authorised_action
+    view_context.authorised_action params[:action], params[:controller]
   end
 end

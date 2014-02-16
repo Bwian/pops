@@ -68,6 +68,10 @@ module OrdersHelper
   def order_sort_header(column)
     link_to order_header(column), orders_path(sort: column)
   end
+  
+  def authorised_action(action, controller)
+    true
+  end
     
   private
   
