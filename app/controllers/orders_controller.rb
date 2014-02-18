@@ -230,8 +230,4 @@ class OrdersController < ApplicationController
   def find_order
     @order = Order.find(params[:id])
   end
-  
-  def authorised_action
-    view_context.authorised_action params[:action], params[:controller]
-  end
 end

@@ -1,6 +1,11 @@
 module ApplicationHelper
   
-  LINK_STYLE = "btn btn-primary btn-sm"
+  LINK_STYLE  = "btn btn-primary btn-sm"
+  
+  # Actions
+  NEW         = 'new'
+  EDIT        = 'edit'
+  DELETE      = 'delete'
   
   def link_list(model)
     name = model.class.name.downcase
@@ -13,16 +18,16 @@ module ApplicationHelper
   end
   
   def link_new(name)
-    session[:admin] ? link_to("New #{name.titleize}", "/#{name.pluralize}/new", class: LINK_STYLE) : ""
+    authorised_action(NEW,params[:controller], nil) ? link_to("New #{name.titleize}", "/#{name.pluralize}/new", class: LINK_STYLE) : ""
   end
   
   def link_edit(model)
     name = model.class.name.downcase
-    session[:admin] ? link_to('Edit', "/#{name.pluralize}/#{model.id}/edit", class: LINK_STYLE) : ""
+    authorised_action(EDIT,params[:controller], model) ? link_to('Edit', "/#{name.pluralize}/#{model.id}/edit", class: LINK_STYLE) : ""
   end
 
   def link_delete(model)
-    session[:admin] ? link_to('Delete', model, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" ) : ""
+    authorised_action(DELETE,params[:controller], model) ? link_to('Delete', model, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" ) : ""
   end
   
   def link_refresh(name)
@@ -40,6 +45,49 @@ module ApplicationHelper
 
   def format_date(datetime)
     datetime ? datetime.strftime('%d/%m/%Y') : ''
+  end
+  
+  def authorised_action(action, controller, model)
+    user = User.find(session[:user_id]) 
+    
+    case controller
+      when 'orders'
+        allow_access = authorise_orders(user,action,model)
+      when 'items'
+        allow_access = authorise_items(user,action,model)
+      else
+        allow_access = session[:admin]
+    end
+    
+    allow_access
+  end
+  
+  private
+  
+  def authorise_orders(user,action,order)  
+    case action
+      when NEW
+        allow_access = user.creator
+      when EDIT,DELETE
+        allow_access = !order.processed?
+      else
+        allow_access = true
+    end
+    
+    allow_access
+  end
+  
+  def authorise_items(user,action,model)
+    order = model.class.name == 'Item' ? model.order : model
+    
+    case action
+      when NEW,EDIT,DELETE
+        allow_access = !order.processed?
+      else
+        allow_access = true
+    end
+    
+    allow_access 
   end
 end
 

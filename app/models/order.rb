@@ -73,6 +73,22 @@ class Order < ActiveRecord::Base
     self.status       = OrderStatus::PROCESSED
   end
   
+  def draft?
+    self.status == OrderStatus::DRAFT
+  end
+  
+  def submitted?
+    self.status == OrderStatus::SUBMITTED
+  end
+  
+  def approved?
+    self.status == OrderStatus::APPROVED
+  end
+  
+  def processed?
+    self.status == OrderStatus::PROCESSED
+  end
+  
   private
   
   def build_atby(onat,by)

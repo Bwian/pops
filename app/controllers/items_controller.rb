@@ -1,10 +1,12 @@
 class ItemsController < ApplicationController
 
+  before_filter :find_item, except: %w[index new create]
+  before_filter :find_order, only: 'new'
+  before_filter :authorised_action, only: %w[new edit]
+  
   # GET /items/1
   # GET /items/1.xml
-  def show
-    @item = Item.find(params[:id])
-    @order = @item.order
+  def show  
     @readonly = true
 
     respond_to do |format|
@@ -30,8 +32,6 @@ class ItemsController < ApplicationController
 
   # GET /items/1/edit
   def edit
-    @item = Item.find(params[:id])
-    @order = @item.order
   end
 
   # POST /items
@@ -56,8 +56,6 @@ class ItemsController < ApplicationController
   # PUT /items/1
   # PUT /items/1.xml
   def update
-    @item = Item.find(params[:id])
-
     respond_to do |format|
       if @item.update_attributes(item_params)
         format.html { redirect_to(order_url(:id => @item.order_id, notice: "Item was successfully updated.")) }
@@ -72,7 +70,6 @@ class ItemsController < ApplicationController
   # DELETE /items/1
   # DELETE /items/1.xml
   def destroy
-    @item = Item.find(params[:id])
     @item.destroy
 
     respond_to do |format|
@@ -108,5 +105,14 @@ class ItemsController < ApplicationController
       :quantity,
       :price
      ) 
+  end
+  
+  def find_item
+    @item = Item.find(params[:id])
+    @order = @item.order
+  end
+  
+  def find_order
+    @order = Order.find(params[:order_id])
   end
 end

@@ -18,7 +18,7 @@ module OrdersHelper
   }
   
   def link_item_new(order)
-    session[:admin] ? link_to("Add Item", new_order_item_path(order), class: ApplicationHelper::LINK_STYLE) : ""
+    authorised_action('new','items',order) ? link_to("Add Item", new_order_item_path(order), class: ApplicationHelper::LINK_STYLE) : ""
   end
 
   def link_action(order)  
@@ -67,10 +67,6 @@ module OrdersHelper
   
   def order_sort_header(column)
     link_to order_header(column), orders_path(sort: column)
-  end
-  
-  def authorised_action(action, controller)
-    true
   end
     
   private

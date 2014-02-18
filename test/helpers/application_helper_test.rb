@@ -44,4 +44,43 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_equal('',format_date(nil))
     assert_match(/..\/..\/..../,format_date(Time.now))
   end
+  
+  test "authorised_action other" do 
+    setup_user_session(:brian)
+    assert(authorised_action(nil, 'users', nil))
+    setup_user_session(:sean)
+    assert_not(authorised_action(nil, 'users', nil))
+  end
+  
+  test "authorised_action orders new" do 
+    setup_user_session(:sean)
+    assert(authorised_action('new', 'orders', nil),:sean)
+    setup_user_session(:invalid)
+    assert_not(authorised_action('new', 'orders', nil),:invalid)
+  end
+  
+  test "authorised_action orders edit delete processed" do 
+    setup_user_session(:brian)
+    order = orders(:processed)
+    assert_not(authorised_action('edit', 'orders', order),'edit')
+    assert_not(authorised_action('delete', 'orders', order),'delete')
+  end
+  
+  test "authorised_action items new edit delete processed" do 
+    setup_user_session(:brian)
+    order = orders(:processed)
+    item = Item.new
+    item.order_id = order.id
+    assert_not(authorised_action('new', 'items',  order),'new')
+    assert_not(authorised_action('edit', 'items', item),'edit')
+    assert_not(authorised_action('delete', 'items', item),'delete')
+  end
+  
+  private
+  
+  def setup_user_session(code)
+    user = users(code)
+    session[:user_id] = user.id
+    session[:admin] = user.admin
+  end
 end

@@ -16,7 +16,6 @@ class ActiveSupport::TestCase
   def setup_admin_session
     user = users(:brian)
     session[:user_id] = user.id
-    session[:tip_entry_id] = user.id
     session[:admin] = user.admin
     session[:timeout] = Time.now.to_i + 300 
     session[:order_filter] = OrderFilter.new(user.id)

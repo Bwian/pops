@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    return_to = session[:return_to] ? session[:return_to] : welcome_url
+    return_to = session[:return_to] ? session[:return_to] : orders_url
     reset_session
     session[:return_to] = return_to
 
