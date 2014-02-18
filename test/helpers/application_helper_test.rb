@@ -2,6 +2,16 @@ require 'test_helper'
 
 class ApplicationHelperTest < ActionView::TestCase
   
+  NEW       = 'new'
+  EDIT      = 'edit'
+  DELETE    = 'delete'
+  
+  ORDERS    = 'orders'
+  ITEMS     = 'items'
+  
+  SHOULD    = 'should'
+  SHOULDNT  = 'should not'
+  
   setup do
     setup_admin_session
     @order = orders(:draft)
@@ -45,63 +55,38 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_match(/..\/..\/..../,format_date(Time.now))
   end
   
-  test "authorised_action other" do 
+  test "authorised_action admin" do 
     setup_user_session(:brian)
-    assert(authorised_action(nil, 'users', nil))
+    assert(authorised_action(nil, 'users', nil),'Admin actions should succeed for user brian')
     setup_user_session(:sean)
-    assert_not(authorised_action(nil, 'users', nil))
+    assert_not(authorised_action(nil, 'users', nil),'Admin actions should not succeed for user sean')
   end
   
   test "authorised_action orders new" do 
     setup_user_session(:sean)
-    assert(authorised_action('new', 'orders', nil),:sean)
+    assert(authorised_action(NEW, ORDERS, nil),'Sean should be able to create orders')
     setup_user_session(:invalid)
-    assert_not(authorised_action('new', 'orders', nil),:invalid)
+    assert_not(authorised_action(NEW, ORDERS, nil),'Invalid should not be able to create orders')
   end
   
   test "authorised_action orders(draft) - edit delete" do 
     order = orders(:draft)
-    
-    setup_user_session(:brian)
-    assert(authorised_action('edit', 'orders', order),'edit brian')
-    assert(authorised_action('delete', 'orders', order),'delete brian')
-    
-    setup_user_session(:sean)
-    assert_not(authorised_action('edit', 'orders', order),'edit sean')
-    assert_not(authorised_action('delete', 'orders', order),'delete sean')
+    order_authorised(order,:brian)
+    order_not_authorised(order,:sean)
   end
   
-  test "authorised_action items(draft) - edit delete" do 
+  test "authorised_action items(draft) - new edit delete" do 
     order = orders(:draft)
-    item = Item.new
-    item.order_id = order.id
-    
-    setup_user_session(:brian)
-    assert(authorised_action('new', 'items',  order),'new brian')
-    assert(authorised_action('edit', 'items', item),'edit brian')
-    assert(authorised_action('delete', 'items', item),'delete brian')
-    
-    setup_user_session(:sean)
-    assert_not(authorised_action('new', 'items',  order),'new sean')
-    assert_not(authorised_action('edit', 'items', item),'edit sean')
-    assert_not(authorised_action('delete', 'items', item),'delete sean')
+    item_authorised(order,:brian)
+    item_not_authorised(order,:sean)
   end
   
   test "authorised_action orders(processed) - edit delete" do 
-    setup_user_session(:brian)
-    order = orders(:processed)
-    assert_not(authorised_action('edit', 'orders', order),'edit')
-    assert_not(authorised_action('delete', 'orders', order),'delete')
+    order_not_authorised(orders(:processed),:brian)
   end
   
   test "authorised_action items(processed) - new edit delete" do 
-    setup_user_session(:brian)
-    order = orders(:processed)
-    item = Item.new
-    item.order_id = order.id
-    assert_not(authorised_action('new', 'items',  order),'new')
-    assert_not(authorised_action('edit', 'items', item),'edit')
-    assert_not(authorised_action('delete', 'items', item),'delete')
+    item_not_authorised(orders(:processed),:brian)
   end
   
   private
@@ -110,5 +95,39 @@ class ApplicationHelperTest < ActionView::TestCase
     user = users(code)
     session[:user_id] = user.id
     session[:admin] = user.admin
+  end
+  
+  def order_authorised(order,user)
+    setup_user_session(user)
+    assert(authorised_action(EDIT, ORDERS, order),assert_message(user,order,EDIT,SHOULD))
+    assert(authorised_action(DELETE, ORDERS, order),assert_message(user,order,DELETE,SHOULD))
+  end
+  
+  def order_not_authorised(order,user)
+    setup_user_session(user)
+    assert_not(authorised_action(EDIT, ORDERS, order),assert_message(user,order,EDIT,SHOULDNT))
+    assert_not(authorised_action(DELETE, ORDERS, order),assert_message(user,order,DELETE,SHOULDNT))
+  end
+  
+  def item_authorised(order,user)
+    setup_user_session(user)
+    item = Item.new
+    item.order_id = order.id
+    assert(authorised_action(NEW, ITEMS,  order),assert_message(user,order,NEW,SHOULD))
+    assert(authorised_action(EDIT, ITEMS, item),assert_message(user,order,EDIT,SHOULD))
+    assert(authorised_action(DELETE, ITEMS, item),assert_message(user,order,DELETE,SHOULD))
+  end
+  
+  def item_not_authorised(order,user)
+    setup_user_session(user)
+    item = Item.new
+    item.order_id = order.id
+    assert_not(authorised_action(NEW, ITEMS,  order),assert_message(user,order,NEW,SHOULDNT))
+    assert_not(authorised_action(EDIT, ITEMS, item),assert_message(user,order,EDIT,SHOULDNT))
+    assert_not(authorised_action(DELETE, ITEMS, item),assert_message(user,order,DELETE,SHOULDNT))
+  end
+  
+  def assert_message(user,order,action,type)
+    "#{action.titleize} #{type} succeed for #{OrderStatus.status(order.status)} when user is #{user.to_s}"
   end
 end
