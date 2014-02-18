@@ -59,14 +59,42 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_not(authorised_action('new', 'orders', nil),:invalid)
   end
   
-  test "authorised_action orders edit delete processed" do 
+  test "authorised_action orders(draft) - edit delete" do 
+    order = orders(:draft)
+    
+    setup_user_session(:brian)
+    assert(authorised_action('edit', 'orders', order),'edit brian')
+    assert(authorised_action('delete', 'orders', order),'delete brian')
+    
+    setup_user_session(:sean)
+    assert_not(authorised_action('edit', 'orders', order),'edit sean')
+    assert_not(authorised_action('delete', 'orders', order),'delete sean')
+  end
+  
+  test "authorised_action items(draft) - edit delete" do 
+    order = orders(:draft)
+    item = Item.new
+    item.order_id = order.id
+    
+    setup_user_session(:brian)
+    assert(authorised_action('new', 'items',  order),'new brian')
+    assert(authorised_action('edit', 'items', item),'edit brian')
+    assert(authorised_action('delete', 'items', item),'delete brian')
+    
+    setup_user_session(:sean)
+    assert_not(authorised_action('new', 'items',  order),'new sean')
+    assert_not(authorised_action('edit', 'items', item),'edit sean')
+    assert_not(authorised_action('delete', 'items', item),'delete sean')
+  end
+  
+  test "authorised_action orders(processed) - edit delete" do 
     setup_user_session(:brian)
     order = orders(:processed)
     assert_not(authorised_action('edit', 'orders', order),'edit')
     assert_not(authorised_action('delete', 'orders', order),'delete')
   end
   
-  test "authorised_action items new edit delete processed" do 
+  test "authorised_action items(processed) - new edit delete" do 
     setup_user_session(:brian)
     order = orders(:processed)
     item = Item.new

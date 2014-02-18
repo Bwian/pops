@@ -69,7 +69,9 @@ module ApplicationHelper
       when NEW
         allow_access = user.creator
       when EDIT,DELETE
-        allow_access = !order.processed?
+        allow_access = 
+          !order.processed? && 
+          access_draft(user,order)
       else
         allow_access = true
     end
@@ -82,12 +84,20 @@ module ApplicationHelper
     
     case action
       when NEW,EDIT,DELETE
-        allow_access = !order.processed?
+        allow_access = 
+          !order.processed? && 
+          access_draft(user,order)
       else
         allow_access = true
     end
     
     allow_access 
+  end
+  
+  def access_draft(user,order)
+    return true if !order.draft?
+    return false if order.creator != user
+    true
   end
 end
 
