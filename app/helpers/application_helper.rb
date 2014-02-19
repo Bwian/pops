@@ -71,7 +71,9 @@ module ApplicationHelper
       when EDIT,DELETE
         allow_access = 
           !order.processed? && 
-          access_draft(user,order)
+          change_draft(user,order) &&
+          change_submitted(user,order) &&
+          change_approved(user,order)
       else
         allow_access = true
     end
@@ -86,7 +88,9 @@ module ApplicationHelper
       when NEW,EDIT,DELETE
         allow_access = 
           !order.processed? && 
-          access_draft(user,order)
+          change_draft(user,order) &&
+          change_submitted(user,order) &&
+          change_approved(user,order)
       else
         allow_access = true
     end
@@ -94,11 +98,24 @@ module ApplicationHelper
     allow_access 
   end
   
-  def access_draft(user,order)
+  def change_draft(user,order)
     return true if !order.draft?
     return false if order.creator != user
     true
   end
+  
+  def change_submitted(user,order)
+    return true if !order.submitted?
+    return false if order.approver != user || !user.approver
+    true
+  end
+  
+  def change_approved(user,order)
+    return true if !order.approved?
+    return false if !user.processor
+    true
+  end
+  
 end
 
 

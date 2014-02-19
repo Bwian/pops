@@ -81,6 +81,30 @@ class ApplicationHelperTest < ActionView::TestCase
     item_not_authorised(order,:sean)
   end
   
+  test "authorised_action orders(submitted) - edit delete" do 
+    order = orders(:submitted)
+    order_authorised(order,:brian)
+    order_not_authorised(order,:sean)
+  end
+  
+  test "authorised_action items(submitted) - new edit delete" do 
+    order = orders(:submitted)
+    item_authorised(order,:brian)
+    item_not_authorised(order,:sean)
+  end
+  
+  test "authorised_action orders(approved) - edit delete" do 
+    order = orders(:approved)
+    order_authorised(order,:brian)
+    order_not_authorised(order,:sean)
+  end
+  
+  test "authorised_action items(approved) - new edit delete" do 
+    order = orders(:approved)
+    item_authorised(order,:brian)
+    item_not_authorised(order,:sean)
+  end
+  
   test "authorised_action orders(processed) - edit delete" do 
     order_not_authorised(orders(:processed),:brian)
   end
@@ -113,7 +137,7 @@ class ApplicationHelperTest < ActionView::TestCase
     setup_user_session(user)
     item = Item.new
     item.order_id = order.id
-    assert(authorised_action(NEW, ITEMS,  order),assert_message(user,order,NEW,SHOULD))
+    assert(authorised_action(NEW, ITEMS, order),assert_message(user,order,NEW,SHOULD))
     assert(authorised_action(EDIT, ITEMS, item),assert_message(user,order,EDIT,SHOULD))
     assert(authorised_action(DELETE, ITEMS, item),assert_message(user,order,DELETE,SHOULD))
   end
@@ -122,7 +146,7 @@ class ApplicationHelperTest < ActionView::TestCase
     setup_user_session(user)
     item = Item.new
     item.order_id = order.id
-    assert_not(authorised_action(NEW, ITEMS,  order),assert_message(user,order,NEW,SHOULDNT))
+    assert_not(authorised_action(NEW, ITEMS, order),assert_message(user,order,NEW,SHOULDNT))
     assert_not(authorised_action(EDIT, ITEMS, item),assert_message(user,order,EDIT,SHOULDNT))
     assert_not(authorised_action(DELETE, ITEMS, item),assert_message(user,order,DELETE,SHOULDNT))
   end
