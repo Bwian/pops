@@ -209,27 +209,8 @@ td.win, td.draw, td.loss, td.bye, td.pending {
   border-bottom: 2px solid $main-color;
 }
 
-#roles {
-  line-height:      2em;
-  width:            8em;
-  margin: 0em;
-  background:       $main-color-light url("data:image/png;base64,R0lGODlhDwAUAIABAAAAAP///yH5BAEAAAEALAAAAAAPABQAAAIXjI+py+0Po5wH2HsXzmw//lHiSJZmUAAAOw==") no-repeat 90% 50%;
-  border-radius:    4px;
-  border:           1px solid $main-color-medium;
-  overflow:         auto;
-  display:          inline-block; 
-}
-
-#roles select {
-  border: none;
-  box-shadow: none;
-  background: transparent;
-  margin-left: 1em;
-  -webkit-appearance: none; 
-}
-
-#roles select:focus {
-  outline: none;
+.roles {
+  height: 2em;
 }
 
 .ck-button {

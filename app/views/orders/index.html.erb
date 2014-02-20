@@ -19,9 +19,7 @@
     <div class=header>
       <div class="header-title header-cells">Orders</div>
       <div class="header-cells">
-        <div id="roles">
-          <%= select(:order_filter, :role, roles(), {}, { onchange: "this.form.submit()" } )%>
-        </div>
+        <%= select(:order_filter, :role, roles(), {}, { onchange: "this.form.submit()", class: "btn btn-primary roles" } )%>
       </div>
       <div class="header-cells">
         <div class="ck-button">
