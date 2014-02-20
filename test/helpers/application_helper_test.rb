@@ -1,14 +1,7 @@
 require 'test_helper'
 
 class ApplicationHelperTest < ActionView::TestCase
-  
-  NEW       = 'new'
-  EDIT      = 'edit'
-  DELETE    = 'delete'
-  
-  ORDERS    = 'orders'
-  ITEMS     = 'items'
-  
+   
   SHOULD    = 'should'
   SHOULDNT  = 'should not'
   

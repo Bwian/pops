@@ -18,7 +18,7 @@ module OrdersHelper
   }
   
   def link_item_new(order)
-    authorised_action('new','items',order) ? link_to("Add Item", new_order_item_path(order), class: ApplicationHelper::LINK_STYLE) : ""
+    authorised_action(NEW,ITEMS,order) ? link_to("Add Item", new_order_item_path(order), class: ApplicationHelper::LINK_STYLE) : ""
   end
 
   def link_action(order)  
@@ -34,7 +34,7 @@ module OrdersHelper
     
     links = []
     actions.each do |action|
-      link = session[:admin] ? link_to(action_label(action), "/orders/#{order.id}/#{action}", method: :post, class: ApplicationHelper::LINK_STYLE) : ""
+      link = authorised_action(EDIT,params[:controller], order) ? link_to(action_label(action), "/orders/#{order.id}/#{action}", method: :post, class: ApplicationHelper::LINK_STYLE) : ""
       links << link
     end
     

@@ -2,11 +2,6 @@ module ApplicationHelper
   
   LINK_STYLE  = "btn btn-primary btn-sm"
   
-  # Actions
-  NEW         = 'new'
-  EDIT        = 'edit'
-  DELETE      = 'delete'
-  
   def link_list(model)
     name = model.class.name.downcase
     link_to("List #{name.titleize.pluralize}", "/#{name.pluralize}", class: LINK_STYLE)
@@ -31,7 +26,7 @@ module ApplicationHelper
   end
   
   def link_refresh(name)
-    session[:admin] ? link_to("Refresh #{name.titleize.pluralize}", "/#{name.pluralize}/new", class: LINK_STYLE) : ""
+    authorised_action(REFRESH,params[:controller],nil) ? link_to("Refresh #{name.titleize.pluralize}", "/#{name.pluralize}/new", class: LINK_STYLE) : ""
   end
   
   def link_logoutin
@@ -51,9 +46,9 @@ module ApplicationHelper
     user = User.find(session[:user_id]) 
     
     case controller
-      when 'orders'
+      when ORDERS
         allow_access = authorise_orders(user,action,model)
-      when 'items'
+      when ITEMS
         allow_access = authorise_items(user,action,model)
       else
         allow_access = session[:admin]
@@ -68,7 +63,7 @@ module ApplicationHelper
     case action
       when NEW
         allow_access = user.creator
-      when EDIT,DELETE
+      when EDIT, DELETE
         allow_access = 
           !order.processed? && 
           change_draft(user,order) &&
@@ -85,7 +80,7 @@ module ApplicationHelper
     order = model.class.name == 'Item' ? model.order : model
     
     case action
-      when NEW,EDIT,DELETE
+      when NEW, EDIT, DELETE
         allow_access = 
           !order.processed? && 
           change_draft(user,order) &&
@@ -97,6 +92,7 @@ module ApplicationHelper
     
     allow_access 
   end
+  
   
   def change_draft(user,order)
     return true if !order.draft?

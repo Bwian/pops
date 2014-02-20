@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
 
   before_filter :find_item, except: %w[index new create]
-  before_filter :find_order, only: 'new'
+  before_filter :find_order, only: %w[new]
   before_filter :authorised_action, only: %w[new edit]
   
   # GET /items/1
