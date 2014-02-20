@@ -63,6 +63,28 @@ class OrderTest < ActiveSupport::TestCase
     assert_equal(OrderStatus::PROCESSED,@approved.status)
   end
   
+  test 'draft?' do
+    assert(@draft.draft?)
+    assert_not(@approved.draft?)
+  end
+  
+  test 'submitted?' do
+    assert(@submitted.submitted?)
+    assert_not(@draft.submitted?)
+  end
+  
+  test 'approved?' do
+    assert(@approved.approved?)
+    assert_not(@draft.approved?)
+  end
+  
+  test 'processed?' do
+    @processed = @approved
+    @processed.status = OrderStatus::PROCESSED
+    assert(@processed.processed?)
+    assert_not(@draft.processed?)
+  end
+  
   test 'dirty and send' do
     assert_not(@draft.changed?)
     @draft.to_submitted

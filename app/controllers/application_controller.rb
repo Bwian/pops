@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 
   def authorise    
     session[:return_to] = request.fullpath if request.get?
-    unless User.find_by_id(session[:user_id]) && authorised_action
+    unless User.find_by_id(session[:user_id]) && admin_action
       redirect_to login_url, notice: "Please log in to access this feature"
     end
   end
@@ -29,6 +29,13 @@ class ApplicationController < ActionController::Base
   
   private
 
+  def authorised_action
+    if !view_context.authorised_action params[:action], params[:controller], @order
+      redirect_to orders_url, notice: "Action #{params[:action]} not allowed for #{params[:controller]}"
+    end
+    true
+  end
+  
   INDEX = 'index'
   SHOW  = 'show'
   ALL   = 'all'
@@ -44,7 +51,7 @@ class ApplicationController < ActionController::Base
     'tax_rates' => [INDEX]
   }
 
-  def authorised_action
+  def admin_action
     valid_actions = ADMIN[params[:controller]]
     if valid_actions.include?(ALL) || valid_actions.include?(params[:action])
       return true
