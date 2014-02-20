@@ -85,6 +85,17 @@ class OrderTest < ActiveSupport::TestCase
     assert_not(@draft.processed?)
   end
   
+  test 'approver_present' do
+    @submitted.approver_id = nil
+    assert !@submitted.save, "Saved the order without an approver"
+  end
+  
+  test 'approver_not_processor' do
+    @approved.to_processed(@brian.id)
+    @approved.processor_id = @approved.approver_id
+    assert !@approved.save, "Saved the order with processor the same as the approver"
+  end
+  
   test 'dirty and send' do
     assert_not(@draft.changed?)
     @draft.to_submitted

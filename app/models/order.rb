@@ -7,12 +7,16 @@ class Order < ActiveRecord::Base
   has_many :items
   
   validates :supplier_id, :status, presence: true
-  validate :approver_present
+  validate :approver_present, :approver_not_processor
   
   before_save :set_supplier
   
   def approver_present
     errors.add(:approver_id, "must be present") if self.approver_id.nil? && self.status == OrderStatus::SUBMITTED
+  end
+  
+  def approver_not_processor
+    errors.add(:processor_id, "must not be the same as Approver") if !self.processor_id.nil? && self.approver_id == self.processor_id
   end
     
   def status_name
