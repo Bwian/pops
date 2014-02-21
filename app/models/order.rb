@@ -4,7 +4,7 @@ class Order < ActiveRecord::Base
   belongs_to :creator, :class_name => 'User' 
   belongs_to :approver, :class_name => 'User'
   belongs_to :processor, :class_name => 'User'
-  has_many :items
+  has_many :items, :dependent => :destroy
   
   validates :supplier_id, :status, presence: true
   validate :approver_present, :approver_not_processor

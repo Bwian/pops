@@ -80,8 +80,12 @@ class OrdersController < ApplicationController
     @order.destroy
 
     respond_to do |format|
-      format.html { redirect_to(orders_url) }
-      format.xml { head :ok }
+      if @order.destroyed
+        format.html { redirect_to(orders_url,notice: "Order #{@order.id} was successfully deleted.") }
+        format.xml { head :ok }
+      else
+        format.html { render action: "show" }
+      end
     end
   end
   
