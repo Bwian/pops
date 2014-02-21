@@ -18,3 +18,12 @@ two:
   description: Second Draft Item
   quantity: 1
   price: 9.99
+
+three:
+  order: approved
+  program: one
+  account: one
+  tax_rate_id: 32 
+  description: First Approved Item
+  quantity: 1
+  price: 4.95 

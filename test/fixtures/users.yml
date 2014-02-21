@@ -33,3 +33,14 @@ invalid:
   approver: false
   processor: false
   creator: false
+  
+processor:
+  code: heather
+  name: Heather Collins
+  hashed_password: MyString
+  salt: MyString
+  email: sean@somewhere.com
+  admin: false
+  approver: false
+  processor: true
+  creator: true

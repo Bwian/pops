@@ -57,6 +57,30 @@ module ApplicationHelper
     allow_access
   end
   
+  def authorised_status_change(action,order)
+    user = User.find(session[:user_id])
+    
+    case action
+      when 'draft'
+        return false if !order.submitted?
+        return true if order.creator == user || order.approver == user
+      when 'submit'
+        return false if !order.draft? && !order.approved?
+        return false if !order.items.any?
+        return true if order.draft? && order.creator == user
+        return true if order.approved? && order.approver == user
+        return true if order.approved? && user.processor?
+      when 'approve'
+        return false if !order.submitted?
+        return true if order.approver == user
+      when 'complete'
+        return false if !order.approved?
+        return true if user.processor?      
+    end
+    
+    false
+  end
+  
   private
   
   def authorise_orders(user,action,order)  
@@ -93,7 +117,6 @@ module ApplicationHelper
     allow_access 
   end
   
-  
   def change_draft(user,order)
     return true if !order.draft?
     return false if order.creator != user
@@ -112,6 +135,12 @@ module ApplicationHelper
     true
   end
   
+  def authorise_draft(user,action,order)
+    pry binding
+    return true if !order.submitted?
+    return false if order.creator != user
+    true
+  end
 end
 
 

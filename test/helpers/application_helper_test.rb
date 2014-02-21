@@ -5,6 +5,13 @@ class ApplicationHelperTest < ActionView::TestCase
   SHOULD    = 'should'
   SHOULDNT  = 'should not'
   
+  DRAFT     = 'draft'
+  SUBMIT    = 'submit'
+  APPROVE   = 'approve'
+  PROCESS   = 'complete'
+  
+  ANYONE    = 'anyone'
+  
   setup do
     setup_admin_session
     @order = orders(:draft)
@@ -106,6 +113,59 @@ class ApplicationHelperTest < ActionView::TestCase
     item_not_authorised(orders(:processed),:brian)
   end
   
+  test "authorised_status_change - to draft" do
+    order = orders(:approved)
+    assert_not(authorised_status_change(DRAFT,order),assert_message(ANYONE,order,DRAFT,SHOULDNT))
+    
+    order = orders(:submitted)
+    setup_user_session(:sean)
+    assert(authorised_status_change(DRAFT,order),assert_message(:sean,order,DRAFT,SHOULD))
+    
+    setup_user_session(:brian)
+    assert(authorised_status_change(DRAFT,order),assert_message(:brian,order,DRAFT,SHOULD))
+    
+    setup_user_session(:invalid)
+    assert_not(authorised_status_change(DRAFT,order),assert_message(:invalid,order,DRAFT,SHOULDNT))
+  end
+  
+  test "authorised_status_change - to submitted" do
+    order = orders(:submitted)
+    assert_not(authorised_status_change(SUBMIT,order),assert_message(ANYONE,order,SUBMIT,SHOULDNT))
+    
+    order = orders(:draft)
+    setup_user_session(:brian)
+    assert(authorised_status_change(SUBMIT,order),assert_message(:brian,order,SUBMIT,SHOULD))
+    
+    order = orders(:approved)
+    assert(authorised_status_change(SUBMIT,order),assert_message(:brian,order,SUBMIT,SHOULD))
+    
+    setup_user_session(:processor)
+    assert(authorised_status_change(SUBMIT,order),assert_message(:processor,order,SUBMIT,SHOULD))
+  end
+  
+  test "authorised_status_change - to approved" do
+    order = orders(:draft)
+    assert_not(authorised_status_change(APPROVE,order),assert_message(ANYONE,order,APPROVE,SHOULDNT))
+    
+    order = orders(:submitted)
+    setup_user_session(:brian)
+    assert(authorised_status_change(APPROVE,order),assert_message(:brian,order,APPROVE,SHOULD))
+  end
+  
+  test "authorised_status_change - to processed" do
+    order = orders(:draft)
+    assert_not(authorised_status_change(PROCESS,order),assert_message(ANYONE,order,PROCESS,SHOULDNT))
+    
+    order = orders(:approved)
+    setup_user_session(:processor)
+    assert(authorised_status_change(PROCESS,order),assert_message(:processor,order,PROCESS,SHOULD))
+  end
+  
+  test "authorised_status_change - to submitted no items" do
+    order = orders(:no_items)
+    assert_not(authorised_status_change(SUBMIT,order),'Submit should fail - no items')
+  end
+  
   private
   
   def setup_user_session(code)
@@ -145,6 +205,6 @@ class ApplicationHelperTest < ActionView::TestCase
   end
   
   def assert_message(user,order,action,type)
-    "#{action.titleize} #{type} succeed for #{OrderStatus.status(order.status)} when user is #{user.to_s}"
+    "#{action.titleize} #{type} succeed for #{OrderStatus.status(order.status)} order when user is #{user.to_s}"
   end
 end

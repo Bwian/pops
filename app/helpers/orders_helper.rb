@@ -25,7 +25,7 @@ module OrdersHelper
     actions = []
     case order.status
       when OrderStatus::DRAFT
-        actions = ['submit'] if order.items.any?
+        actions = ['submit'] 
       when OrderStatus::SUBMITTED
         actions = ['draft','approve']
       when OrderStatus::APPROVED
@@ -34,11 +34,9 @@ module OrdersHelper
     
     links = []
     actions.each do |action|
-      link = true ? link_to(action_label(action), "/orders/#{order.id}/#{action}", method: :post, class: ApplicationHelper::LINK_STYLE) : ""
+      link = authorised_status_change(action,order) ? link_to(action_label(action), "/orders/#{order.id}/#{action}", method: :post, class: ApplicationHelper::LINK_STYLE) : ""
       links << link
     end
-    
-    # authorised_action(EDIT,params[:controller], order)
     
     links
   end
