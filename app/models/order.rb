@@ -93,6 +93,32 @@ class Order < ActiveRecord::Base
     self.status == OrderStatus::PROCESSED
   end
   
+  def to_json
+    oj = self.as_json(include: [:supplier, {items: {include: [:program, :account, :tax_rate]}}])
+    oj["grandtotal"]    = sprintf('%.2f', self.grandtotal)
+    oj["subtotal"]      = sprintf('%.2f', self.subtotal)
+    oj["gst"]           = sprintf('%.2f', self.gst)
+    oj["invoice_date"]  = build_date(self.invoice_date)
+    oj["payment_date"]  = build_date(self.payment_date)
+    oj["creator"]       = build_user(self.creator_id)
+    oj["created_at"]    = build_datetime(self.approved_at)
+    oj["approver"]      = build_user(self.approver_id)
+    oj["approved_at"]   = build_datetime(self.approved_at)
+    oj["processor"]     = build_user(self.processor_id)
+    oj["processed_at"]  = build_datetime(self.processed_at)
+    oj["updated_at"]    = build_datetime(self.updated_at)
+    idx = 0
+    oj["items"].each do |item|
+      item["price"]       = sprintf('%.2f', item["price"])
+      item["created_at"]  = build_datetime(item["created_at"])
+      item["updated_at"]  = build_datetime(item["updated_at"])
+      item["tax_rate"]["rate"] = sprintf('%.2f', item["tax_rate"]["rate"])
+      oj["items"][idx]    = item
+      idx += 1
+    end
+    oj
+  end
+  
   private
   
   def build_atby(onat,by)
@@ -101,5 +127,17 @@ class Order < ActiveRecord::Base
   
   def set_supplier
     self.supplier_name = self.supplier.name if self.supplier_id > 0
+  end
+  
+  def build_datetime(date)
+    date ? "#{date.strftime('%d %b %Y')} - #{date.strftime('%H:%M')}" : nil
+  end
+  
+  def build_date(date)
+    date ? "#{date.strftime('%d %b %Y')}" : nil
+  end
+  
+  def build_user(id)
+    id ? User.find(id).code : nil
   end
 end

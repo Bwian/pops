@@ -106,4 +106,11 @@ class OrderTest < ActiveSupport::TestCase
     assert_not(@draft.send("supplier_id_changed?"))
     assert_equal('MISC PURCHASES',@draft.send("supplier").send("name"))
   end
+  
+  test 'to_json' do
+    oj = @draft.to_json
+    ojs = oj.to_json
+    ojsh = ActiveSupport::JSON.decode(ojs)
+    assert(oj.eql?ojsh)
+  end
 end
