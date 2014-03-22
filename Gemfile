@@ -47,3 +47,7 @@ end
 gem 'pry', group: [:development, :test]
 gem 'pry-nav', group: [:development, :test]
 
+# pdf management
+gem 'prawn'
+gem 'prawn-print'
+

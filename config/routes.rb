@@ -20,6 +20,7 @@ Pops::Application.routes.draw do
   resources :users
   
   get  'orders/refresh'      => 'orders#refresh'
+  get  'orders/:id/print'    => 'orders#print', :defaults => { :format => 'pdf' }
   resources :orders do
     resources :items, :only => [:new]
   end 

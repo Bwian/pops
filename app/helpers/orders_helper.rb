@@ -41,6 +41,10 @@ module OrdersHelper
     links
   end
   
+  def link_print(order)
+    true ? link_to('Print', "/orders/#{order.id}/print", format: 'pdf', class: ApplicationHelper::LINK_STYLE) : ""
+  end
+  
   def order_actions(order,readonly)
     actions = []
     if readonly
@@ -53,6 +57,7 @@ module OrdersHelper
       actions << submit_tag(submit_label, class: ApplicationHelper::LINK_STYLE)
     end
     actions << link_list(order)
+    actions << link_print(order)
   end
   
   def roles
