@@ -93,6 +93,8 @@ module ApplicationHelper
           change_draft(user,order) &&
           change_submitted(user,order) &&
           change_approved(user,order)
+        when PRINT
+          allow_access = order.approved? || order.processed?
       else
         allow_access = true
     end

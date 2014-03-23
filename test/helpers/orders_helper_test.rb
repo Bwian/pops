@@ -32,6 +32,13 @@ class OrdersHelperTest < ActionView::TestCase
     assert_match(/Create Order/,actions[0])
   end
   
+  test 'order_actions show print' do
+    @order.status = OrderStatus::APPROVED
+    actions = order_actions(@order,true)
+    assert_equal(7,actions.size)
+    assert_match(/Print/,actions[5])
+  end
+  
   test "roles" do
     assert_equal(3,roles.size)
     session[:user_id] = users(:sean).id

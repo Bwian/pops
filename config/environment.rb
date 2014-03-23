@@ -9,6 +9,7 @@ NEW     = 'new'
 EDIT    = 'edit'
 DELETE  = 'delete'
 REFRESH = 'refresh'
+PRINT   = 'print'
 
 ORDERS  = 'orders'
 ITEMS   = 'items' 

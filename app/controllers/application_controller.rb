@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   end
    
   def update_timeout
-    session[:timeout] = Time.now.to_i + 300
+    session[:timeout] = Time.now.to_i + 3000
   end
   
   private

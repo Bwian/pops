@@ -4,37 +4,31 @@ class OrdersController < ApplicationController
   before_filter :authorised_action, only: %w[new edit]
   
   # GET /orders
-  # GET /orders.xml
   def index
     @order_filter = session[:order_filter] || OrderFilter.new(session[:user_id])
     @orders = @order_filter.faults.any? ? Order.none : Order.where(where_parameters).limit(100).joins(join_user(params[:sort])).order(sort_order(params[:sort]))
    
     respond_to do |format|
       format.html # index.html.erb
-      format.xml { render xml: @orders }
     end
   end
 
   # GET /orders/1
-  # GET /orders/1.xml
   def show
     @readonly = true
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml { render xml: @order }
     end
   end
 
   # GET /orders/new
-  # GET /orders/new.xml
   def new
     @order = Order.new
     @order.approver_id = User.find(session[:user_id]).approver_id
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml { render xml: @order }
     end
   end
 
@@ -43,7 +37,6 @@ class OrdersController < ApplicationController
   end
 
   # POST /orders
-  # POST /orders.xml
   def create
     @order = Order.new(order_params)
     @order.status = OrderStatus::DRAFT
@@ -52,37 +45,30 @@ class OrdersController < ApplicationController
     respond_to do |format|
       if @order.save
         format.html { redirect_to new_order_item_path(@order) }
-        format.xml { render xml: @order, status: :created, location: @order }
       else
         format.html { render action: "new" }
-        format.xml { render xml: @order.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # PUT /orders/1
-  # PUT /orders/1.xml
   def update
     respond_to do |format|
       if @order.update_attributes(order_params)
         format.html { redirect_to(@order, notice: "Order #{@order.id} was successfully updated.") }
-        format.xml { head :ok }
       else
         format.html { render action: "edit" }
-        format.xml { render xml: @order.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # DELETE /orders/1
-  # DELETE /orders/1.xml
   def destroy
     @order.destroy
 
     respond_to do |format|
       if @order.destroyed?
         format.html { redirect_to(orders_url,notice: "Order #{@order.id} was successfully deleted.") }
-        format.xml { head :ok }
       else
         format.html { render action: "show" }
       end
@@ -95,10 +81,8 @@ class OrdersController < ApplicationController
     respond_to do |format|
       if @order.save
         format.html { redirect_to(@order, notice: "Order #{@order.id} set to Draft.") }
-        format.xml { head :ok }
       else
         format.html { render action: "edit" }
-        format.xml { render xml: @order.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -109,11 +93,9 @@ class OrdersController < ApplicationController
     respond_to do |format|
       if @order.save
         format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Submitted.") }
-        format.xml { head :ok }
       else
         @order.status = OrderStatus::DRAFT
         format.html { render action: "edit" }
-        format.xml { render xml: @order.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -124,12 +106,10 @@ class OrdersController < ApplicationController
     respond_to do |format|
       if @order.save
         format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Approved.") }
-        format.xml { head :ok }
       else
         @order.status = OrderStatus::SUBMITTED
         @order.approved_at = nil
         format.html { render action: "edit" }
-        format.xml { render xml: @order.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -140,13 +120,11 @@ class OrdersController < ApplicationController
     respond_to do |format|
       if @order.save
         format.html { redirect_to(@order, notice: "Order #{@order.id} set to Processed.") }
-        format.xml { head :ok }
       else
         @order.status = OrderStatus::APPROVED
         @order.processor_id = nil
         @order.processed_at = nil
         format.html { render action: "edit" }
-        format.xml { render xml: @order.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -158,7 +136,21 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to(orders_url) }
-      format.xml { head :ok }
+    end
+  end
+  
+  def print
+    pdf = Prawn::Document.new
+    pdf.text "I installed Adobe Reader and all I got was this lousy printout."
+    pdf.print
+    
+    respond_to do |format|
+      format.pdf do
+        send_data(pdf.render, 
+          filename: "order_#{@order.id}.pdf", 
+          type: "application/pdf",
+          disposition: "attachment")
+      end
     end
   end
   
