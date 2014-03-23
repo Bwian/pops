@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  
+  before_filter :find_user, except: %w[index new create]
+  
   # GET /users
   def index
     @users = User.all
@@ -10,7 +13,6 @@ class UsersController < ApplicationController
 
   # GET /users/1
   def show
-    @user = User.find(params[:id])
     @readonly = true
 
     respond_to do |format|
@@ -29,7 +31,6 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    @user = User.find(params[:id])
   end
 
   # POST /users
@@ -48,8 +49,6 @@ class UsersController < ApplicationController
 
   # PUT /users/1
   def update
-    @user = User.find(params[:id])
-
     respond_to do |format|
       if @user.update_attributes(user_params)
         User.reset_selection
@@ -62,7 +61,6 @@ class UsersController < ApplicationController
 
   # DELETE /users/1
   def destroy
-    @user = User.find(params[:id])
     @user.destroy
     User.reset_selection
 
@@ -75,5 +73,9 @@ class UsersController < ApplicationController
   
   def user_params
     params.require(:user).permit(:name, :code, :password, :hashed_password, :salt, :email, :approver_id, :creator, :approver, :processor, :admin)
+  end
+  
+  def find_user
+    @user = User.find(params[:id])
   end
 end
