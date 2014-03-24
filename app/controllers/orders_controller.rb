@@ -139,9 +139,9 @@ class OrdersController < ApplicationController
     end
   end
   
+  # GET /orders/1/print
   def print
-    pdf = Prawn::Document.new
-    pdf.text "I installed Adobe Reader and all I got was this lousy printout."
+    pdf = OrderPdf.new(@order)
     pdf.print
     
     respond_to do |format|
