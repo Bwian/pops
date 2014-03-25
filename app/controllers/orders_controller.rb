@@ -149,7 +149,7 @@ class OrdersController < ApplicationController
         send_data(pdf.render, 
           filename: "order_#{@order.id}.pdf", 
           type: "application/pdf",
-          disposition: "attachment")
+          disposition: "inline")
       end
     end
   end

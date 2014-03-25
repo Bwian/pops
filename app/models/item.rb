@@ -24,4 +24,7 @@ class Item < ActiveRecord::Base
     sprintf('%.2f', self.gst)
   end
   
+  def subtotal
+    price - gst
+  end
 end
