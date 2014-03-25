@@ -61,7 +61,7 @@
           <td><b><%= link_to(order.id, order) %></b></td>
           <td><%= order.supplier_name %></td>
           <td><%= order.invoice_no %></td>
-          <td align="right"><%= sprintf('%.2f', order.grandtotal) %></td>
+          <td align="right"><%= order.formatted_grandtotal %></td>
           <td><%= format_date(order.created_at) %></td>
           <td><%= order.creator ? order.creator.code : '' %></td>
           <td><%= format_date(order.approved_at) %></td>

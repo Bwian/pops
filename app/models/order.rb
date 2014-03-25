@@ -54,6 +54,18 @@ class Order < ActiveRecord::Base
     total
   end
   
+  def formatted_gst
+    sprintf('%.2f', self.gst)
+  end
+  
+  def formatted_subtotal
+    sprintf('%.2f', self.subtotal)
+  end
+  
+  def formatted_grandtotal
+    sprintf('%.2f', self.grandtotal)
+  end
+    
   def to_draft
     self.status       = OrderStatus::DRAFT
   end

@@ -43,6 +43,18 @@ class OrderTest < ActiveSupport::TestCase
     assert_in_delta(14.94,@draft.grandtotal,0.001)
   end
   
+  test 'formatted_subtotal' do
+    assert_equal('14.49',@draft.formatted_subtotal)
+  end
+  
+  test 'formatted_gst' do
+    assert_equal('0.45',@draft.formatted_gst)
+  end
+  
+  test 'formatted_grandtotal' do
+    assert_equal('14.94',@draft.formatted_grandtotal)
+  end
+  
   test 'to_draft' do
     @submitted.to_draft
     assert_equal(OrderStatus::DRAFT,@submitted.status)

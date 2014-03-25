@@ -87,23 +87,23 @@
             <td><%= item.account.name %></td>
             <td align="center"><%= item.program.code %></td>
             <td align="center"><%= item.tax_rate.short_name %></td>
-            <td align="right"><%= sprintf('%.2f',item.price) %></td>
+            <td align="right"><%= item.formatted_subtotal %></td>
           </tr>
         <% end %>
         <tr>
           <td colspan="3"></td>
           <td class="subtotals">Subtotal:</td>
-          <td class="subtotals"><%= sprintf('%.2f', @order.subtotal) %></td>
+          <td class="subtotals"><%= @order.formatted_subtotal %></td>
         </tr>
         <tr>
           <td colspan="3"></td>
           <td class="gst">GST:</td>
-          <td class="gst"><%= sprintf('%.2f', @order.gst) %></td>
+          <td class="gst"><%= @order.formatted_gst %></td>
         </tr>
         <tr>
           <td colspan="3"></td>
           <td class="totals">Total:</td>
-          <td class="totals"><%= sprintf('%.2f', @order.grandtotal) %></td>
+          <td class="totals"><%= @order.formatted_grandtotal %></td>
         </tr>
       </table>
     </div>

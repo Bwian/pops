@@ -27,4 +27,8 @@ class Item < ActiveRecord::Base
   def subtotal
     price - gst
   end
+  
+  def formatted_subtotal
+    sprintf('%.2f', self.subtotal)
+  end
 end
