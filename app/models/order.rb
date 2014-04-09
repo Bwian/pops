@@ -34,6 +34,18 @@ class Order < ActiveRecord::Base
     self.supplier_id && self.supplier_id > 1 ? self.supplier.name : self.supplier_name
   end
   
+  def supplier_address1
+    supplier_address(1)
+  end
+  
+  def supplier_address2
+    supplier_address(2)
+  end
+    
+  def supplier_address3
+    supplier_address(3)
+  end
+  
   def subtotal
     grandtotal - gst
   end
@@ -151,5 +163,10 @@ class Order < ActiveRecord::Base
   
   def build_user(id)
     id ? User.find(id).code : nil
+  end
+  
+  def supplier_address(line)
+    return '' if self.supplier_id && self.supplier_id == 0
+    self.supplier.send("address#{line}")
   end
 end

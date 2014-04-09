@@ -37,7 +37,6 @@ class OrderPdf
 			cells.padding = 1
 			cells.borders = []
       column(3).style(:align => :right)
-      # column(1).style(:align => :center)
 		end
     
     @pdf.move_down(25)
@@ -45,13 +44,13 @@ class OrderPdf
       [{:content => order.supplier_name, :font_style => :bold, :colspan => 2}, 
        {:content => 'PO Number:', :align => :right, :text_color => UCB_RED, :font_style => :bold},
        {:content => order.id.to_s, :text_color => UCB_GREEN, :font_style => :bold, :size => 14 }],
-      [{:content => order.supplier.address1, :colspan => 2},
+      [{:content => order.supplier_address1, :colspan => 2},
        {:content => 'Date:', :align => :right, :text_color => UCB_RED, :font_style => :bold},
        {:content => format_date(order.approved_at)}],
-      [{:content => order.supplier.address2, :colspan => 2},
+      [{:content => order.supplier_address2, :colspan => 2},
        {:content => 'Your Ref:', :align => :right, :text_color => UCB_RED, :font_style => :bold},
        {:content => order.reference}],
-      [{:content => order.supplier.address3, :colspan => 2},
+      [{:content => order.supplier_address3, :colspan => 2},
        {:content => 'Approved by:', :align => :right, :text_color => UCB_RED, :font_style => :bold},
        {:content => order.approver.name}]
 		], :position => :right, :column_widths => [130,130,130,130]) do

@@ -31,6 +31,18 @@ class OrderTest < ActiveSupport::TestCase
     assert_equal("COLES ONLINE", orders(:invalid).supplier_desc)
   end
   
+  test 'supplier_address' do
+    assert_equal('927 Sturt St',@submitted.supplier_address1,'address1')
+    assert_equal('Ballarat',@submitted.supplier_address2,'address2')
+    assert_equal('Victoria',@submitted.supplier_address3,'address3')
+  end
+  
+  test 'supplier_address_misc' do
+    assert_equal('',@draft.supplier_address1,'address1')
+    assert_equal('',@draft.supplier_address2,'address2')
+    assert_equal('',@draft.supplier_address3,'address3')
+  end
+  
   test 'subtotal' do
     assert_in_delta(14.49,@draft.subtotal,0.001)
   end
