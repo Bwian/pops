@@ -44,6 +44,10 @@ class User < ActiveRecord::Base
     role_array
   end
   
+  def first_name
+    self.name.nil? ? '' : self.name.split(" ")[0]
+  end
+  
   def User.encrypt_password(password, salt)
     Digest::SHA2.hexdigest(password + "pops" + salt)
   end

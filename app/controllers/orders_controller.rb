@@ -102,10 +102,11 @@ class OrdersController < ApplicationController
   
   def approve
     @order.to_approved(session[:user_id])
+    email_notice = sendmail(@order)
     
     respond_to do |format|
       if @order.save
-        format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Approved.") }
+        format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Approved. #{email_notice}") }
       else
         @order.status = OrderStatus::SUBMITTED
         @order.approved_at = nil
@@ -225,5 +226,28 @@ class OrdersController < ApplicationController
   
   def find_order
     @order = Order.find(params[:id])
+  end
+  
+  def sendmail(order)
+    return '' unless order.status_changed?
+    
+    fromto = "#{order.status_was}#{order.status}"
+    mail = nil
+    to = nil
+    
+    case fromto
+      when 'SA'
+        mail = OrderMailer.approved_email(@order)
+        to = order.creator
+    end
+
+    if to
+      notice = to.email.nil? || to.email.empty? ? "No email address for #{to.name}" : "Order emailed to #{to.name} at #{to.email}"
+    else
+      notice = ''
+    end
+      
+    mail.deliver if mail
+    notice
   end
 end

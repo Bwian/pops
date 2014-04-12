@@ -83,4 +83,8 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(1,@user2.roles.size)
     assert_equal('Processor',@user1.roles[0])
   end
+  
+  test "first_name" do
+    assert_equal('Brian',@user1.first_name)
+  end
 end

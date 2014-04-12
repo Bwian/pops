@@ -1,0 +1,1 @@
+sudo postfix $1

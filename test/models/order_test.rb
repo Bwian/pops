@@ -121,11 +121,15 @@ class OrderTest < ActiveSupport::TestCase
   end
   
   test 'dirty and send' do
+    # example of testing for changed models and attributes
     assert_not(@draft.changed?)
     @draft.to_submitted
     assert(@draft.changed?)
     assert(@draft.status_changed?)
+    assert('D',@draft.status_was)
     assert_not(@draft.supplier_id_changed?)
+    
+    # example of the use of "send"
     assert(@draft.send("status_changed?"))
     assert_not(@draft.send("supplier_id_changed?"))
     assert_equal('MISC PURCHASES',@draft.send("supplier").send("name"))
