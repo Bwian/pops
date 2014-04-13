@@ -102,11 +102,12 @@ class OrdersController < ApplicationController
   
   def approve
     @order.to_approved(session[:user_id])
-    email_notice = sendmail(@order)
+    message = OrderMessage.new(@order,'approved')
     
     respond_to do |format|
       if @order.save
-        format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Approved. #{email_notice}") }
+        format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Approved. #{message.notice}") }
+        message.deliver
       else
         @order.status = OrderStatus::SUBMITTED
         @order.approved_at = nil
