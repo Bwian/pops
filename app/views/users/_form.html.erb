@@ -31,7 +31,19 @@
     </div>
     <div class="field">
       <%= f.label :email, 'Email:' %>
-      <%= f.text_field :email, readonly: @readonly %>
+      <%= f.text_field :email, :size => 40, readonly: @readonly %>
+    </div>
+    <div class="field">
+      <%= f.label :phone, 'Phone:' %>
+      <%= f.text_field :phone, readonly: @readonly %>
+    </div>
+    <div class="field">
+      <%= f.label :accounts_filter, 'Accounts Filter:' %>
+      <%= f.text_field :accounts_filter, :size => 80, readonly: @readonly %>
+    </div>
+    <div class="field">
+      <%= f.label :programs_filter, 'Programs Filter:' %>
+      <%= f.text_field :programs_filter, :size => 80, readonly: @readonly %>
     </div>
 	  <div class="field">
 	    <%= f.label :approver_id, 'Default Approver:' %>
