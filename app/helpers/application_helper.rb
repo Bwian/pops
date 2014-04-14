@@ -1,6 +1,7 @@
 module ApplicationHelper
   
   LINK_STYLE  = "btn btn-primary btn-sm"
+  FIRST_STYLE = "btn btn-success btn-sm"
   
   def link_list(model)
     name = model.class.name.downcase

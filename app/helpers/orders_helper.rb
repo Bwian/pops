@@ -27,15 +27,17 @@ module OrdersHelper
       when OrderStatus::DRAFT
         actions = ['submit'] 
       when OrderStatus::SUBMITTED
-        actions = ['draft','approve']
+        actions = ['approve','draft']
       when OrderStatus::APPROVED
-        actions = ['submit','complete']
+        actions = ['complete','submit']
     end
     
     links = []
+    btn_class = ApplicationHelper::FIRST_STYLE
     actions.each do |action|
-      link = authorised_status_change(action,order) ? link_to(action_label(action), "/orders/#{order.id}/#{action}", method: :post, class: ApplicationHelper::LINK_STYLE) : ""
+      link = authorised_status_change(action,order) ? link_to(action_label(action), "/orders/#{order.id}/#{action}", method: :post, class: btn_class) : ""
       links << link
+      btn_class = ApplicationHelper::LINK_STYLE
     end
     
     links
