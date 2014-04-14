@@ -1,8 +1,9 @@
 class OrderMessage
 
-  def initialize(order,action)
+  def initialize(order,action,user_id)
     @order = order
-    self.send("#{action}")
+    @user = User.find(user_id)
+    self.send("#{action}")  # Setup mailer
   end
 
   def notice
@@ -24,5 +25,11 @@ class OrderMessage
     @mail = OrderMailer.approved_email(@order)
     @to = @order.creator
     @from = @order.approver
+  end
+  
+  def resubmitted
+    @mail = OrderMailer.resubmitted_email(@order,@user)
+    @to = @order.approver
+    @from = @user
   end
 end

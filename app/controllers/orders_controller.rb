@@ -90,9 +90,17 @@ class OrdersController < ApplicationController
   def submit
     @order.to_submitted
 
+    if @order.status_was == OrderStatus::APPROVED #&& @order.creator_id != session[:user_id]
+      message = OrderMessage.new(@order,'resubmitted',session[:user_id])
+      notice = message.notice
+    else
+      notice = ''
+    end
+
     respond_to do |format|
       if @order.save
-        format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Submitted.") }
+        format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Submitted. #{notice}") }
+        message.deliver if !notice.empty?
       else
         @order.status = OrderStatus::DRAFT
         format.html { render action: "edit" }
@@ -102,7 +110,7 @@ class OrdersController < ApplicationController
   
   def approve
     @order.to_approved(session[:user_id])
-    message = OrderMessage.new(@order,'approved')
+    message = OrderMessage.new(@order,'approved',session[:user_id])
     
     respond_to do |format|
       if @order.save

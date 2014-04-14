@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>Hi <%= @to.first_name%>,</p>
+		<p>The attached purchase order <%= @order.id%> has been approved.
+			Please forward it to the appropriate supplier.</p>
+		<p>Thanks, <%= @from.first_name %></p>
+  </body>
+</html>
