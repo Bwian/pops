@@ -35,11 +35,11 @@
 	  </div>
     <div class="field">
       <%= f.label :supplier_name, '' %>
-      <%= f.text_field :supplier_name, readonly: @readonly %>
+      <%= f.text_field :supplier_name, :maxlength => 70, readonly: @readonly %>
     </div>
     <div class="field">
       <%= f.label :invoice_no, 'Invoice Number:' %>
-      <%= f.text_field :invoice_no, readonly: @readonly %>
+      <%= f.text_field :invoice_no, :maxlength => 20, readonly: @readonly %>
     </div>
     <div class="field">
       <%= f.label :invoice_date, 'Invoice Date:' %>
@@ -53,7 +53,7 @@
     </div>
     <div class="field">
       <%= f.label :reference, 'Reference:' %>
-      <%= f.text_field :reference, readonly: @readonly %>
+      <%= f.text_field :reference, :maxlength => 20, readonly: @readonly %>
     </div>
 	  <div class="field">
 	    <%= f.label :approver_id, 'Approver:' %>

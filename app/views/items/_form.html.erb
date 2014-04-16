@@ -49,7 +49,7 @@
     </div>
     <div class="field">
       <%= f.label :description, 'Description:' %>
-      <%= f.text_field :description, readonly: @readonly %>
+      <%= f.text_field :description, :maxlength => 40, readonly: @readonly %>
     </div>
     <div class="field">
       <%= f.label :price, 'Price (incl tax):' %>
