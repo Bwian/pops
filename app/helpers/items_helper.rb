@@ -29,7 +29,7 @@ module ItemsHelper
   def tax_list(item)
     return TaxRate.selection if User.find(session[:user_id]).processor
     return TaxRate.limited_selection unless item.tax_rate_id
-    return TaxRate.selection unless TaxRate.limited_selection.detect {|rate| rate[0] == item.tax_rate_id}
+    return TaxRate.selection unless TaxRate.limited_selection.detect {|rate| rate[1] == item.tax_rate_id}
     TaxRate.limited_selection 
   end
 end

@@ -27,3 +27,12 @@ three:
   description: First Approved Item
   quantity: 1
   price: 4.95 
+
+four:
+  order: approved
+  program: one
+  account: one
+  tax_rate_id: 33 
+  description: Second Approved Item
+  quantity: 1
+  price: 4.95 

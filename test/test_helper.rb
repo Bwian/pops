@@ -15,6 +15,17 @@ class ActiveSupport::TestCase
   
   def setup_admin_session
     user = users(:brian)
+    setup_session(user)
+  end
+  
+  def setup_creator_session
+    user = users(:sean)
+    setup_session(user)
+  end
+  
+  private
+  
+  def setup_session(user)
     session[:user_id] = user.id
     session[:admin] = user.admin
     session[:timeout] = Time.now.to_i + 300 
