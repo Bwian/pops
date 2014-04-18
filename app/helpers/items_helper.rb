@@ -7,7 +7,7 @@ module ItemsHelper
   end
   
   def tax_rate_select(item,readonly)
-    select :item, :tax_rate_id, TaxRate.selection, 
+    select :item, :tax_rate_id, tax_list(item), 
       { prompt: 'Select a tax rate', selected: default_tax_rate(item) },
       { disabled: readonly, class: "btn btn-primary" }
   end
@@ -24,5 +24,12 @@ module ItemsHelper
     end
  
     DEFAULT_TAX_RATE    
+  end
+  
+  def tax_list(item)
+    return TaxRate.selection if User.find(session[:user_id]).processor
+    return TaxRate.limited_selection unless item.tax_rate_id
+    return TaxRate.selection unless TaxRate.limited_selection.detect {|rate| rate[0] == item.tax_rate_id}
+    TaxRate.limited_selection 
   end
 end
