@@ -47,11 +47,12 @@ module ItemsHelper
   
   def account_list(item)
     filter = User.find(session[:user_id]).accounts_filter
-    list = select_list(filter,Account.selection,item.account_id)
+    select_list(filter,Account.selection,item.account_id)
   end
   
   def program_list(item)
-    Program.selection
+    filter = User.find(session[:user_id]).programs_filter
+    select_list(filter,Program.selection,item.program_id)
   end
   
   def select_list(filter,list,current_id)

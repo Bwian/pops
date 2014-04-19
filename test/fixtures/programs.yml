@@ -7,3 +7,18 @@ one:
 two:
   name: Program Two
   code: 0002
+  
+three:
+  id: 3
+  name: Program Three
+  code: 0003
+  
+four:
+  id: 4
+  name: Program Four
+  code: 0004
+
+five:
+  id: 5
+  name: Program Five
+  code: 0005

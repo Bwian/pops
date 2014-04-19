@@ -12,6 +12,7 @@ brian:
   processor: true
   creator: true
   accounts_filter: 3-4
+  programs_filter: 3-4
 
 sean:
   code: sean

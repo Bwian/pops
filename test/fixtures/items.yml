@@ -30,7 +30,7 @@ three:
 
 four:
   order: approved
-  program: one
+  program_id: 5
   account_id: 5
   tax_rate_id: 33 
   description: Second Approved Item
