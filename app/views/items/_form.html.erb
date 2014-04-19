@@ -33,13 +33,11 @@
     </div>
 	  <div class="field">
 	    <%= f.label :program_id, 'Program:' %>
-	    <%= f.select :program_id, Program.selection, { prompt: 'Select a program' },
-            { disabled: @readonly, class: "btn btn-primary" } %>
+	    <%= program_select(@item,@readonly) %>
 	  </div>
 	  <div class="field">
 	    <%= f.label :account_id, 'Account:' %>
-	    <%= f.select :account_id, Account.selection, { prompt: 'Select an account' },
-            { disabled: @readonly, onchange: "javascript:tax_rate()", class: "btn btn-primary" } %>
+	    <%= account_select(@item,@readonly) %>
 	  </div>
 	  <div class="field">
 	    <%= f.label :tax_rate_id, 'Tax Rate:' %>
@@ -57,7 +55,7 @@
     </div>
     <div class="field">
       <%= f.label :gst, 'GST:' %>
-      <div class="text" id="gst">&nbsp;<%= @item.formatted_gst %></div>
+			<%= text_field_tag :gst, @item.formatted_gst, readonly: true %>
     </div>
     
     <div class="actions">

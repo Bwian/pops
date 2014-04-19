@@ -1,5 +1,5 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
-# Note: Can't use 
+# Note: Can't use descriptors for tax_rate as we need to use literal ids
 
 one:
   order: draft
@@ -31,8 +31,10 @@ three:
 four:
   order: approved
   program: one
-  account: one
+  account_id: 5
   tax_rate_id: 33 
   description: Second Approved Item
   quantity: 1
-  price: 4.95 
+  price: 4.95
+  
+ 
