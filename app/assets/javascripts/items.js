@@ -15,3 +15,11 @@ function tax_rate() {
     data: $('form').serialize()
   });
 };
+
+function account_select() {
+  $.ajax({
+    url:  "account_select",
+    type: "POST",
+    data: $('form').serialize()
+  });
+};

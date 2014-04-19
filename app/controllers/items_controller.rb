@@ -60,7 +60,6 @@ class ItemsController < ApplicationController
   # DELETE /items/1
   def destroy
     @item.destroy
-
     respond_to do |format|
       format.html { redirect_to(order_url(:id => @item.order_id, notice: "Item was successfully deleted.")) }
     end
@@ -76,6 +75,13 @@ class ItemsController < ApplicationController
   def tax_rate
     @tax_item = Item.new(item_params)
     @tax_item.tax_rate_id = nil
+    respond_to do |format|
+      format.js
+    end
+  end
+  
+  def account_select
+    @account_flag = params[:account_flag]
     respond_to do |format|
       format.js
     end

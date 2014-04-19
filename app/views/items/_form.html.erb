@@ -37,7 +37,15 @@
 	  </div>
 	  <div class="field">
 	    <%= f.label :account_id, 'Account:' %>
-	    <%= account_select(@item,@readonly) %>
+	    <%= account_select(@item,@readonly,true) %>
+      <% if !@readonly %>
+				<div class="filter-button">
+	        <label>
+	          <%= check_box_tag :account_flag, 1, true, disabled: @readonly, onchange: "javascript:account_select()" %>
+	          <span>Filter</span>
+	        </label>
+				</div>
+			<% end %>
 	  </div>
 	  <div class="field">
 	    <%= f.label :tax_rate_id, 'Tax Rate:' %>

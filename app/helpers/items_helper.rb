@@ -12,10 +12,10 @@ module ItemsHelper
       { disabled: readonly, class: "btn btn-primary" }
   end
   
-  def account_select(item,readonly)
-    select :item, :account_id, account_list(item), 
+  def account_select(item,readonly,flag)
+    select :item, :account_id, account_list(item,flag), 
       { prompt: 'Select an account', selected: item.account_id },
-      { disabled: readonly, onchange: "javascript:tax_rate()", class: "btn btn-primary btn-select" }
+      { disabled: readonly, class: "btn btn-primary btn-select" }
   end
   
   def program_select(item,readonly)
@@ -45,19 +45,20 @@ module ItemsHelper
     TaxRate.limited_selection 
   end
   
-  def account_list(item)
+  def account_list(item,flag)
     filter = User.find(session[:user_id]).accounts_filter
-    select_list(filter,Account.selection,item.account_id)
+    select_list(filter,Account.selection,item.account_id,flag)
   end
   
   def program_list(item)
     filter = User.find(session[:user_id]).programs_filter
-    select_list(filter,Program.selection,item.program_id)
+    select_list(filter,Program.selection,item.program_id,true) # TODO: needs fixing
   end
   
-  def select_list(filter,list,current_id)
+  def select_list(filter,list,current_id,flag)
     ranges = build_ranges(filter)
-    return list if ranges.empty?
+    return list if ranges.empty? 
+    return list if !flag
     
     current_id = 0 if current_id.nil?
     filtered_list = []

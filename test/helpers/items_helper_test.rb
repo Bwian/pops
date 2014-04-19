@@ -61,21 +61,21 @@ class ItemsHelperTest < ActionView::TestCase
     setup_admin_session
     item = Item.new
     item.order = @order
-    assert account_select(item,true).include?("Account Three")
-    assert_not account_select(item,true).include?("Account Two")
+    assert account_select(item,true,true).include?("Account Three")
+    assert_not account_select(item,true,true).include?("Account Two")
   end
   
   test 'account_select - unfiltered' do
     setup_creator_session
     item = Item.new
     item.order = @order
-    assert account_select(item,true).include?("Account One")
+    assert account_select(item,true,true).include?("Account One")
   end
   
   test 'account_select - extra' do
     setup_admin_session
     item = items(:four)
-    assert account_select(item,true).include?("Account Five")
+    assert account_select(item,true,true).include?("Account Five")
   end
   
   test 'program_select - filtered' do
