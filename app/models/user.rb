@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   validates :name, :code, uniqueness: true
   validates :password, confirmation: true
   validate :password_must_be_present
+  validate :filters_valid
 
   @@selection = nil
   
@@ -65,8 +66,21 @@ class User < ActiveRecord::Base
   def password_must_be_present
     errors.add(:password, "Missing password") unless self.hashed_password.present?
   end
+  
+  def filters_valid
+    check_filter(:accounts_filter,self.accounts_filter)
+    check_filter(:programs_filter,self.programs_filter)
+  end
 
   def generate_salt
     self.salt = self.object_id.to_s + rand.to_s
+  end
+  
+  def check_filter(field,filter)
+    return if filter.nil? || filter.empty?
+    idx = filter =~ /[^0-9, \-]/
+    return if idx.nil?
+    
+    errors.add(field,"contains invalid character '#{filter[idx]}' at position #{idx+1}.  Filters should consist of numbers and ranges separated by spaces or commas.  eg. 1234,2345-3456 4567")
   end
 end

@@ -87,4 +87,14 @@ class UserTest < ActiveSupport::TestCase
   test "first_name" do
     assert_equal('Brian',@user1.first_name)
   end
+  
+  test "invalid accounts filter" do
+    @user1.accounts_filter = '1234x' 
+    assert_not(@user1.valid?)
+  end
+  
+  test "invalid programs filter" do
+    @user1.programs_filter = '1234x' 
+    assert_not(@user1.valid?)
+  end
 end
