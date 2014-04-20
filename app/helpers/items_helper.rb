@@ -5,11 +5,11 @@ module ItemsHelper
   def default_tax_rate(item)   
     item && item.tax_rate_id ? item.tax_rate_id : get_tax_rate(item)
   end
-  
-  def tax_rate_select(item,readonly)
-    select :item, :tax_rate_id, tax_list(item), 
-      { prompt: 'Select a tax rate', selected: default_tax_rate(item) },
-      { disabled: readonly, class: "btn btn-primary" }
+
+  def program_select(item,readonly,flag)
+    select :item, :program_id, program_list(item,flag), 
+      { prompt: 'Select a program', selected: item.program_id },
+      { disabled: readonly, class: "btn btn-primary btn-select" }
   end
   
   def account_select(item,readonly,flag)
@@ -18,10 +18,10 @@ module ItemsHelper
       { disabled: readonly, onchange: "javascript:tax_rate()", class: "btn btn-primary btn-select" }
   end
   
-  def program_select(item,readonly,flag)
-    select :item, :program_id, program_list(item,flag), 
-      { prompt: 'Select a program', selected: item.program_id },
-      { disabled: readonly, class: "btn btn-primary btn-select" }
+  def tax_rate_select(item,readonly)
+    select :item, :tax_rate_id, tax_list(item), 
+      { prompt: 'Select a tax rate', selected: default_tax_rate(item) },
+      { disabled: readonly, class: "btn btn-primary" }
   end
   
   private
@@ -39,10 +39,13 @@ module ItemsHelper
   end
   
   def tax_list(item)
+    limited_selection = TaxRate.limited_selection
     return TaxRate.selection if User.find(session[:user_id]).processor
-    return TaxRate.limited_selection unless item.tax_rate_id
-    return TaxRate.selection unless TaxRate.limited_selection.detect {|rate| rate[1] == item.tax_rate_id}
-    TaxRate.limited_selection 
+    return limited_selection unless item.tax_rate_id
+    unless limited_selection.detect {|rate| rate[1] == item.tax_rate_id}
+      limited_selection << [item.tax_rate.name,item.tax_rate_id]
+    end
+    limited_selection 
   end
   
   def account_list(item,flag)
@@ -60,7 +63,7 @@ module ItemsHelper
     return list if ranges.empty? 
     return list if !flag
     
-    current_id = 0 if current_id.nil?
+    current_id = '' if current_id.nil?
     filtered_list = []
     list.each do |line|
       ranges.each do |range|

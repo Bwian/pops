@@ -139,7 +139,6 @@ module ApplicationHelper
   end
   
   def authorise_draft(user,action,order)
-    pry binding
     return true if !order.submitted?
     return false if order.creator != user
     true

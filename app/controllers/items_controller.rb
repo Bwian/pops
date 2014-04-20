@@ -20,7 +20,7 @@ class ItemsController < ApplicationController
     @item.program_id = session[:program_id]
     @item.account_id = session[:account_id]
     @order = @item.order
-
+    
     respond_to do |format|
       format.html # new.html.erb
     end
@@ -80,15 +80,15 @@ class ItemsController < ApplicationController
     end
   end
   
-  def account_select
-    @account_flag = params[:account_flag]
+  def account_select   
+    @account_item = Item.new(item_params)
     respond_to do |format|
       format.js
     end
   end
   
   def program_select
-    @program_flag = params[:program_flag]
+    @program_item = Item.new(item_params)
     respond_to do |format|
       format.js
     end
