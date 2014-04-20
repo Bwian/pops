@@ -18,8 +18,8 @@ module ItemsHelper
       { disabled: readonly, onchange: "javascript:tax_rate()", class: "btn btn-primary btn-select" }
   end
   
-  def program_select(item,readonly)
-    select :item, :program_id, program_list(item), 
+  def program_select(item,readonly,flag)
+    select :item, :program_id, program_list(item,flag), 
       { prompt: 'Select a program', selected: item.program_id },
       { disabled: readonly, class: "btn btn-primary btn-select" }
   end
@@ -50,9 +50,9 @@ module ItemsHelper
     select_list(filter,Account.selection,item.account_id,flag)
   end
   
-  def program_list(item)
+  def program_list(item,flag)
     filter = User.find(session[:user_id]).programs_filter
-    select_list(filter,Program.selection,item.program_id,true) # TODO: needs fixing
+    select_list(filter,Program.selection,item.program_id,flag)
   end
   
   def select_list(filter,list,current_id,flag)

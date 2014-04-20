@@ -87,6 +87,13 @@ class ItemsController < ApplicationController
     end
   end
   
+  def program_select
+    @program_flag = params[:program_flag]
+    respond_to do |format|
+      format.js
+    end
+  end
+  
   private
   
   def item_params

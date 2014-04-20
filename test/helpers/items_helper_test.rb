@@ -82,20 +82,20 @@ class ItemsHelperTest < ActionView::TestCase
     setup_admin_session
     item = Item.new
     item.order = @order
-    assert program_select(item,true).include?("Program Three")
-    assert_not program_select(item,true).include?("Program Two")
+    assert program_select(item,true,true).include?("Program Three")
+    assert_not program_select(item,true,true).include?("Program Two")
   end
   
   test 'program_select - unfiltered' do
     setup_creator_session
     item = Item.new
     item.order = @order
-    assert program_select(item,true).include?("Program One")
+    assert program_select(item,true,true).include?("Program One")
   end
   
   test 'program_select - extra' do
     setup_admin_session
     item = items(:four)
-    assert program_select(item,true).include?("Program Five")
+    assert program_select(item,true,true).include?("Program Five")
   end
 end

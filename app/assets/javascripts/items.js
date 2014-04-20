@@ -21,3 +21,11 @@ function account_select() {
     data: $('form').serialize()
   });
 };
+
+function program_select() {
+  $.ajax({
+    url:  "program_select",
+    type: "POST",
+    data: $('form').serialize()
+  });
+};

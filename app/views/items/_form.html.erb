@@ -33,7 +33,15 @@
     </div>
 	  <div class="field">
 	    <%= f.label :program_id, 'Program:' %>
-	    <%= program_select(@item,@readonly) %>
+	    <%= program_select(@item,@readonly,true) %>
+      <% if !@readonly %>
+				<div class="filter-button">
+	        <label>
+	          <%= check_box_tag :program_flag, 1, true, disabled: @readonly, onchange: "javascript:program_select()" %>
+	          <span>Filter</span>
+	        </label>
+				</div>
+			<% end %>
 	  </div>
 	  <div class="field">
 	    <%= f.label :account_id, 'Account:' %>
