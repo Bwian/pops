@@ -1,6 +1,4 @@
-// $('#item_price').on('change',function(){
-
-function gst() {
+function set_gst() {
   $.ajax({
     url:  "gst",
     type: "POST",
