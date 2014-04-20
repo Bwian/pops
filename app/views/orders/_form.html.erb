@@ -1,5 +1,5 @@
 <div class="admin_form">
-<%= form_for(@order) do |f| %>
+<%= form_for(@order, onLoad: "javascript:show_supplier()") do |f| %>
   <fieldset>
     <legend><%= legend("Order Details", @readonly) %></legend>
 
@@ -31,11 +31,11 @@
     <div class="field">
 	    <%= f.label :supplier_id, 'Supplier:' %>
 	    <%= f.select :supplier_id, Supplier.selection, { prompt: 'Select a supplier' },
-            { disabled: @readonly, class: "btn btn-primary", autofocus: true } %>
+            { disabled: @readonly, class: "btn btn-primary", onchange: "javascript:show_supplier()", autofocus: true } %>
 	  </div>
-    <div class="field">
-      <%= f.label :supplier_name, '' %>
-      <%= f.text_field :supplier_name, :maxlength => 70, readonly: @readonly %>
+    <div id="supplier" class="field">
+      <%= f.label :supplier_name, 'Supplier Name:' %>
+      <%= f.text_field :supplier_name, :maxlength => 60, readonly: @readonly %>
     </div>
     <div class="field">
       <%= f.label :invoice_no, 'Invoice Number:' %>
