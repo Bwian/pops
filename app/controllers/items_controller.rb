@@ -82,6 +82,7 @@ class ItemsController < ApplicationController
   
   def account_select   
     @account_item = Item.new(item_params)
+    @account_flag = params[:account_flag]
     respond_to do |format|
       format.js
     end
@@ -89,6 +90,7 @@ class ItemsController < ApplicationController
   
   def program_select
     @program_item = Item.new(item_params)
+    @program_flag = params[:program_flag]
     respond_to do |format|
       format.js
     end

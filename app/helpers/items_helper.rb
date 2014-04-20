@@ -8,19 +8,19 @@ module ItemsHelper
 
   def program_select(item,readonly,flag)
     select :item, :program_id, program_list(item,flag), 
-      { prompt: 'Select a program', selected: item.program_id },
+      { include_blank: 'Select a program', selected: item.program_id },
       { disabled: readonly, class: "btn btn-primary btn-select" }
   end
   
   def account_select(item,readonly,flag)
     select :item, :account_id, account_list(item,flag), 
-      { prompt: 'Select an account', selected: item.account_id },
+      { include_blank: 'Select an account', selected: item.account_id },
       { disabled: readonly, onchange: "javascript:tax_rate()", class: "btn btn-primary btn-select" }
   end
   
   def tax_rate_select(item,readonly)
     select :item, :tax_rate_id, tax_list(item), 
-      { prompt: 'Select a tax rate', selected: default_tax_rate(item) },
+      { include_blank: 'Select a tax rate', selected: default_tax_rate(item) },
       { disabled: readonly, class: "btn btn-primary" }
   end
   
@@ -63,7 +63,7 @@ module ItemsHelper
     return list if ranges.empty? 
     return list if !flag
     
-    current_id = '' if current_id.nil?
+    current_id = '\\' if current_id.nil?
     filtered_list = []
     list.each do |line|
       ranges.each do |range|
