@@ -15,7 +15,7 @@ module ItemsHelper
   def account_select(item,readonly,flag)
     select :item, :account_id, account_list(item,flag), 
       { prompt: 'Select an account', selected: item.account_id },
-      { disabled: readonly, class: "btn btn-primary btn-select" }
+      { disabled: readonly, onchange: "javascript:tax_rate()", class: "btn btn-primary btn-select" }
   end
   
   def program_select(item,readonly)
