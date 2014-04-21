@@ -25,15 +25,17 @@ class OrderPdf
   
   def build(order)
     header(order)
-    details(order)
-    footer
+    # details(order)
+    footer(order)
+    @pdf.number_pages("UnitingCare Ballarat Purchase Order number #{order.id} - page <page> of <total>", {:at => [0,0], :align => :center})	
   end
 
   def header(order)
-  	@pdf.table([
-			[{:image => "#{Rails.root}/app/assets/images/logo.jpg", :scale => 0.15}, 
-			 {:content => 'Purchase Order', :colspan => 3, :align => :right, :text_color => UCB_GREEN, :size => 20, :font_style => :bold}]
-		], :position => :right, :column_widths => [130,130,130,130]) do
+    @pdf.table([
+			[{:image => "#{Rails.root}/app/assets/images/UCB-grayscale.jpg", :scale => 0.07},
+       {:content => "UnitingCare Ballarat\n<font size='8'>ABN: 15 562 149 440</font>\nPO Box 608\nBallarat  Vic  3353\nTelephone: (03) 5332 1286\nFax: (03) 5332 1055", :inline_format => true},   
+			 {:content => 'Purchase Order', :align => :right, :size => 20, :font_style => :bold}]
+		], :column_widths => [200,160,160]) do
 			cells.padding = 1
 			cells.borders = []
       column(3).style(:align => :right)
@@ -42,18 +44,18 @@ class OrderPdf
     @pdf.move_down(25)
   	@pdf.table([
       [{:content => order.supplier_name, :font_style => :bold, :colspan => 2}, 
-       {:content => 'PO Number:', :align => :right, :text_color => UCB_RED, :font_style => :bold},
-       {:content => order.id.to_s, :text_color => UCB_GREEN, :font_style => :bold, :size => 14 }],
+       {:content => 'PO Number:', :align => :right, :font_style => :bold},
+       {:content => order.id.to_s, :font_style => :bold, :size => 14 }],
       [{:content => order.supplier_address1, :colspan => 2},
-       {:content => 'Date:', :align => :right, :text_color => UCB_RED, :font_style => :bold},
+       {:content => 'Issue Date:', :align => :right, :font_style => :bold},
        {:content => format_date(order.approved_at)}],
       [{:content => order.supplier_address2, :colspan => 2},
-       {:content => 'Your Ref:', :align => :right, :text_color => UCB_RED, :font_style => :bold},
+       {:content => 'Your Reference:', :align => :right, :font_style => :bold},
        {:content => order.reference}],
       [{:content => order.supplier_address3, :colspan => 2},
-       {:content => 'Approved by:', :align => :right, :text_color => UCB_RED, :font_style => :bold},
-       {:content => order.approver.name}]
-		], :position => :right, :column_widths => [130,130,130,130]) do
+       {:content => 'Supplier Number:', :align => :right, :font_style => :bold},
+       {:content => order.supplier_id.to_s}] 
+		], :column_widths => [130,130,130,130]) do
 			cells.padding = 1
 			cells.borders = []
       column(3).style(:align => :right)
@@ -69,7 +71,6 @@ class OrderPdf
     end
 		
     @pdf.table(data, 
-			:position => :right,
       :row_colors => [ROW_COLOUR_EVEN, ROW_COLOUR_ODD],
 			:header => :true, 
 			:column_widths => [390,130]) do
@@ -87,7 +88,6 @@ class OrderPdf
       ['Total:',sprintf('%.2f', order.grandtotal)]
     ]
     @pdf.table(data, 
-			:position => :right,
       :row_colors => [ROW_COLOUR_EVEN, ROW_COLOUR_ODD],
 			:header => :true, 
 			:column_widths => [130,130]) do
@@ -102,9 +102,35 @@ class OrderPdf
 		end
   end
   
-  def footer
-  	page_no = '<page> of <total>'
-		@pdf.number_pages(page_no, {:at => [0,0], :align => :center})	
+  def footer(order)
+  	@pdf.move_down(20)
+  	data = [
+  	  ["1.","A complying Tax Invoice must be submitted to UnitingCare Ballarat before payment for goods/services can be made."],
+      ["2.","Invoices and related correspondence must quote our Purchase Order Number: <b>#{order.id}</b>"],
+      ["3.","A delivery docket must be provided with all delivered goods."],
+      ["4.","Acceptance by the Supplier of this Purchase Order is deemed to be acceptance of UCB Purchase Order Terms & Conditions. Refer to UCB website (ucare.org.au) for details."]
+  	]
+    @pdf.table(data, 
+			:cell_style => {:size => 8,:inline_format => true},
+      :column_widths => [15,525]) do
+      cells.borders = []
+      cells.padding = 0 
+    end
+    
+    @pdf.move_down(20)
+  	data = [
+  	  ['Invoice to:','Deliver to:','Authorised by:'],
+      ["Finance Department\nUnitingCare Ballarat\nPO Box 608\nBallarat  Vic  3353\nor accounts@ucare.org.au",
+       "#{order.delivery_address}",
+       "#{order.approver.name}\n\n#{order.approver.phone}"]
+  	]
+    @pdf.table(data, 
+			:cell_style => {:inline_format => true},
+      :column_widths => [200,200,140]) do
+      cells.borders = []
+      cells.padding = [5,0,0,0] 
+      row(0).font_style = :bold_italic 
+    end
   end
   
   def format_date(date)
