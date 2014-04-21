@@ -179,7 +179,8 @@ class OrdersController < ApplicationController
       :approver_id,
       :approved_at, 
       :processor_id, 
-      :processed_at) 
+      :processed_at,
+      :delivery_address) 
   end
   
   def where_parameters
