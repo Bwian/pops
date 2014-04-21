@@ -29,6 +29,11 @@ class Item < ActiveRecord::Base
   end
   
   def formatted_subtotal
-    sprintf('%.2f', self.subtotal)
+    price.nil? ? '' : sprintf('%.2f', self.subtotal)
   end
+  
+  def formatted_price
+    price.nil? ? '' : sprintf('%.2f', self.price)
+  end
+    
 end

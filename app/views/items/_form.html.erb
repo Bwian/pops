@@ -67,7 +67,7 @@
     </div>
     <div class="field">
       <%= f.label :price, 'Price (incl tax):' %>
-      <%= f.text_field :price, readonly: @readonly, onchange: "javascript:set_gst()" %>
+      <%= f.text_field :price, value: @item.formatted_price, readonly: @readonly, onchange: "javascript:set_gst()" %>
     </div>
     <div class="field">
       <%= f.label :gst, 'GST:' %>

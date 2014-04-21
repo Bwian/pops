@@ -2,6 +2,7 @@ require 'test_helper'
 
 class ItemTest < ActiveSupport::TestCase
   setup do
+    @new = Item.new
     @draft = orders(:draft)
     @item1 = items(:one)
     @item2 = items(:two)
@@ -31,6 +32,12 @@ class ItemTest < ActiveSupport::TestCase
   end
   
   test 'formatted_subtotal' do
+    assert_equal('',@new.formatted_subtotal)
     assert_equal('4.50',@item1.formatted_subtotal)
+  end
+  
+  test 'formatted_price' do
+    assert_equal('',@new.formatted_price)
+    assert_equal('4.95',@item1.formatted_price)
   end
 end
