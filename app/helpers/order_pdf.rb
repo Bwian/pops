@@ -9,7 +9,8 @@ class OrderPdf
   attr_reader :pdf
   
   def initialize(order)
-    @pdf = Prawn::Document.new
+    @pdf = Prawn::Document.new #(page_size: 'A4')
+    @page_width = @pdf.bounds.width
     build(order)  
   end
   
@@ -23,9 +24,17 @@ class OrderPdf
   
   private
   
+  def widths(cols)
+    column_widths = []
+    cols.each do |col|
+      column_widths << col * @page_width / 100.0
+    end
+    column_widths
+  end
+  
   def build(order)
     header(order)
-    # details(order)
+    details(order)
     footer(order)
     @pdf.number_pages("UnitingCare Ballarat Purchase Order number #{order.id} - page <page> of <total>", {:at => [0,0], :align => :center})	
   end
@@ -35,33 +44,33 @@ class OrderPdf
 			[{:image => "#{Rails.root}/app/assets/images/UCB-grayscale.jpg", :scale => 0.07},
        {:content => "UnitingCare Ballarat\n<font size='8'>ABN: 15 562 149 440</font>\nPO Box 608\nBallarat  Vic  3353\nTelephone: (03) 5332 1286\nFax: (03) 5332 1055", :inline_format => true},   
 			 {:content => 'Purchase Order', :align => :right, :size => 20, :font_style => :bold}]
-		], :column_widths => [200,160,160]) do
+		], :column_widths => widths([40,30,30])) do
 			cells.padding = 1
 			cells.borders = []
-      column(3).style(:align => :right)
 		end
     
-    @pdf.move_down(25)
+    @pdf.move_down(20)
   	@pdf.table([
-      [{:content => order.supplier_name, :font_style => :bold, :colspan => 2}, 
-       {:content => 'PO Number:', :align => :right, :font_style => :bold},
+      [{:content => order.supplier_name}, 
+       {:content => 'PO Number:'},
        {:content => order.id.to_s, :font_style => :bold, :size => 14 }],
-      [{:content => order.supplier_address1, :colspan => 2},
-       {:content => 'Issue Date:', :align => :right, :font_style => :bold},
+      [{:content => order.supplier_address1},
+       {:content => 'Issue Date:'},
        {:content => format_date(order.approved_at)}],
-      [{:content => order.supplier_address2, :colspan => 2},
-       {:content => 'Your Reference:', :align => :right, :font_style => :bold},
+      [{:content => order.supplier_address2},
+       {:content => 'Your Reference:'},
        {:content => order.reference}],
-      [{:content => order.supplier_address3, :colspan => 2},
-       {:content => 'Supplier Number:', :align => :right, :font_style => :bold},
+      [{:content => order.supplier_address3},
+       {:content => 'Supplier Number:'},
        {:content => order.supplier_id.to_s}] 
-		], :column_widths => [130,130,130,130]) do
+		], :column_widths => widths([50,25,25])) do
 			cells.padding = 1
 			cells.borders = []
-      column(3).style(:align => :right)
-		end
+      column([1,2]).style(:align => :right)
+      column(1).style(:font_style => :bold)
+    end
     
-    @pdf.move_down(25)
+    @pdf.move_down(20)
   end
   
   def details(order)
@@ -73,7 +82,7 @@ class OrderPdf
     @pdf.table(data, 
       :row_colors => [ROW_COLOUR_EVEN, ROW_COLOUR_ODD],
 			:header => :true, 
-			:column_widths => [390,130]) do
+			:column_widths => widths([75,25])) do
 			cells.padding = [2,5,2,5]
 			cells.borders = []
 			row(0).font_style = :bold
@@ -90,7 +99,7 @@ class OrderPdf
     @pdf.table(data, 
       :row_colors => [ROW_COLOUR_EVEN, ROW_COLOUR_ODD],
 			:header => :true, 
-			:column_widths => [130,130]) do
+			:column_widths => widths([25,25])) do
 			cells.padding = [2,5,2,5]
 			cells.borders = []
 			
@@ -112,7 +121,7 @@ class OrderPdf
   	]
     @pdf.table(data, 
 			:cell_style => {:size => 8,:inline_format => true},
-      :column_widths => [15,525]) do
+      :column_widths => widths([2,98])) do
       cells.borders = []
       cells.padding = 0 
     end
@@ -122,14 +131,15 @@ class OrderPdf
   	  ['Invoice to:','Deliver to:','Authorised by:'],
       ["Finance Department\nUnitingCare Ballarat\nPO Box 608\nBallarat  Vic  3353\nor accounts@ucare.org.au",
        "#{order.delivery_address}",
-       "#{order.approver.name}\n\n#{order.approver.phone}"]
+       "#{order.approver.name}\n#{order.approver.phone}"]
   	]
     @pdf.table(data, 
 			:cell_style => {:inline_format => true},
-      :column_widths => [200,200,140]) do
+      :column_widths => widths([40,40,20])) do
       cells.borders = []
       cells.padding = [5,0,0,0] 
       row(0).font_style = :bold_italic 
+      column(2).style(:align => :right)
     end
   end
   
