@@ -1,12 +1,6 @@
 class OrderPdf
   
-	ROW_COLOUR_ODD    = "EBD6D6"
-	ROW_COLOUR_EVEN   = "FFFFFF"
-	ROW_COLOUR_HEAD   = "D6ADAD"
-	UCB_GREEN				  = "666633"
-	UCB_RED					  = "993333"
-  
-  attr_reader :pdf
+	ROW_COLOUR_HEAD   = "BBBBBB"
   
   def initialize(order)
     @pdf = Prawn::Document.new #(page_size: 'A4')
@@ -74,45 +68,44 @@ class OrderPdf
   end
   
   def details(order)
-    data = [['Description','Cost']]
+    data = [['Description','Ex GST','GST','Total']]
     order.items.each do |item|
-      data << [item.description,sprintf('%.2f', item.subtotal)]
+      data << [item.description,item.formatted_subtotal,item.formatted_gst,item.formatted_price]
     end
-		
+    (data.size..15).each { data << [' ',' ',' ',' ']}
     @pdf.table(data, 
-      :row_colors => [ROW_COLOUR_EVEN, ROW_COLOUR_ODD],
 			:header => :true, 
-			:column_widths => widths([75,25])) do
+			:column_widths => widths([58,15,12,15])) do
 			cells.padding = [2,5,2,5]
-			cells.borders = []
-			row(0).font_style = :bold
-			row(0).background_color = ROW_COLOUR_HEAD
-      column(1).style(:align => :right)
+			cells.borders = [:left,:right]
+      column([1,2,3]).style(:align => :right)
+      row(0).style(:borders => [:top,:bottom,:right,:left],:padding => 5,:font_style => :bold,:background_color => ROW_COLOUR_HEAD)      
 		end
     
-    @pdf.move_down(10)
+    contact = "#{order.creator.name} - #{order.creator.phone} - #{order.creator.email}"
     data = [
-      ['Subtotal:',sprintf('%.2f', order.subtotal)],
-      ['GST:',sprintf('%.2f', order.gst)],
-      ['Total:',sprintf('%.2f', order.grandtotal)]
+      ['For enquiries, please contact:','Ex GST:',sprintf('%.2f', order.subtotal)],
+      [contact,'GST:',sprintf('%.2f', order.gst)],
+      ['','Total:',sprintf('%.2f', order.grandtotal)]
     ]
-    @pdf.table(data, 
-      :row_colors => [ROW_COLOUR_EVEN, ROW_COLOUR_ODD],
-			:header => :true, 
-			:column_widths => widths([25,25])) do
-			cells.padding = [2,5,2,5]
-			cells.borders = []
-			
-      row(0).background_color = ROW_COLOUR_ODD
-      row(2).font_style = :bold
-			row(2).background_color = ROW_COLOUR_HEAD
-      column(0).style(:align => :right)
-      column(1).style(:align => :right)
-		end
+    
+    @pdf.table(data,
+  		:column_widths => widths([73,12,15])) do
+  		cells.padding = [2,5,2,5] 
+      column([1,2]).style(:align => :right)
+      
+      cells.borders = []
+      rows(0).columns(0).style(:borders => [:left,:top])
+      rows(0).columns(1..2).style(:borders => [:right,:top])
+      rows(1).columns(0).style(:borders => [:left],:font_style => :bold)
+      rows(1).columns(1..2).style(:borders => [:right])
+      rows(2).columns(0).style(:borders => [:left,:bottom])
+      rows(2).columns(1..2).style(:borders => [:right,:bottom],:font_style => :bold)
+    end
   end
   
   def footer(order)
-  	@pdf.move_down(20)
+  	@pdf.move_down(10)
   	data = [
   	  ["1.","A complying Tax Invoice must be submitted to UnitingCare Ballarat before payment for goods/services can be made."],
       ["2.","Invoices and related correspondence must quote our Purchase Order Number: <b>#{order.id}</b>"],
@@ -126,7 +119,7 @@ class OrderPdf
       cells.padding = 0 
     end
     
-    @pdf.move_down(20)
+    @pdf.move_down(10)
   	data = [
   	  ['Invoice to:','Deliver to:','Authorised by:'],
       ["Finance Department\nUnitingCare Ballarat\nPO Box 608\nBallarat  Vic  3353\nor accounts@ucare.org.au",
