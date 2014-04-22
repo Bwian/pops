@@ -18,18 +18,25 @@ class OrderPdf
   
   private
   
-  def widths(cols)
-    column_widths = []
-    cols.each do |col|
-      column_widths << col * @page_width / 100.0
-    end
-    column_widths
-  end
-  
   def build(order)
     header(order)
-    details(order)
-    footer(order)
+    data = []
+    order.items.each do |item|
+      data << [item.description,item.formatted_subtotal,item.formatted_gst,item.formatted_price]
+    end
+    line_count = data.size
+    (data.size..15).each { data << [' ',' ',' ',' '] }
+    
+    details(order,data[0..14])
+    if line_count <= 15
+      totals(order)
+      footer(order)
+    else
+      continued(order)
+      footer(order)
+      details(order,data[15..data.size])
+      totals(order)
+    end
     @pdf.number_pages("UnitingCare Ballarat Purchase Order number #{order.id} - page <page> of <total>", {:at => [0,0], :align => :center})	
   end
 
@@ -67,12 +74,8 @@ class OrderPdf
     @pdf.move_down(20)
   end
   
-  def details(order)
-    data = [['Description','Ex GST','GST','Total']]
-    order.items.each do |item|
-      data << [item.description,item.formatted_subtotal,item.formatted_gst,item.formatted_price]
-    end
-    (data.size..15).each { data << [' ',' ',' ',' ']}
+  def details(order,data)
+    data.unshift ['Description','Ex GST','GST','Total']
     @pdf.table(data, 
 			:header => :true, 
 			:column_widths => widths([58,15,12,15])) do
@@ -81,14 +84,29 @@ class OrderPdf
       column([1,2,3]).style(:align => :right)
       row(0).style(:borders => [:top,:bottom,:right,:left],:padding => 5,:font_style => :bold,:background_color => ROW_COLOUR_HEAD)      
 		end
-    
+  end
+  
+  def continued(order)
+    contact = "#{order.creator.name} - #{order.creator.phone} - #{order.creator.email}"
+    data = [
+      ['For enquiries, please contact:',' ','Continued'],
+      [contact,' ','on next page'],
+      [' ',' ',' ']
+    ]
+    detail_end(data)
+  end
+  
+  def totals(order)
     contact = "#{order.creator.name} - #{order.creator.phone} - #{order.creator.email}"
     data = [
       ['For enquiries, please contact:','Ex GST:',sprintf('%.2f', order.subtotal)],
       [contact,'GST:',sprintf('%.2f', order.gst)],
       ['','Total:',sprintf('%.2f', order.grandtotal)]
     ]
-    
+    detail_end(data)
+  end
+  
+  def detail_end(data)
     @pdf.table(data,
   		:column_widths => widths([73,12,15])) do
   		cells.padding = [2,5,2,5] 
@@ -138,5 +156,14 @@ class OrderPdf
   
   def format_date(date)
     date ? "#{date.strftime('%d %b %Y')}" : ''
+  end
+  
+  
+  def widths(cols)
+    column_widths = []
+    cols.each do |col|
+      column_widths << col * @page_width / 100.0
+    end
+    column_widths
   end
 end
