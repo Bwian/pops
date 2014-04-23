@@ -4,7 +4,7 @@ class Item < ActiveRecord::Base
   belongs_to :account
   belongs_to :tax_rate
   
-  default_scope { order('created_at DESC') }
+  default_scope { order('created_at ASC') }
   
   validates :order_id, 
             :program_id, 

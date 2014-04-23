@@ -99,9 +99,9 @@ class OrderPdf
   def totals(order)
     contact = "#{order.creator.name} - #{order.creator.phone} - #{order.creator.email}"
     data = [
-      ['For enquiries, please contact:','Ex GST:',sprintf('%.2f', order.subtotal)],
-      [contact,'GST:',sprintf('%.2f', order.gst)],
-      ['','Total:',sprintf('%.2f', order.grandtotal)]
+      ['For enquiries, please contact:','Ex GST:',order.formatted_subtotal],
+      [contact,'GST:',order.formatted_gst],
+      ['','Total:',order.formatted_grandtotal]
     ]
     detail_end(data)
   end
