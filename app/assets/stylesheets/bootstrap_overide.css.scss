@@ -13,7 +13,7 @@ html,body {
   padding: 0 0 $footer-height;
 }
 
-#wrap > .container {
+#wrap > .container-fluid {
   padding: 60px 15px 0;
 }
 
@@ -23,14 +23,14 @@ html,body {
   color: $main-color-bg;
 }
 
-#footer > .container {
+#footer > .container-fluid {
   padding-left: 15px;
   padding-right: 15px;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
 }
 
-.container .credit {
+.container-fluid .credit {
   margin: 20px 0;
 }
 
