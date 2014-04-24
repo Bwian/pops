@@ -46,6 +46,7 @@ end
 # gem 'debugger', group: [:development, :test]
 gem 'pry', group: [:development, :test]
 gem 'pry-nav', group: [:development, :test]
+gem 'pry-debugger', group: [:development, :test]
 
 # pdf management
 gem 'prawn'

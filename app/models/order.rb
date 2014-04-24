@@ -1,5 +1,9 @@
 class Order < ActiveRecord::Base
-
+  
+  FROM  = 0
+  TO    = 1
+  ID    = 'id'
+  
   belongs_to :supplier
   belongs_to :creator, :class_name => 'User' 
   belongs_to :approver, :class_name => 'User'
@@ -144,20 +148,56 @@ class Order < ActiveRecord::Base
     oj
   end
   
-  def diff_json(from)
-    diff = ''
-    to = self.to_json
-    return diff if from == to
+  def diff_json(from_order)
+    to_order = self.to_json
+    return '' if from_order == to_order
 
-    from.each do |key,value|
-      next if key == 'items'
-      diff << "#{key}: '#{value}' to '#{to[key]}'\n" if value != to[key]
+    diff = diff_message(from_order,to_order)
+    
+    from = from_order['items']
+    to = to_order['items']
+    out = []
+    
+    from.each do |from_item|
+      out << [from_item,nil]
+    end
+
+    to.each do |to_item|
+      found = nil
+      out.each_with_index do |items,idx|
+        found = idx if items[FROM] && to_item[ID] == items[FROM][ID]    
+      end
+      found ? out[found][TO] = to_item : out << [nil,to_item] 
+    end
+
+    idx = 1
+    out.each do |items|
+      if items[TO].nil?
+        diff << "Item #{idx} - deleted:\n#{diff_message(items[FROM],items[TO])}"
+      elsif items[FROM].nil?
+        diff << "Item #{idx} - added:\n#{diff_message(items[FROM],items[TO])}"
+      else
+        diff << "Item #{idx} - changed:\n#{diff_message(items[FROM],items[TO])}" if items[FROM] != items[TO]
+      end
+      idx += 1
     end
     
-    diff
+    diff.empty? ? diff : "Changes:\n#{diff}".sub(/\n$/,'')
   end
   
   private
+  
+  def diff_message(from,to)
+    diff = ''
+    if from.nil?
+      to.each { |key,value| diff << "- #{key}: '#{value}'\n" if key != 'items' }
+    elsif to.nil?
+      from.each { |key,value| diff << "- #{key}: '#{value}'\n" if key != 'items' }
+    else
+      from.each { |key,value| diff << "- #{key}: '#{value}' to '#{to[key]}'\n" if  key != 'items' && from[key] != to[key] }
+    end
+    diff
+  end
   
   def build_atby(onat,by)
     "on #{onat.strftime('%d/%m/%Y')} at #{onat.strftime('%H:%M')} by #{by.code}"
