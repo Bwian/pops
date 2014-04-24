@@ -141,4 +141,22 @@ class OrderTest < ActiveSupport::TestCase
     ojsh = ActiveSupport::JSON.decode(ojs)
     assert(oj.eql?ojsh)
   end
+  
+  test 'no changes' do
+    oj = @draft.to_json
+    assert_equal('',@draft.diff_json(oj))
+  end
+  
+  test 'order changes' do
+    oj = @draft.to_json
+    @draft.status = 'A'
+    assert_equal("status: 'D' to 'A'\n",@draft.diff_json(oj))
+  end
+  
+  test 'item changes' do
+    oj = @draft.to_json
+    item = @draft.items.first
+    item.description = 'Rhino'
+    assert_equal("",@draft.diff_json(oj))
+  end
 end

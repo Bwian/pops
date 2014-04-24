@@ -119,28 +119,42 @@ class Order < ActiveRecord::Base
   
   def to_json
     oj = self.as_json(include: [:supplier, {items: {include: [:program, :account, :tax_rate]}}])
-    oj["grandtotal"]    = sprintf('%.2f', self.grandtotal)
-    oj["subtotal"]      = sprintf('%.2f', self.subtotal)
-    oj["gst"]           = sprintf('%.2f', self.gst)
-    oj["invoice_date"]  = build_date(self.invoice_date)
-    oj["payment_date"]  = build_date(self.payment_date)
-    oj["creator"]       = build_user(self.creator_id)
-    oj["created_at"]    = build_datetime(self.approved_at)
-    oj["approver"]      = build_user(self.approver_id)
-    oj["approved_at"]   = build_datetime(self.approved_at)
-    oj["processor"]     = build_user(self.processor_id)
-    oj["processed_at"]  = build_datetime(self.processed_at)
-    oj["updated_at"]    = build_datetime(self.updated_at)
+    oj["supplier"]        = "#{self.supplier_name} (#{self.supplier_id})"
+    oj["invoice_date"]    = build_date(self.invoice_date)
+    oj["payment_date"]    = build_date(self.payment_date)
+    oj["creator"]         = build_user(self.creator_id)
+    oj["approver"]        = build_user(self.approver_id)
+    oj["processor"]       = build_user(self.processor_id)
     idx = 0
     oj["items"].each do |item|
       item["price"]       = sprintf('%.2f', item["price"])
-      item["created_at"]  = build_datetime(item["created_at"])
-      item["updated_at"]  = build_datetime(item["updated_at"])
-      item["tax_rate"]["rate"] = sprintf('%.2f', item["tax_rate"]["rate"])
+      item["program"]     = "#{item['program']['name']} (#{item['program_id']})"
+      item["account"]     = "#{item['account']['name']} (#{item['account_id']})"
+      item["tax_rate"]    = "#{item['tax_rate']['name']}-#{item['tax_rate']['rate']}% (#{item['program_id']})"
       oj["items"][idx]    = item
       idx += 1
     end
+
+    oj = oj.delete_if { |key,value| key =~ /_at$|_id$/ }
+    oj.delete("supplier_name")
+    oj["items"].each do |item|
+      item.each { |key,value| item.delete(key) if key =~ /_at$|_id$/ }
+    end 
+    oj.update(oj) { |key,value| value.nil? ? '' : value }
     oj
+  end
+  
+  def diff_json(from)
+    diff = ''
+    to = self.to_json
+    return diff if from == to
+
+    from.each do |key,value|
+      next if key == 'items'
+      diff << "#{key}: '#{value}' to '#{to[key]}'\n" if value != to[key]
+    end
+    
+    diff
   end
   
   private
