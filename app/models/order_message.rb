@@ -1,8 +1,12 @@
 class OrderMessage
-
+  
+  attr_writer :body
+  
   def initialize(order,action,user_id)
     @order = order
+    @action = action
     @user = User.find(user_id)
+    @body = ''
     self.send("#{action}")  # Setup mailer
   end
 
@@ -16,20 +20,28 @@ class OrderMessage
   end
 
   def deliver
-    @mail.deliver
+    mail = OrderMailer.send("#{@action}_email",@order,user: @user, body: self.body)
+    mail.deliver
   end
 
+  def body
+    @body.gsub("\n","</br>").html_safe
+  end
+  
   private
   
   def approved
-    @mail = OrderMailer.approved_email(@order)
     @to = @order.creator
     @from = @order.approver
   end
   
   def resubmitted
-    @mail = OrderMailer.resubmitted_email(@order,@user)
     @to = @order.approver
+    @from = @user
+  end
+  
+  def changed_creator
+    @to = @order.creator
     @from = @user
   end
 end

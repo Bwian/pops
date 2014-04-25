@@ -8,6 +8,18 @@ class OrdersController < ApplicationController
     @order_filter = session[:order_filter] || OrderFilter.new(session[:user_id])
     @orders = @order_filter.faults.any? ? Order.none : Order.where(where_parameters).limit(100).joins(join_user(params[:sort])).order(sort_order(params[:sort]))
    
+    if session[:changes]
+      oj = session[:changes]
+      order = Order.find(oj['id'])
+      diff = order.diff_json(oj) 
+      if !diff.empty?  
+        message = OrderMessage.new(order,'changed_creator',session[:user_id])
+        message.body = diff
+        message.deliver
+      end
+      session[:changes] = nil
+    end
+
     respond_to do |format|
       format.html # index.html.erb
     end
@@ -16,6 +28,7 @@ class OrdersController < ApplicationController
   # GET /orders/1
   def show
     @readonly = true
+    session[:changes] = @order.to_json if session[:changes].nil? || session[:changes]['id'] != @order.id
 
     respond_to do |format|
       format.html # show.html.erb

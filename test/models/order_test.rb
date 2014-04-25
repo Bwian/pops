@@ -142,18 +142,18 @@ class OrderTest < ActiveSupport::TestCase
     assert(oj.eql?ojsh)
   end
   
-  test 'no changes' do
+  test 'note no changes' do
     oj = @draft.to_json
     assert_equal('',@draft.diff_json(oj))
   end
   
-  test 'order changes' do
+  test 'note order changes' do
     oj = @draft.to_json
     @draft.status = 'A'
     assert(@draft.diff_json(oj).end_with?("status: 'D' to 'A'"))
   end
   
-  test 'item changes' do
+  test 'note item changes' do
     oj = @draft.to_json
     item = @draft.items.first
     item.description = 'Rhino'
@@ -165,14 +165,14 @@ class OrderTest < ActiveSupport::TestCase
   # from the JSON object to make it look like an item has been added and
   # add an item to make it look like one has been deleted.
   
-  test 'item addition' do
+  test 'note item addition' do
     oj = @draft.to_json
     oj['items'].delete_at(0) 
     assert(@draft.diff_json(oj).include?("Item 2 - added:"))
     assert(@draft.diff_json(oj).include?("description: 'Second Draft Item'"))
   end
   
-  test 'item deletion' do
+  test 'note item deletion' do
     oj = @draft.to_json
     item = oj['items'][0].clone
     item['id'] = 1
