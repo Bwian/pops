@@ -1,6 +1,6 @@
 class OrderMessage
   
-  attr_writer :body
+  attr_writer :body, :to
   
   def initialize(order,action,user_id)
     @order = order
@@ -20,7 +20,7 @@ class OrderMessage
   end
 
   def deliver
-    mail = OrderMailer.send("#{@action}_email",@order,user: @user, body: self.body)
+    mail = OrderMailer.send("#{@action}_email", @order, user: @user, to: @to, body: self.body)
     mail.deliver
   end
 
@@ -40,8 +40,8 @@ class OrderMessage
     @from = @user
   end
   
-  def changed_creator
-    @to = @order.creator
+  def changed
+    @to = nil
     @from = @user
   end
 end

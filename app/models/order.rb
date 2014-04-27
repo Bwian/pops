@@ -139,7 +139,7 @@ class Order < ActiveRecord::Base
       idx += 1
     end
 
-    oj = oj.delete_if { |key,value| key =~ /_at$|id$/ }
+    oj = oj.delete_if { |key,value| key =~ /_at$|_id$/ }
     oj.delete("supplier_name")
     oj["items"].each do |item|
       item.each { |key,value| item.delete(key) if key =~ /_at$|_id$/ }
@@ -181,7 +181,7 @@ class Order < ActiveRecord::Base
       end
       idx += 1
     end
-    
+
     diff.empty? ? diff : "Changes:\n#{diff}".sub(/\n$/,'')
   end
   

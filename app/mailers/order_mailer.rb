@@ -10,7 +10,7 @@ class OrderMailer < ActionMailer::Base
     pdf = OrderPdf.new(@order)
     attachments["PO_#{@order.id}.pdf"] = pdf.render
     
-    mail(to: @to.email, from: @from.email, subject: "Purchase Order #{@order.id} approved.")
+    build_mail('approved')
   end
   
   def resubmitted_email(order,args)
@@ -18,16 +18,21 @@ class OrderMailer < ActionMailer::Base
     @to = order.approver
     @from = args[:user]
 
-    mail(to: @to.email, from: @from.email, subject: "Purchase Order #{@order.id} reset to Submitted.")
+    build_mail('reset to Submitted')
   end
   
-  def changed_creator_email(order,args)
+  def changed_email(order,args)
     @order = order
-    @to = order.creator
+    @to = args[:to]
     @from = args[:user]
     @body = args[:body]
 
-    mail(to: @to.email, from: @from.email, subject: "Purchase Order #{@order.id} changed.")
+    build_mail('changed')
   end
   
+  private
+  
+  def build_mail(action)
+    mail(to: @to.email, from: @from.email, subject: "Purchase Order #{@order.id} #{action}.")
+  end
 end

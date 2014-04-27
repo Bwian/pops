@@ -13,9 +13,16 @@ class OrdersController < ApplicationController
       order = Order.find(oj['id'])
       diff = order.diff_json(oj) 
       if !diff.empty?  
-        message = OrderMessage.new(order,'changed_creator',session[:user_id])
+        message = OrderMessage.new(order,'changed',session[:user_id])
         message.body = diff
-        message.deliver
+        if session[:user_id] != order.creator_id
+          message.to = order.creator
+          message.deliver
+        end
+        if session[:user_id] != order.approver_id
+          message.to = order.approver
+          message.deliver
+        end
       end
       session[:changes] = nil
     end
@@ -88,6 +95,7 @@ class OrdersController < ApplicationController
     end
   end
   
+  # POST /orders/1/draft
   def draft
     @order.to_draft
     
@@ -100,10 +108,11 @@ class OrdersController < ApplicationController
     end
   end
   
+  # POST /orders/1/submit
   def submit
     @order.to_submitted
 
-    if @order.status_was == OrderStatus::APPROVED #&& @order.creator_id != session[:user_id]
+    if @order.status_was == OrderStatus::APPROVED && @order.creator_id != session[:user_id]
       message = OrderMessage.new(@order,'resubmitted',session[:user_id])
       notice = message.notice
     else
@@ -121,6 +130,7 @@ class OrdersController < ApplicationController
     end
   end
   
+  # POST /orders/1/approve
   def approve
     @order.to_approved(session[:user_id])
     message = OrderMessage.new(@order,'approved',session[:user_id])
@@ -137,6 +147,7 @@ class OrdersController < ApplicationController
     end
   end
   
+  # POST /orders/1/complete
   def complete
     @order.to_processed(session[:user_id])
     
@@ -152,6 +163,7 @@ class OrdersController < ApplicationController
     end
   end
   
+  # POST /orders/refresh
   def refresh
     order_filter = session[:order_filter] || OrderFilter.new(session[:user_id])
     order_filter.update(params[:order_filter])
