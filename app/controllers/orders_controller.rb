@@ -111,18 +111,12 @@ class OrdersController < ApplicationController
   # POST /orders/1/submit
   def submit
     @order.to_submitted
-
-    if @order.status_was == OrderStatus::APPROVED && @order.creator_id != session[:user_id]
-      message = OrderMessage.new(@order,'resubmitted',session[:user_id])
-      notice = message.notice
-    else
-      notice = ''
-    end
+    message = @order.sendmail(session[:user_id])
 
     respond_to do |format|
       if @order.save
-        format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Submitted. #{notice}") }
-        message.deliver if !notice.empty?
+        format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Submitted. #{get_notice(message)}") }
+        message.deliver if message && message.valid?
       else
         @order.status = OrderStatus::DRAFT
         format.html { render action: "edit" }
@@ -133,12 +127,12 @@ class OrdersController < ApplicationController
   # POST /orders/1/approve
   def approve
     @order.to_approved(session[:user_id])
-    message = OrderMessage.new(@order,'approved',session[:user_id])
+    message = @order.sendmail(session[:user_id])
     
     respond_to do |format|
       if @order.save
-        format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Approved. #{message.notice}") }
-        message.deliver
+        format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Approved. #{get_notice(message)}") }
+        message.deliver if message && message.valid?
       else
         @order.status = OrderStatus::SUBMITTED
         @order.approved_at = nil
@@ -263,26 +257,7 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
   end
   
-  def sendmail(order)
-    return '' unless order.status_changed?
-    
-    fromto = "#{order.status_was}#{order.status}"
-    mail = nil
-    to = nil
-    
-    case fromto
-      when 'SA'
-        mail = OrderMailer.approved_email(@order)
-        to = order.creator
-    end
-
-    if to
-      notice = to.email.nil? || to.email.empty? ? "No email address for #{to.name}" : "Order emailed to #{to.name} at #{to.email}"
-    else
-      notice = ''
-    end
-      
-    mail.deliver if mail
-    notice
+  def get_notice(message)
+    message ? message.notice : ''
   end
 end

@@ -46,3 +46,14 @@ processor:
   approver: false
   processor: true
   creator: true
+  
+no_email:
+  code: homer
+  name: Homer Simpson
+  hashed_password:
+  salt: rambo
+  email: 
+  admin: false
+  approver: false
+  processor: false
+  creator: false

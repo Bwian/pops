@@ -185,6 +185,22 @@ class Order < ActiveRecord::Base
     diff.empty? ? diff : "Changes:\n#{diff}".sub(/\n$/,'')
   end
   
+  def sendmail(user)
+    return nil unless self.status_changed?
+    
+    fromto = "#{self.status_was}#{self.status}"
+    message = nil
+    
+    case fromto
+      when 'SA'
+        message = OrderMessage.new(self,'approved',user)
+      when 'AS'
+        message = OrderMessage.new(self,'resubmitted',user)
+    end
+      
+    message
+  end
+  
   private
   
   def diff_message(from,to)

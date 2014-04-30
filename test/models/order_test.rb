@@ -181,4 +181,12 @@ class OrderTest < ActiveSupport::TestCase
     assert(@draft.diff_json(oj).include?("Item 3 - deleted:"))
     assert(@draft.diff_json(oj).include?("description: 'Third Draft Item'"))
   end
+  
+  test 'sendmail - approved' do
+    @submitted.to_approved(@brian.id)
+    message = @submitted.sendmail(@brian.id)
+    assert(message,'Message is nil')
+    assert(message.valid?,'Message is invalid')
+    assert_equal("Order emailed to Sean Anderson at sean@somewhere.com",message.notice)
+  end
 end

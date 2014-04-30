@@ -28,6 +28,12 @@ class OrderMessage
     @body.gsub("\n","</br>").html_safe
   end
   
+  def valid?
+    return false if !@from || !@from.email
+    return false if !@to || !@to.email
+    true  
+  end
+  
   private
   
   def approved
