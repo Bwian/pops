@@ -35,5 +35,24 @@ class Item < ActiveRecord::Base
   def formatted_price
     price.nil? ? '' : sprintf('%.2f', self.price)
   end
-    
+  
+  def program_name
+    self.program ? self.program.name : "Missing Program #{self.program_id}"
+  end
+  
+  def program_code
+    self.program ? self.program.code : "#{self.program_id}"
+  end
+  
+  def account_name
+    self.account ? self.account.name : "Missing Account #{self.account_id}"
+  end  
+  
+  def tax_rate_name
+    self.tax_rate ? self.tax_rate.name : "Missing Tax Rate #{self.tax_rate_id}"
+  end
+  
+  def tax_rate_short_name
+    self.tax_rate ? self.tax_rate.short_name : "Missing Tax Rate #{self.tax_rate_id}"
+  end
 end

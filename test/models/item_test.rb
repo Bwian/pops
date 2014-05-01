@@ -40,4 +40,49 @@ class ItemTest < ActiveSupport::TestCase
     assert_equal('',@new.formatted_price)
     assert_equal('4.95',@item1.formatted_price)
   end
+  
+  test 'program_name found' do
+    assert_equal('Program One',@item1.program_name)
+  end
+  
+  test 'program_name not found' do
+    @item1.program_id = 99
+    assert_equal('Missing Program 99',@item1.program_name)
+  end
+  
+  test 'program_code found' do
+    assert_equal('1',@item1.program_code)
+  end
+  
+  test 'program_code not found' do
+    @item1.program_id = 99
+    assert_equal('99',@item1.program_code)
+  end
+  
+  test 'account_name found' do
+    assert_equal('Account One',@item1.account_name)
+  end
+  
+  test 'account_name not found' do
+    @item1.account_id = 99
+    assert_equal('Missing Account 99',@item1.account_name)
+  end
+  
+  test 'tax_rate_name found' do
+    assert_equal('Normal GST',@item1.tax_rate_name)
+  end
+  
+  test 'tax_rate_name not found' do
+    @item1.tax_rate_id = 99
+    assert_equal('Missing Tax Rate 99',@item1.tax_rate_name)
+  end
+  
+  test 'tax_rate_short_name found' do
+    assert_equal('GST',@item1.tax_rate_short_name)
+  end
+  
+  test 'tax_rate_short_name not found' do
+    @item1.tax_rate_id = 99
+    assert_equal('Missing Tax Rate 99',@item1.tax_rate_short_name)
+  end
 end

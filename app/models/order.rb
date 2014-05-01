@@ -132,9 +132,9 @@ class Order < ActiveRecord::Base
     idx = 0
     oj["items"].each do |item|
       item["price"]       = sprintf('%.2f', item["price"])
-      item["program"]     = "#{item['program']['name']} (#{item['program_id']})"
-      item["account"]     = "#{item['account']['name']} (#{item['account_id']})"
-      item["tax_rate"]    = "#{item['tax_rate']['name']}-#{item['tax_rate']['rate']}% (#{item['program_id']})"
+      item["program"]     = "#{(item['program'] && item['program']['name']) || 'Unknown'} (#{item['program_id']})"
+      item["account"]     = "#{(item['account'] && item['account']['name']) || 'Unknown'} (#{item['account_id']})"
+      item["tax_rate"]    = "#{(item['tax_rate'] && item['tax_rate']['name']) || 'Unknown'} (#{item['tax_rate_id']})"
       oj["items"][idx]    = item
       idx += 1
     end

@@ -88,9 +88,9 @@
         <% @order.items.each do |item| %>
           <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
             <td><b><%= link_to(item.description,item) %></b></td>
-            <td><%= item.account.name %></td>
-            <td align="center"><%= item.program.code %></td>
-            <td align="center"><%= item.tax_rate.short_name %></td>
+            <td><%= item.account_name %></td>
+            <td align="center"><%= item.program_code %></td>
+            <td align="center"><%= item.tax_rate_short_name %></td>
             <td align="right"><%= item.formatted_subtotal %></td>
           </tr>
         <% end %>
