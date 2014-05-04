@@ -11,11 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140421024802) do
+ActiveRecord::Schema.define(version: 20140504131358) do
 
   create_table "accounts", force: true do |t|
     t.string  "name"
     t.integer "tax_rate_id"
+    t.string  "status"
   end
 
   add_index "accounts", ["tax_rate_id"], name: "index_accounts_on_tax_rate_id"
@@ -59,7 +60,7 @@ ActiveRecord::Schema.define(version: 20140421024802) do
 
   create_table "programs", force: true do |t|
     t.string "name"
-    t.string "code"
+    t.string "status"
   end
 
   create_table "suppliers", force: true do |t|
@@ -71,12 +72,14 @@ ActiveRecord::Schema.define(version: 20140421024802) do
     t.string  "fax"
     t.string  "email"
     t.integer "tax_rate_id"
+    t.string  "status"
   end
 
   create_table "tax_rates", force: true do |t|
     t.string  "name"
     t.string  "short_name"
     t.decimal "rate"
+    t.string  "status"
   end
 
   create_table "users", force: true do |t|

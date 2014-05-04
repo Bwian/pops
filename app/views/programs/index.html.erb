@@ -13,7 +13,6 @@
   <% @programs.each do |program| %>
     <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
       <td><%= program.name %></td>
-			<td><%= program.code %></td>
     </tr>
   <% end %>
 </table>

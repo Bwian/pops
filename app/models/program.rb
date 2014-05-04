@@ -7,7 +7,7 @@ class Program < ActiveRecord::Base
   @@selection = nil
   
   def self.selection
-    @@selection ||= Program.all.map { |p| [p.name, p.id] }
+    @@selection ||= Program.where(status: ['A','N']).map { |p| [p.name, p.id] }
   end
   
   def self.reset_selection

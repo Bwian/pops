@@ -41,7 +41,7 @@ class Item < ActiveRecord::Base
   end
   
   def program_code
-    self.program ? self.program.code : "#{self.program_id}"
+    self.program_id.to_s
   end
   
   def account_name

@@ -50,11 +50,13 @@ module ItemsHelper
   
   def account_list(item,flag)
     filter = User.find(session[:user_id]).accounts_filter
+    filter = '6000-' if filter.nil? || filter.empty?
     select_list(filter,Account.selection,item.account_id,flag)
   end
   
   def program_list(item,flag)
     filter = User.find(session[:user_id]).programs_filter
+    
     select_list(filter,Program.selection,item.program_id,flag)
   end
   

@@ -2,23 +2,28 @@
 
 one:
   name: Program One
-  code: 0001
+  status: A
 
 two:
   name: Program Two
-  code: 0002
+  status: A
   
 three:
   id: 3
   name: Program Three
-  code: 0003
+  status: A
   
 four:
   id: 4
   name: Program Four
-  code: 0004
+  status: N
 
 five:
   id: 5
   name: Program Five
-  code: 0005
+  status: N
+  
+six:
+  id: 6
+  name: Program Six
+  status: D

@@ -6,6 +6,7 @@ class ProgramTest < ActiveSupport::TestCase
     
     program = Program.new
     program.name = 'New Supplier'
+    program.status = 'N'
     program.save
     
     assert_equal(5, Program.selection.count)

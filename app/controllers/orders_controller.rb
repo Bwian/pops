@@ -10,8 +10,8 @@ class OrdersController < ApplicationController
    
     if session[:changes]
       oj = session[:changes]
-      order = Order.find(oj['id'])
-      diff = order.diff_json(oj) 
+      order = Order.find_by(id: oj['id'])  # use find_by for no exception
+      diff = order ? order.diff_json(oj) : ''
       if !diff.empty?  
         message = OrderMessage.new(order,'changed',session[:user_id])
         message.body = diff

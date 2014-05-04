@@ -6,6 +6,7 @@ class ItemTest < ActiveSupport::TestCase
     @draft = orders(:draft)
     @item1 = items(:one)
     @item2 = items(:two)
+    @item4 = items(:four)
   end
   
   test 'item count' do
@@ -50,13 +51,8 @@ class ItemTest < ActiveSupport::TestCase
     assert_equal('Missing Program 99',@item1.program_name)
   end
   
-  test 'program_code found' do
-    assert_equal('1',@item1.program_code)
-  end
-  
-  test 'program_code not found' do
-    @item1.program_id = 99
-    assert_equal('99',@item1.program_code)
+  test 'program_code' do
+    assert_equal('5',@item4.program_code)
   end
   
   test 'account_name found' do
