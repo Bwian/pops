@@ -85,7 +85,7 @@ module ItemsHelper
           next
         when 1
           from = fromto[0].to_i
-          to = from
+          to = f.last == '-' ? 1.0/0.0 : from
         else
           from = fromto[0].to_i
           to = fromto[1].to_i
