@@ -15,7 +15,7 @@ class ItemTest < ActiveSupport::TestCase
   
   test 'any?' do
     assert(@draft.items.any?)
-    assert(!orders(:invalid).items.any?)
+    assert_not(orders(:invalid).items.any?)
   end
   
   test 'gst' do

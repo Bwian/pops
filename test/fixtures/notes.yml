@@ -1,0 +1,16 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  order: submitted
+  user: brian
+  info: Stuff brian changed
+
+two:
+  order: submitted
+  user: brian
+  info: More stuff brian changed
+  
+three:
+  order: approved
+  user: sean
+  info: Stuff sean changed
