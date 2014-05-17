@@ -81,4 +81,11 @@ class ItemTest < ActiveSupport::TestCase
     @item1.tax_rate_id = 99
     assert_equal('Missing Tax Rate 99',@item1.tax_rate_short_name)
   end
+  
+  test 'to_json' do
+    ij = @item1.to_json
+    ijs = ij.to_json
+    ijsh = ActiveSupport::JSON.decode(ijs)
+    assert(ij.eql?ijsh)
+  end
 end

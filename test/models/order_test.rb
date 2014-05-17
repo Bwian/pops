@@ -189,4 +189,10 @@ class OrderTest < ActiveSupport::TestCase
     assert(message.valid?,'Message is invalid')
     assert_equal("Order emailed to Sean Anderson at sean@somewhere.com",message.notice)
   end
+  
+  test 'add_notes?' do
+    assert_not(@draft.add_notes?,'Draft')
+    assert(@submitted .add_notes?,'Submitted')
+    assert_not(Order.new.add_notes?,'New')
+  end
 end

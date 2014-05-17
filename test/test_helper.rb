@@ -30,5 +30,7 @@ class ActiveSupport::TestCase
     session[:admin] = user.admin
     session[:timeout] = Time.now.to_i + 300 
     session[:order_filter] = OrderFilter.new(user.id)
+    session.delete(:order_changes)
+    session.delete(:item_changes)
   end
 end

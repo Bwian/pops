@@ -55,4 +55,30 @@ class Item < ActiveRecord::Base
   def tax_rate_short_name
     self.tax_rate ? self.tax_rate.short_name : "Missing Tax Rate #{self.tax_rate_id}"
   end
+  
+  def to_json
+    json = self.as_json
+    json['price']       = self.formatted_price
+    json['program']     = "#{self.program_name} (#{self.program_id})"
+    json['account']     = "#{self.account_name} (#{self.account_id})"
+    json['tax_rate']     = "#{self.tax_rate_name} (#{self.tax_rate_id})"    
+    json.delete('program_id')
+    json.delete('account_id')
+    json.delete('tax_rate_id')    
+    json = json.delete_if { |key,value| key =~ /_at$/ }
+    json
+  end
+  
+  def diff_json(from)
+    to = self.to_json
+    diff = ''
+    if from.nil?
+      to.each { |key,value| diff << "- #{key}: '#{value}'\n" }
+    elsif to.nil?
+      from.each { |key,value| diff << "- #{key}: '#{value}'\n" }
+    else
+      from.each { |key,value| diff << "- #{key}: '#{value}' to '#{to[key]}'\n" if  key != 'items' && from[key] != to[key] }
+    end
+    diff
+  end
 end

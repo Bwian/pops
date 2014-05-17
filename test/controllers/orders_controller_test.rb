@@ -71,6 +71,7 @@ class OrdersControllerTest < ActionController::TestCase
   end
 
   test "should destroy order" do
+    get :show, id: @order.to_param  # setup session[:order_changes] first
     assert_difference('Order.count', -1) do
       delete :destroy, id: @order.to_param
     end

@@ -1,5 +1,7 @@
 class OrdersController < ApplicationController
 
+  include NotesHelper
+  
   before_filter :find_order, except: %w[index new create refresh]
   before_filter :authorised_action, only: %w[new edit]
   
@@ -7,25 +9,6 @@ class OrdersController < ApplicationController
   def index
     @order_filter = session[:order_filter] || OrderFilter.new(session[:user_id])
     @orders = @order_filter.faults.any? ? Order.none : Order.where(where_parameters).limit(100).joins(join_user(params[:sort])).order(sort_order(params[:sort]))
-   
-    if session[:changes]
-      oj = session[:changes]
-      order = Order.find_by(id: oj['id'])  # use find_by for no exception
-      diff = order ? order.diff_json(oj) : ''
-      if !diff.empty?  
-        message = OrderMessage.new(order,'changed',session[:user_id])
-        message.body = diff
-        if session[:user_id] != order.creator_id
-          message.to = order.creator
-          message.deliver
-        end
-        if session[:user_id] != order.approver_id
-          message.to = order.approver
-          message.deliver
-        end
-      end
-      session[:changes] = nil
-    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -35,7 +18,7 @@ class OrdersController < ApplicationController
   # GET /orders/1
   def show
     @readonly = true
-    session[:changes] = @order.to_json if session[:changes].nil? || session[:changes]['id'] != @order.id
+    save_json('order',@order)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -75,6 +58,7 @@ class OrdersController < ApplicationController
   def update
     respond_to do |format|
       if @order.update_attributes(order_params)
+        add_notes('order',@order)
         format.html { redirect_to(@order, notice: "Order #{@order.id} was successfully updated.") }
       else
         format.html { render action: "edit" }
@@ -84,6 +68,7 @@ class OrdersController < ApplicationController
 
   # DELETE /orders/1
   def destroy
+    add_notes('order',nil)
     @order.destroy
 
     respond_to do |format|

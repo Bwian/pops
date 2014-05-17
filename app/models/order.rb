@@ -202,6 +202,10 @@ class Order < ActiveRecord::Base
     message
   end
   
+  def add_notes?
+    self.notes.any? || self.status == OrderStatus::SUBMITTED || self.status == OrderStatus::APPROVED
+  end
+  
   private
   
   def diff_message(from,to)

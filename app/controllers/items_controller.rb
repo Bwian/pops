@@ -1,5 +1,7 @@
 class ItemsController < ApplicationController
-
+  
+  include NotesHelper
+  
   before_filter :find_item, except: %w[index new create]
   before_filter :find_order, only: %w[new]
   before_filter :authorised_action, only: %w[new edit]
@@ -7,6 +9,7 @@ class ItemsController < ApplicationController
   # GET /items/1
   def show  
     @readonly = true
+    save_json('item',@item)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -15,6 +18,7 @@ class ItemsController < ApplicationController
 
   # GET /items/new
   def new
+    save_json('item',nil)
     @item = Item.new
     @item.order_id = params[:order_id]
     @item.program_id = session[:program_id]
@@ -39,6 +43,7 @@ class ItemsController < ApplicationController
     
     respond_to do |format|
       if @item.save
+        add_notes('item',@item)
         format.html { redirect_to(order_url :id => @order.id) }
       else
         format.html { render action: "new" }
@@ -50,6 +55,7 @@ class ItemsController < ApplicationController
   def update
     respond_to do |format|
       if @item.update_attributes(item_params)
+        add_notes('item',@item)
         format.html { redirect_to(order_url(:id => @item.order_id, notice: "Item was successfully updated.")) }
       else
         format.html { render action: "edit" }
@@ -59,6 +65,7 @@ class ItemsController < ApplicationController
 
   # DELETE /items/1
   def destroy
+    add_notes('item',nil)
     @item.destroy
     respond_to do |format|
       format.html { redirect_to(order_url(:id => @item.order_id, notice: "Item was successfully deleted.")) }
