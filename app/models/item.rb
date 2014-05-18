@@ -68,17 +68,4 @@ class Item < ActiveRecord::Base
     json = json.delete_if { |key,value| key =~ /_at$/ }
     json
   end
-  
-  def diff_json(from)
-    to = self.to_json
-    diff = ''
-    if from.nil?
-      to.each { |key,value| diff << "- #{key}: '#{value}'\n" }
-    elsif to.nil?
-      from.each { |key,value| diff << "- #{key}: '#{value}'\n" }
-    else
-      from.each { |key,value| diff << "- #{key}: '#{value}' to '#{to[key]}'\n" if  key != 'items' && from[key] != to[key] }
-    end
-    diff
-  end
 end

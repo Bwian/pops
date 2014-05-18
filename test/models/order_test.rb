@@ -142,46 +142,6 @@ class OrderTest < ActiveSupport::TestCase
     assert(oj.eql?ojsh)
   end
   
-  test 'note no changes' do
-    oj = @draft.to_json
-    assert_equal('',@draft.diff_json(oj))
-  end
-  
-  test 'note order changes' do
-    oj = @draft.to_json
-    @draft.status = 'A'
-    assert(@draft.diff_json(oj).end_with?("status: 'D' to 'A'"))
-  end
-  
-  test 'note item changes' do
-    oj = @draft.to_json
-    item = @draft.items.first
-    item.description = 'Rhino'
-    assert(@draft.diff_json(oj).end_with?("description: 'Second Draft Item' to 'Rhino'"))
-  end
-  
-  # Tests for item addition and deletion are a little counter intuitive.
-  # Can't easily add or delete items from the order so we delete an item
-  # from the JSON object to make it look like an item has been added and
-  # add an item to make it look like one has been deleted.
-  
-  test 'note item addition' do
-    oj = @draft.to_json
-    oj['items'].delete_at(0) 
-    assert(@draft.diff_json(oj).include?("Item 2 - added:"))
-    assert(@draft.diff_json(oj).include?("description: 'Second Draft Item'"))
-  end
-  
-  test 'note item deletion' do
-    oj = @draft.to_json
-    item = oj['items'][0].clone
-    item['id'] = 1
-    item['description'] = 'Third Draft Item'
-    oj['items'] << item 
-    assert(@draft.diff_json(oj).include?("Item 3 - deleted:"))
-    assert(@draft.diff_json(oj).include?("description: 'Third Draft Item'"))
-  end
-  
   test 'sendmail - approved' do
     @submitted.to_approved(@brian.id)
     message = @submitted.sendmail(@brian.id)

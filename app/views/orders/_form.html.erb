@@ -74,9 +74,9 @@
   	<div class="notice">
       <label for="notice" > </label>
       <%= notice %>
-    </div>
-    
+    </div>  
   </fieldset>
+	
   <% if @order.items.any? %>
     <div class="itemlist">
       <table width="100%">
@@ -109,6 +109,23 @@
           <td class="totals">Total:</td>
           <td class="totals"><%= @order.formatted_grandtotal %></td>
         </tr>
+      </table>
+    </div>
+  <% end %>
+	
+  <% if @order.notes.any? %>
+    <div class="itemlist">
+      <table width="100%">
+        <th>Notes</th>
+        <th> </th>
+        <th> </th>
+        <% @order.notes.each do |note| %>
+          <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+            <td><%= note.formatted_date %></td>
+						<td><%= note.user_name %></td>
+						<td><%= html_newlines(note.info) %></td>
+          </tr>
+        <% end %>
       </table>
     </div>
   <% end %>

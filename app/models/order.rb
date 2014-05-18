@@ -123,67 +123,17 @@ class Order < ActiveRecord::Base
   end
   
   def to_json
-    oj = self.as_json(include: [:supplier, {items: {include: [:program, :account, :tax_rate]}}])
+    oj = self.as_json
     oj["supplier"]        = "#{self.supplier_name} (#{self.supplier_id})"
     oj["invoice_date"]    = build_date(self.invoice_date)
     oj["payment_date"]    = build_date(self.payment_date)
     oj["creator"]         = build_user(self.creator_id)
     oj["approver"]        = build_user(self.approver_id)
     oj["processor"]       = build_user(self.processor_id)
-    idx = 0
-    oj["items"].each do |item|
-      item["price"]       = sprintf('%.2f', item["price"])
-      item["program"]     = "#{(item['program'] && item['program']['name']) || 'Unknown'} (#{item['program_id']})"
-      item["account"]     = "#{(item['account'] && item['account']['name']) || 'Unknown'} (#{item['account_id']})"
-      item["tax_rate"]    = "#{(item['tax_rate'] && item['tax_rate']['name']) || 'Unknown'} (#{item['tax_rate_id']})"
-      oj["items"][idx]    = item
-      idx += 1
-    end
-
     oj = oj.delete_if { |key,value| key =~ /_at$|_id$/ }
     oj.delete("supplier_name")
-    oj["items"].each do |item|
-      item.each { |key,value| item.delete(key) if key =~ /_at$|_id$/ }
-    end 
     oj.update(oj) { |key,value| value.nil? ? '' : value }
     oj
-  end
-  
-  def diff_json(from_order)
-    to_order = self.to_json
-    return '' if from_order == to_order
-
-    diff = diff_message(from_order,to_order)
-    
-    from = from_order['items']
-    to = to_order['items']
-    out = []
-    
-    from.each do |from_item|
-      out << [from_item,nil]
-    end
-
-    to.each do |to_item|
-      found = nil
-      out.each_with_index do |items,idx|
-        found = idx if items[FROM] && to_item[ID] == items[FROM][ID]    
-      end
-      found ? out[found][TO] = to_item : out << [nil,to_item] 
-    end
-
-    idx = 1
-    out.each do |items|
-      if items[TO].nil?
-        diff << "Item #{idx} - deleted:\n#{diff_message(items[FROM],items[TO])}"
-      elsif items[FROM].nil?
-        diff << "Item #{idx} - added:\n#{diff_message(items[FROM],items[TO])}"
-      else
-        diff << "Item #{idx} - changed:\n#{diff_message(items[FROM],items[TO])}" if items[FROM] != items[TO]
-      end
-      idx += 1
-    end
-
-    diff.empty? ? diff : "Changes:\n#{diff}".sub(/\n$/,'')
   end
   
   def sendmail(user)

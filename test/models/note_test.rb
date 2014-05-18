@@ -23,4 +23,8 @@ class NoteTest < ActiveSupport::TestCase
     @note.user_id = 99
     assert_equal('Missing User 99',@note.user_name)
   end
+  
+  test 'formatted_date' do
+    assert(@note.formatted_date =~ /\d{2}\/\d{2}\/\d{4} - \d{2}:\d{2}/)
+  end
 end
