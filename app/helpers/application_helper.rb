@@ -62,10 +62,10 @@ module ApplicationHelper
     user = User.find(session[:user_id])
     
     case action
-      when 'draft'
+      when 'draft','redraft'
         return false if !order.submitted?
         return true if order.creator == user || order.approver == user
-      when 'submit'
+      when 'submit','resubmit'
         return false if !order.draft? && !order.approved?
         return false if !order.items.any?
         return true if order.draft? && order.creator == user

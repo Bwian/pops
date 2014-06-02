@@ -27,9 +27,9 @@ module OrdersHelper
       when OrderStatus::DRAFT
         actions = ['submit'] 
       when OrderStatus::SUBMITTED
-        actions = ['approve','draft']
+        actions = ['approve','redraft']
       when OrderStatus::APPROVED
-        actions = ['complete','submit']
+        actions = ['complete','resubmit']
     end
     
     links = []

@@ -27,6 +27,8 @@ Pops::Application.routes.draw do
   
   post 'orders/refresh'      => 'orders#refresh'
   post 'orders/:id/draft'    => 'orders#draft'
+  post 'orders/:id/redraft'  => 'orders#draft'
+  post 'orders/:id/resubmit' => 'orders#submit'
   post 'orders/:id/submit'   => 'orders#submit'
   post 'orders/:id/approve'  => 'orders#approve'
   post 'orders/:id/complete' => 'orders#complete'

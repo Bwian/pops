@@ -7,3 +7,7 @@ function show_supplier() {
     $("#supplier").show();
   }
 };
+
+function clear_notes() {
+  $("#order_notes").val("")
+}
