@@ -69,18 +69,14 @@
       <% order_actions(@order,@readonly).each do |link| %>
         <%= link %>
       <% end %>
-			
-			<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
-			  Notes
-			</button>
 
-			<!-- Modal -->
-			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<!-- Notes Modal -->
+			<div class="modal fade" id="notes" tabindex="-1" role="dialog" aria-labelledby="notesLabel" aria-hidden="true">
 			  <div class="modal-dialog">
 			    <div class="modal-content">
 			      <div class="modal-header">
 			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="javascript:clear_notes()">&times;</button>
-			        <h4 class="modal-title" id="myModalLabel">Notes</h4>
+			        <h4 class="modal-title" id="notesLabel">Notes</h4>
 			      </div>
 			      <div class="modal-body">
 			        <%= text_area_tag 'order_notes', nil, rows: 5, cols: 72 %>

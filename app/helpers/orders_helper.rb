@@ -57,6 +57,7 @@ module OrdersHelper
     else  
       submit_label = order.id ? 'Update Order' : 'Create Order'
       actions << submit_tag(submit_label, class: ApplicationHelper::LINK_STYLE)
+      actions << button_tag('Notes', data: {toggle: 'modal', target: '#notes'}, class: ApplicationHelper::LINK_STYLE)   
     end
     actions << link_print(order) unless link_print(order).empty?
     actions << link_list(order)
