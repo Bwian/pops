@@ -82,8 +82,8 @@
 			        <%= text_area_tag 'order_notes', nil, rows: 5, cols: 72 %>
 			      </div>
 			      <div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="javascript:clear_notes()">Cancel</button>
-			        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+			        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" onclick="javascript:clear_notes()">Cancel</button>
+			        <%= link_reaction(@order) %>
 			      </div>
 			    </div>
 			  </div>

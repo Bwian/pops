@@ -35,7 +35,14 @@ module OrdersHelper
     links = []
     btn_class = ApplicationHelper::FIRST_STYLE
     actions.each do |action|
-      link = authorised_status_change(action,order) ? link_to(action_label(action), "/orders/#{order.id}/#{action}", method: :post, class: btn_class) : ""
+      link = ""
+      if authorised_status_change(action,order)
+        if action.start_with?('re')
+          link = link_notes(action)
+        else
+          link = link_to(action_label(action), "/orders/#{order.id}/#{action}", method: :post, class: btn_class) 
+        end
+      end
       links << link
       btn_class = ApplicationHelper::LINK_STYLE
     end
@@ -43,8 +50,24 @@ module OrdersHelper
     links
   end
   
+  def link_reaction(order)
+    case order.status
+    when OrderStatus::SUBMITTED
+      action = 'redraft'
+    when OrderStatus::APPROVED
+      action = 'resubmit'
+    else
+      action = nil
+    end
+    action ? link_to(action_label(action), "/orders/#{order.id}/#{action}", method: :post, class: ApplicationHelper::LINK_STYLE) : ""
+  end
+  
   def link_print(order)
     authorised_action(PRINT,ORDERS,order) ? link_to('Print', "/orders/#{order.id}/print", format: 'pdf', class: ApplicationHelper::LINK_STYLE) : ""
+  end
+  
+  def link_notes(action)
+    button_tag(action.capitalize, data: {toggle: 'modal', target: '#notes'}, class: ApplicationHelper::LINK_STYLE)   
   end
   
   def order_actions(order,readonly)
@@ -57,7 +80,7 @@ module OrdersHelper
     else  
       submit_label = order.id ? 'Update Order' : 'Create Order'
       actions << submit_tag(submit_label, class: ApplicationHelper::LINK_STYLE)
-      actions << button_tag('Notes', data: {toggle: 'modal', target: '#notes'}, class: ApplicationHelper::LINK_STYLE)   
+      actions << link_notes('notes')
     end
     actions << link_print(order) unless link_print(order).empty?
     actions << link_list(order)
