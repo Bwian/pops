@@ -130,7 +130,8 @@ class Order < ActiveRecord::Base
     oj["creator"]         = build_user(self.creator_id)
     oj["approver"]        = build_user(self.approver_id)
     oj["processor"]       = build_user(self.processor_id)
-    oj = oj.delete_if { |key,value| key =~ /_at$|_id$/ }
+    oj = oj.delete_if { |key,value| key =~ /_id$/ }
+    oj.delete("updated_at")
     oj.delete("supplier_name")
     oj.update(oj) { |key,value| value.nil? ? '' : value }
     oj

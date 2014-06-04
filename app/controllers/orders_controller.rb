@@ -47,6 +47,8 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
+        params[:id] = @order.id
+        save_notes(params)
         format.html { redirect_to new_order_item_path(@order) }
       else
         format.html { render action: "new" }
@@ -88,8 +90,9 @@ class OrdersController < ApplicationController
     
     respond_to do |format|
       if @order.save
-        save_notes(params)
+        save_notes(params)     
         url = @order.creator_id == session[:user_id] ? order_url : orders_url
+        flash.notice = "Order #{@order.id} reset to Draft."
         format.js { render :js => "window.location = '#{url}'" }
       else
         find_order
@@ -125,6 +128,7 @@ class OrdersController < ApplicationController
       if @order.save
         save_notes(params)
         url = @order.creator_id == session[:user_id] || @order.approver_id == session[:user_id] ? order_url : orders_url
+        flash.notice = "Order #{@order.id} reset to Submitted. #{get_notice(message)}"
         format.js { render :js => "window.location = '#{url}'" }
         message.deliver if message && message.valid?
       else
