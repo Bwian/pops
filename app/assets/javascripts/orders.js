@@ -14,7 +14,7 @@ function clear_notes() {
 
 function submit_it(action) {
   $.ajax({
-    url:  $('form').attr('action') + '/' + action + '/',
+    url:  $('form').attr('action') + '/' + action,
     type: "POST",
     data: $('form').serialize()
   });

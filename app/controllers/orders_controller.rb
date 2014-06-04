@@ -56,7 +56,6 @@ class OrdersController < ApplicationController
 
   # PATCH /orders/1
   def update
-    binding.pry
     respond_to do |format|
       if @order.update_attributes(order_params)
         add_notes('order',@order)
@@ -83,16 +82,18 @@ class OrdersController < ApplicationController
   end
   
   # POST /orders/1/draft
-  def draft
+  def redraft
     @order.to_draft
-
+    add_notes('order',@order)
+    
     respond_to do |format|
       if @order.save
         save_notes(params)
         url = @order.creator_id == session[:user_id] ? order_url : orders_url
         format.js { render :js => "window.location = '#{url}'" }
       else
-        format.html { render action: "edit" }
+        find_order
+        format.js { render action: "edit" }
       end
     end
   end
@@ -105,13 +106,30 @@ class OrdersController < ApplicationController
     respond_to do |format|
       if @order.save
         save_notes(params)
-        url = orders_url
         format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Submitted. #{get_notice(message)}") }
+        message.deliver if message && message.valid?
+      else
+        find_order
+        format.html { render action: "edit" }
+      end
+    end
+  end
+  
+  # POST /orders/1/submit
+  def resubmit
+    @order.to_submitted
+    add_notes('order',@order)
+    message = @order.sendmail(session[:user_id])
+
+    respond_to do |format|
+      if @order.save
+        save_notes(params)
+        url = @order.creator_id == session[:user_id] || @order.approver_id == session[:user_id] ? order_url : orders_url
         format.js { render :js => "window.location = '#{url}'" }
         message.deliver if message && message.valid?
       else
-        @order.status = OrderStatus::DRAFT
-        format.html { render action: "edit" }
+        find_order
+        format.js { render action: "edit" }
       end
     end
   end
@@ -126,8 +144,7 @@ class OrdersController < ApplicationController
         format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Approved. #{get_notice(message)}") }
         message.deliver if message && message.valid?
       else
-        @order.status = OrderStatus::SUBMITTED
-        @order.approved_at = nil
+        find_order
         format.html { render action: "edit" }
       end
     end
@@ -141,9 +158,7 @@ class OrdersController < ApplicationController
       if @order.save
         format.html { redirect_to(@order, notice: "Order #{@order.id} set to Processed.") }
       else
-        @order.status = OrderStatus::APPROVED
-        @order.processor_id = nil
-        @order.processed_at = nil
+        find_order
         format.html { render action: "edit" }
       end
     end
