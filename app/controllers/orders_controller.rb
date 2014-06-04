@@ -54,11 +54,13 @@ class OrdersController < ApplicationController
     end
   end
 
-  # PUT /orders/1
+  # PATCH /orders/1
   def update
+    binding.pry
     respond_to do |format|
       if @order.update_attributes(order_params)
         add_notes('order',@order)
+        save_notes(params)
         format.html { redirect_to(@order, notice: "Order #{@order.id} was successfully updated.") }
       else
         format.html { render action: "edit" }
@@ -83,10 +85,12 @@ class OrdersController < ApplicationController
   # POST /orders/1/draft
   def draft
     @order.to_draft
-    
+
     respond_to do |format|
       if @order.save
-        format.html { redirect_to(@order, notice: "Order #{@order.id} set to Draft.") }
+        save_notes(params)
+        url = @order.creator_id == session[:user_id] ? order_url : orders_url
+        format.js { render :js => "window.location = '#{url}'" }
       else
         format.html { render action: "edit" }
       end
@@ -100,7 +104,10 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
+        save_notes(params)
+        url = orders_url
         format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Submitted. #{get_notice(message)}") }
+        format.js { render :js => "window.location = '#{url}'" }
         message.deliver if message && message.valid?
       else
         @order.status = OrderStatus::DRAFT
@@ -184,7 +191,8 @@ class OrdersController < ApplicationController
       :approved_at, 
       :processor_id, 
       :processed_at,
-      :delivery_address) 
+      :delivery_address,
+      :notes) 
   end
   
   def where_parameters

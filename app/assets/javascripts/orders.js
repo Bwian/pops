@@ -11,3 +11,11 @@ function show_supplier() {
 function clear_notes() {
   $("#order_notes").val("")
 }
+
+function submit_it(action) {
+  $.ajax({
+    url:  $('form').attr('action') + '/' + action + '/',
+    type: "POST",
+    data: $('form').serialize()
+  });
+};

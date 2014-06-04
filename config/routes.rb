@@ -21,17 +21,18 @@ Pops::Application.routes.draw do
   
   get  'orders/refresh'      => 'orders#refresh'
   get  'orders/:id/print'    => 'orders#print', :defaults => { :format => 'pdf' }
+  
   resources :orders do
     resources :items, :only => [:new]
   end 
   
-  post 'orders/refresh'      => 'orders#refresh'
-  post 'orders/:id/draft'    => 'orders#draft'
-  post 'orders/:id/redraft'  => 'orders#draft'
-  post 'orders/:id/resubmit' => 'orders#submit'
-  post 'orders/:id/submit'   => 'orders#submit'
-  post 'orders/:id/approve'  => 'orders#approve'
-  post 'orders/:id/complete' => 'orders#complete'
+  post  'orders/refresh'      => 'orders#refresh'
+  post  'orders/:id/draft'    => 'orders#draft'
+  patch 'orders/:id/redraft'  => 'orders#draft'
+  post  'orders/:id/submit'   => 'orders#submit'
+  patch 'orders/:id/resubmit' => 'orders#submit'
+  post  'orders/:id/approve'  => 'orders#approve'
+  post  'orders/:id/complete' => 'orders#complete'
   
   resources :items, :except => [:index, :new] 
   

@@ -50,16 +50,19 @@ module OrdersHelper
     links
   end
   
-  def link_reaction(order)
+  def link_reaction(order,noupdate)
+    return button_tag('OK', data: {dismiss: 'modal'}, class: ApplicationHelper::LINK_STYLE) if !noupdate
+    
     case order.status
-    when OrderStatus::SUBMITTED
-      action = 'redraft'
-    when OrderStatus::APPROVED
-      action = 'resubmit'
-    else
-      action = nil
+      when OrderStatus::SUBMITTED
+        action = 'redraft'
+      when OrderStatus::APPROVED
+        action = 'resubmit'
+      else
+        action = nil
     end
-    action ? link_to(action_label(action), "/orders/#{order.id}/#{action}", method: :post, class: ApplicationHelper::LINK_STYLE) : ""
+    
+    action ? button_tag(action_label(action), data: {dismiss: 'modal'}, onclick: "javascript:submit_it('#{action}')".html_safe, class: ApplicationHelper::LINK_STYLE) : ""
   end
   
   def link_print(order)

@@ -36,6 +36,17 @@ module NotesHelper
     session.delete(key)
   end
   
+  def save_notes(params)
+    notes = params[:order_notes]
+    return if notes.nil?
+    
+    note = Note.new
+    note.order_id = params[:id]
+    note.user_id = session[:user_id]
+    note.info = notes
+    note.save
+  end
+  
   def diff_model(key,model)
     from = session[key] || {}
     to = model ? model.to_json : {}
