@@ -79,14 +79,14 @@ module OrdersHelper
       actions.concat(link_action(order))
       actions << link_item_new(order)
       actions << link_edit(order)
-      actions << link_delete(order)
+      # actions << link_delete(order)
     else  
       submit_label = order.id ? 'Update Order' : 'Create Order'
       actions << submit_tag(submit_label, class: ApplicationHelper::LINK_STYLE)
       actions << link_notes('notes')
     end
-    actions << link_print(order) unless link_print(order).empty?
-    actions << link_list(order)
+    # actions << link_print(order) unless link_print(order).empty?
+    # actions << link_list(order)
   end
   
   def roles

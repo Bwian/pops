@@ -1,5 +1,5 @@
 <div class="admin_form">
-<%= form_for(@order, onLoad: "javascript:show_supplier()") do |f| %>
+<%= form_for(@order) do |f| %>
   <fieldset>
     <legend><%= legend("Order Details", @readonly) %></legend>
 
@@ -150,3 +150,5 @@
   <% end %>
 <% end %>
 </div>
+<style onload="javascript:show_supplier()"></style>
+<style onload="javascript:show_actions(<%= @readonly %>)"></style>

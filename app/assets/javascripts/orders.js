@@ -19,3 +19,9 @@ function submit_it(action) {
     data: $('form').serialize()
   });
 };
+
+function show_actions(flag) {
+  if (flag) {
+    $("#action_dropdown").show();
+  }  
+}

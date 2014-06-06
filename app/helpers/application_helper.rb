@@ -82,6 +82,10 @@ module ApplicationHelper
     false
   end
   
+  def order_link(order)
+    order ? order.id : ''
+  end
+  
   private
   
   def authorise_orders(user,action,order)  

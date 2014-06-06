@@ -7,7 +7,7 @@
     <%= csrf_meta_tags %>
   </head>
   
-  <body onLoad="show_supplier()">   
+  <body>
     <div id="wrap"><!-- Wrap all page content here -->
       <div class="navbar navbar-custom navbar-fixed-top">
         <div class="container-fluid">
@@ -33,7 +33,15 @@
                   <li><a href="/accounts">Accounts</a></li>
                   <li><a href="/tax_rates">Tax Rates</a></li>
                 </ul>
-              </li>
+              <li class="dropdown" id="action_dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Action<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+									<li><a href="/orders/<%= order_link(@order) %>/print">Print</a></li>
+	                <li class="divider"></li>
+                  <li><a data-confirm="Are you sure?" data-method="delete" href="/orders/<%= order_link(@order) %>" rel="nofollow">Delete</a></li>
+								</ul>
+							</li>
+						</li>
             </ul>
             <ul class="nav navbar-nav pull-right">
               <li><%= link_logoutin %></li>
