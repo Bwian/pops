@@ -15,8 +15,9 @@ class OrdersHelperTest < ActionView::TestCase
   
   test 'order_actions show' do
     actions = order_actions(@order,true)
-    assert_equal(3,actions.size)
-    assert_match(/Edit/,actions[2])
+    assert_equal(2,actions.size)
+    assert_match(/Submit/,actions[0])
+    assert_match(/Add Item/,actions[1])
   end
   
   test 'order_actions edit' do

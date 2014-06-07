@@ -66,6 +66,7 @@ module OrdersHelper
   end
   
   def link_print(order)
+    return '' unless order
     authorised_action(PRINT,ORDERS,order) ? link_to('Print', "/orders/#{order.id}/print", format: 'pdf', class: ApplicationHelper::LINK_STYLE) : ""
   end
   
@@ -78,15 +79,11 @@ module OrdersHelper
     if readonly
       actions.concat(link_action(order))
       actions << link_item_new(order)
-      actions << link_edit(order)
-      # actions << link_delete(order)
     else  
       submit_label = order.id ? 'Update Order' : 'Create Order'
       actions << submit_tag(submit_label, class: ApplicationHelper::LINK_STYLE)
       actions << link_notes('notes')
     end
-    # actions << link_print(order) unless link_print(order).empty?
-    # actions << link_list(order)
   end
   
   def roles

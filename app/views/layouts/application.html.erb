@@ -36,9 +36,9 @@
               <li class="dropdown" id="action_dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Action<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-									<li><a href="/orders/<%= order_link(@order) %>/print">Print</a></li>
-	                <li class="divider"></li>
-                  <li><a data-confirm="Are you sure?" data-method="delete" href="/orders/<%= order_link(@order) %>" rel="nofollow">Delete</a></li>
+									<li><%= link_edit(@order) %></li>
+                  <li><%= link_print(@order) %></li>
+                  <li><%= link_delete(@order) %></li>
 								</ul>
 							</li>
 						</li>

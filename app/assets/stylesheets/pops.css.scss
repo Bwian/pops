@@ -9,7 +9,7 @@ body {
   color: $main-color; 
 }
 
-body, p, ol, ul, td {
+body, p, ol, ul, td, li {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size:   13px;
   line-height: 18px;
@@ -218,6 +218,17 @@ td.win, td.draw, td.loss, td.bye, td.pending {
 
 .roles {
   height: 2em;
+}
+
+.dropdown-menu {
+  min-width:  0px;
+}
+
+.dropdown-menu li a {
+  background: white;
+  color:      $main-color;
+  border:     none;
+  text-align: left;
 }
 
 .filter-button {

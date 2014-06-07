@@ -4,11 +4,13 @@ module ApplicationHelper
   FIRST_STYLE = "btn btn-success btn-sm"
   
   def link_list(model)
+    return '' unless model
     name = model.class.name.downcase
     link_to("List #{name.titleize.pluralize}", "/#{name.pluralize}", class: LINK_STYLE)
   end
   
   def link_model(model)
+    return '' unless model
     name = model.class.name.camelcase
     link_to(name, model, class: LINK_STYLE)
   end
@@ -18,11 +20,13 @@ module ApplicationHelper
   end
   
   def link_edit(model)
+    return '' unless model
     name = model.class.name.downcase
     authorised_action(EDIT,params[:controller], model) ? link_to('Edit', "/#{name.pluralize}/#{model.id}/edit", class: LINK_STYLE) : ""
   end
 
   def link_delete(model)
+    return '' unless model
     authorised_action(DELETE,params[:controller], model) ? link_to('Delete', model, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" ) : ""
   end
   
