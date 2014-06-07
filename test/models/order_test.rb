@@ -139,7 +139,10 @@ class OrderTest < ActiveSupport::TestCase
     oj = @draft.to_json
     ojs = oj.to_json
     ojsh = ActiveSupport::JSON.decode(ojs)
-    assert(oj.eql?ojsh)
+    assert(oj['id'] == ojsh['id'],'id')
+    assert(oj['created_at'] == ojsh['created_at'],'created_at')
+    assert_equal('brian',ojsh['approver'],'approver')
+    assert_equal('Draft',ojsh['status'],'status')
   end
   
   test 'sendmail - approved' do

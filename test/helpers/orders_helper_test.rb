@@ -15,7 +15,7 @@ class OrdersHelperTest < ActionView::TestCase
   
   test 'order_actions show' do
     actions = order_actions(@order,true)
-    assert_equal(5,actions.size)
+    assert_equal(3,actions.size)
     assert_match(/Edit/,actions[2])
   end
   
@@ -30,13 +30,6 @@ class OrdersHelperTest < ActionView::TestCase
     actions = order_actions(@order,false)
     assert_equal(2,actions.size)
     assert_match(/Create Order/,actions[0])
-  end
-  
-  test 'order_actions show print' do
-    @order.status = OrderStatus::APPROVED
-    actions = order_actions(@order,true)
-    assert_equal(7,actions.size)
-    assert_match(/Print/,actions[5])
   end
   
   test "roles" do

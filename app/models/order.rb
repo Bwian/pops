@@ -124,6 +124,7 @@ class Order < ActiveRecord::Base
   
   def to_json
     oj = self.as_json
+    oj["status"]          = self.status_name  
     oj["supplier"]        = "#{self.supplier_name} (#{self.supplier_id})"
     oj["invoice_date"]    = build_date(self.invoice_date)
     oj["payment_date"]    = build_date(self.payment_date)
@@ -137,9 +138,7 @@ class Order < ActiveRecord::Base
     oj
   end
   
-  def sendmail(user)
-    return nil unless self.status_changed?
-    
+  def sendmail(user)    
     fromto = "#{self.status_was}#{self.status}"
     message = nil
     
@@ -148,6 +147,10 @@ class Order < ActiveRecord::Base
         message = OrderMessage.new(self,'approved',user)
       when 'AS'
         message = OrderMessage.new(self,'resubmitted',user)
+      when 'SD'
+        message = OrderMessage.new(self,'redraft',user)
+      else
+        message = OrderMessage.new(self,'changed',user) unless self.status_changed?
     end
       
     message
