@@ -27,4 +27,9 @@ class NoteTest < ActiveSupport::TestCase
   test 'formatted_date' do
     assert(@note.formatted_date =~ /\d{2}\/\d{2}\/\d{4} - \d{2}:\d{2}/)
   end
+  
+  test 'formatted_notes' do
+    assert(@order.formatted_notes =~ /More stuff/)
+    assert_equal(4,@order.formatted_notes.lines.count)
+  end
 end

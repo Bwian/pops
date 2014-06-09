@@ -62,7 +62,11 @@ class OrdersController < ApplicationController
       if @order.update_attributes(order_params)
         add_notes('order',@order)
         save_notes(params)
-        format.html { redirect_to(@order, notice: "Order #{@order.id} was successfully updated.") }
+        if params[:order_notes]
+          message = @order.sendmail(session[:user_id])
+          message.deliver if message && message.valid?
+        end
+        format.html { redirect_to(@order, notice: "Order #{@order.id} was successfully updated. #{get_notice(message)}") }
       else
         format.html { render action: "edit" }
       end
@@ -87,13 +91,15 @@ class OrdersController < ApplicationController
   def redraft
     @order.to_draft
     add_notes('order',@order)
+    save_notes(params)
+    message = @order.sendmail(session[:user_id])  
     
     respond_to do |format|
-      if @order.save
-        save_notes(params)     
+      if @order.save   
         url = @order.creator_id == session[:user_id] ? order_url : orders_url
-        flash.notice = "Order #{@order.id} reset to Draft."
+        flash.notice = "Order #{@order.id} reset to Draft. #{get_notice(message)}"
         format.js { render :js => "window.location = '#{url}'" }
+        message.deliver if message && message.valid?
       else
         find_order
         format.js { render action: "edit" }
@@ -104,13 +110,12 @@ class OrdersController < ApplicationController
   # POST /orders/1/submit
   def submit
     @order.to_submitted
-    message = @order.sendmail(session[:user_id])
+    add_notes('order',@order) if @order.notes.any?
 
     respond_to do |format|
       if @order.save
         save_notes(params)
-        format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Submitted. #{get_notice(message)}") }
-        message.deliver if message && message.valid?
+        format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Submitted.") }
       else
         find_order
         format.html { render action: "edit" }
@@ -118,15 +123,14 @@ class OrdersController < ApplicationController
     end
   end
   
-  # POST /orders/1/submit
   def resubmit
     @order.to_submitted
     add_notes('order',@order)
+    save_notes(params)
     message = @order.sendmail(session[:user_id])
 
     respond_to do |format|
       if @order.save
-        save_notes(params)
         url = @order.creator_id == session[:user_id] || @order.approver_id == session[:user_id] ? order_url : orders_url
         flash.notice = "Order #{@order.id} reset to Submitted. #{get_notice(message)}"
         format.js { render :js => "window.location = '#{url}'" }

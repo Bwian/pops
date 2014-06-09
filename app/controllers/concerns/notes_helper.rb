@@ -55,13 +55,20 @@ module NotesHelper
     diff = ''
     
     if from.empty?
-      to.each { |key,value| diff << "- #{key}: '#{value}'\n" }
+      to.each   { |key,value| diff << "- #{key}: #{val_format(value)}\n" }
     elsif to.empty?
-      from.each { |key,value| diff << "- #{key}: '#{value}'\n" }
+      from.each { |key,value| diff << "- #{key}: #{val_format(value)}\n" }
     else
-      from.each { |key,value| diff << "- #{key}: '#{value}' to '#{to[key]}'\n" if from[key] != to[key] }
+      from.each { |key,value| diff << "- #{key}: #{val_format(value)} to #{val_format(to[key])}\n" if from[key] != to[key] }
     end
     
     diff
+  end
+  
+  private 
+  
+  def val_format(value)
+    rval = "#{value}"
+    rval.empty? ? '{empty}' : "\"#{rval}\""
   end
 end

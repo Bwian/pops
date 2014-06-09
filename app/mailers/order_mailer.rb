@@ -17,7 +17,8 @@ class OrderMailer < ActionMailer::Base
     @order = order
     @to = order.approver
     @from = args[:user]
-
+    @body = args[:body]
+    
     build_mail('reset to Submitted')
   end
   

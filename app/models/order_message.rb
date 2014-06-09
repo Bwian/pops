@@ -11,10 +11,10 @@ class OrderMessage
   end
 
   def notice
-    return "Missing user records for Order #{@order.id}" if !(@to && @from)
+    return "Missing user record for Order #{@order.id}" unless @to && @from
   
-    return "No email address for #{@to.name} - Order #{@order.id}" if !@to.email
-    return "No email address for #{@from.name} - Order #{@order.id}" if !@from.email
+    return "Email not sent - no email address for #{@to.name}." unless @to.email_valid?
+    return "Email not sent - no email address for #{@from.name}." unless @from.email_valid?
     
     return "Order emailed to #{@to.name} at #{@to.email}"
   end
@@ -29,9 +29,13 @@ class OrderMessage
   end
   
   def valid?
-    return false if !@from || !@from.email
-    return false if !@to || !@to.email
+    return false unless @from && @from.email
+    return false unless @to && @to.email
     true  
+  end
+  
+  def from_eq_to?
+    @from == @to
   end
   
   private
@@ -46,8 +50,13 @@ class OrderMessage
     @from = @user
   end
   
+  def redrafted
+    @to = @order.creator
+    @from = @user
+  end
+  
   def changed
-    @to = nil
+    @to = @order.creator
     @from = @user
   end
 end

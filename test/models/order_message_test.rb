@@ -20,13 +20,13 @@ class OrderMessageTest < ActiveSupport::TestCase
   test "valid? - no from email" do
     message = OrderMessage.new(@approved,'resubmitted',users(:no_email).id)
     assert_not(message.valid?)
-    assert(message.notice.start_with? 'No email address for Homer')
+    assert(message.notice.start_with? 'Email not sent')
   end
   
-  test "valid? - no to" do
+  test "valid? - no to email" do
     message = OrderMessage.new(@approved,'changed',@brian.id)
+    message.to = nil;
     assert_not(message.valid?,'Invalid message')
-    assert(message.notice.start_with?('Missing user records'),'Missing user records')
+    assert(message.notice.start_with?('Missing user record'),'Missing user record')
   end
-  
 end

@@ -131,6 +131,8 @@ class Order < ActiveRecord::Base
     oj["creator"]         = build_user(self.creator_id)
     oj["approver"]        = build_user(self.approver_id)
     oj["processor"]       = build_user(self.processor_id)
+    oj["approved_at"]     = build_datetime(self.approved_at)
+    oj["processed_at"]    = build_datetime(self.processed_at)
     oj = oj.delete_if { |key,value| key =~ /_id$/ }
     oj.delete("updated_at")
     oj.delete("supplier_name")
@@ -148,11 +150,16 @@ class Order < ActiveRecord::Base
       when 'AS'
         message = OrderMessage.new(self,'resubmitted',user)
       when 'SD'
-        message = OrderMessage.new(self,'redraft',user)
+        message = OrderMessage.new(self,'redrafted',user)
       else
         message = OrderMessage.new(self,'changed',user) unless self.status_changed?
     end
-      
+    
+    if message
+      message.body = self.formatted_notes
+      message = nil if message.from_eq_to?
+    end
+    
     message
   end
   
@@ -160,12 +167,21 @@ class Order < ActiveRecord::Base
     self.notes.any? || self.status == OrderStatus::SUBMITTED || self.status == OrderStatus::APPROVED
   end
   
+  def formatted_notes
+    notes = ''
+    self.notes.each do |n|
+      notes += "#{build_atby(n.created_at,n.user)}: #{n.info}\n\n"
+    end
+    
+    notes.gsub(/\n{3,}/,"\n\n")
+  end
+  
   private
   
   def diff_message(from,to)
     diff = ''
     if from.nil?
-      to.each { |key,value| diff << "- #{key}: '#{value}'\n" if key != 'items' }
+      to.each   { |key,value| diff << "- #{key}: '#{value}'\n" if key != 'items' }
     elsif to.nil?
       from.each { |key,value| diff << "- #{key}: '#{value}'\n" if key != 'items' }
     else
