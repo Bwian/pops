@@ -2,16 +2,25 @@ require 'test_helper'
 
 class ExoTest < ActionView::TestCase
   
+  attr_reader :status
+    
   include Exo
   
-  test "status_desc valid" do
-    assert_equal('Active',Exo::status_desc('A'))
-    assert_equal('Deleted',Exo::status_desc('D'))
-    assert_equal('New',Exo::status_desc('N'))
+  test "formatted_status valid" do
+    test_status('Active',ACTIVE)
+    test_status('Deleted',DELETED)
+    test_status('New',NEW)
   end
   
-  test "status_desc invalid" do
-    assert_equal('Invalid status - X', Exo::status_desc('X'))
-    assert_equal('Invalid status - nil', Exo::status_desc(nil))
+  test "formatted_status invalid" do
+    test_status('Invalid status - X', 'X')
+    test_status('Invalid status - nil', nil)
+  end
+  
+  private
+  
+  def test_status(expected,status)
+    @status = status
+    assert_equal(expected,formatted_status)
   end
 end

@@ -1,4 +1,5 @@
 module Exo
+  
   ACTIVE  = 'A'
   DELETED = 'D'
   NEW     = 'N'
@@ -10,7 +11,7 @@ module Exo
   }
 
   # Status description if valid otherwise 'Invalid' message
-  def self.status_desc(code)
-    STATUS[code] ? STATUS[code] : "Invalid status - #{code || 'nil'}"
+  def formatted_status
+    STATUS[status] ? STATUS[status] : "Invalid status - #{status || 'nil'}"
   end 
 end
