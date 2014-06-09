@@ -36,7 +36,12 @@ module ApplicationHelper
   
   def link_logoutin
     return '' if request.fullpath == '/login'
-    session[:user_id] ? link_to('Logout','/logout') : link_to('Login', '/login')
+    if session[:user_id]  
+      user = User.find(session[:user_id])
+      link_to("#{user.name} - Logout",'/logout') 
+    else 
+      link_to('Login', '/login')
+    end
   end
   
   def legend(name,disabled)
