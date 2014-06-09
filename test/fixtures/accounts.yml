@@ -3,22 +3,33 @@
 one:
   name: Account One
   tax_rate_id: 
+  status: A
 
 two:
   name: Account Two
   tax_rate_id: 33
+  status: A
   
 three:
   id: 3
   name: Account Three
   tax_rate_id: 33
+  status: A
   
 four:
   id: 4
   name: Account Four
   tax_rate_id: 33
+  status: N
 
 five:
   id: 5
   name: Account Five
   tax_rate_id: 33
+  status: N
+  
+six:
+  id: 6
+  name: Account Six
+  tax_rate_id: 33
+  status: D

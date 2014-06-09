@@ -7,6 +7,7 @@ class SupplierTest < ActiveSupport::TestCase
     
     supplier = Supplier.new
     supplier.name = 'New Supplier'
+    supplier.status = 'N'
     supplier.save
     
     assert_equal(3, Supplier.selection.count)

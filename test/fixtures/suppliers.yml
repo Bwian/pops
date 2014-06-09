@@ -10,6 +10,7 @@ zero:
   fax: 
   email: 
   tax_rate_id: -1
+  status: A
 
 one:
   name: COLES ONLINE
@@ -20,6 +21,7 @@ one:
   fax: 
   email: 
   tax_rate_id: -1
+  status: A
   
 two:
   name: ANZ BANK
@@ -30,3 +32,15 @@ two:
   fax: 
   email: 
   tax_rate_id: 34
+  status: N
+  
+three:
+  name: ANZ BANK - Old
+  address1: 927 Sturt St
+  address2: Ballarat
+  address3: Victoria
+  phone: 
+  fax: 
+  email: 
+  tax_rate_id: 34
+  status: D

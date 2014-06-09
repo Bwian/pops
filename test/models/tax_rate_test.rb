@@ -6,6 +6,7 @@ class TaxRateTest < ActiveSupport::TestCase
     
     tax_rate = TaxRate.new
     tax_rate.name = 'New Tax Rate'
+    tax_rate.status = 'N'
     tax_rate.save
     
     assert_equal(3, TaxRate.selection.count)

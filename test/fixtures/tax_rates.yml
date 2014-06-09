@@ -5,15 +5,25 @@ none:
   name: No GST
   short_name: No GST
   rate: 0
+  status: A
 
 other:
   id: 33
   name: Other GST
   short_name: Other
   rate: 10.00
+  status: A
 
 gst:
   id: 32
   name: Normal GST
   short_name: GST
   rate: 10.00
+  status: N
+
+deleted:
+  id: 31
+  name: Normal GST
+  short_name: GST
+  rate: 10.00
+  status: D

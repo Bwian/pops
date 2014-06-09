@@ -11,7 +11,7 @@ class TaxRate < ActiveRecord::Base
   end
   
   def self.selection
-    @@selection ||= TaxRate.all.map { |t| [t.name, t.id] }
+    @@selection ||= TaxRate.where(status: ['A','N']).map { |t| [t.name, t.id] }
   end
   
   def self.reset_selection

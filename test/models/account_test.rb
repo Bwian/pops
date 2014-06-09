@@ -6,6 +6,7 @@ class AccountTest < ActiveSupport::TestCase
     
     account = Account.new
     account.name = 'New Account'
+    account.status = 'N'
     account.save
     
     assert_equal(5, Account.selection.count)
