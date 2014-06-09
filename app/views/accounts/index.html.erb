@@ -10,10 +10,12 @@
 <table width="100%">
   <th>Name</th>
   <th>Tax Rate</th>
+  <th>Status</th>
   <% @accounts.each do |account| %>
     <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
       <td><%= account.name %></td>
       <td><%= account.tax_rate ? account.tax_rate.name : '' %></td>
+      <td><%= account.formatted_status %>
     </tr>
   <% end %>
 </table>
