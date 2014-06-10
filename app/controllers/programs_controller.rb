@@ -1,17 +1,17 @@
-class ProgramsController < ApplicationController
-  # GET /users
-  def index
-    @programs = Program.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-    end
-  end
+class ProgramsController < ExoController
   
-  # GET /orders/new
-  def new
-    respond_to do |format|
-      format.html { redirect_to(programs_url, notice: "Refresh Programs option not yet implemented") }
-    end
+  before_filter :setup
+
+private
+
+  def model_params
+    params.require(:program).permit(:name, :status)
+  end
+
+  def setup
+    @class  = Program
+    @model  = Program.find(params[:id]) if params[:id]
+    @models = Program.all
+    @models_url = "programs_url"
   end
 end

@@ -4,22 +4,26 @@
 
 <div class=header>
   <div class="header-title header-cells">Suppliers</div>
-  <div class="header-cells right"><%= link_refresh('supplier')%></div>
+  <div class="header-cells right"><%= link_refresh %></div>
 </div>
 
 <table width="100%">
+  <th>ID</th>
   <th>Name</th>
   <th>Address</th>
   <th>Phone</th>
   <th>Fax</th>
   <th>Email</th>
-  <% @suppliers.each do |supplier| %>
+  <th style="text-align:right">Status</th>
+  <% @models.each do |model| %>
     <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-      <td><%= supplier.name %></td>
-			<td><%= supplier.address %></td>
-			<td white-space: nowrap><%= supplier.phone %></td>
-			<td white-space: nowrap><%= supplier.fax %></td>
-      <td><%= supplier.email %></td>
+      <td><%= link_exo(model) %></td>
+      <td><%= model.name %></td>
+			<td><%= model.address %></td>
+			<td white-space: nowrap><%= model.phone %></td>
+			<td white-space: nowrap><%= model.fax %></td>
+      <td><%= model.email %></td>
+      <td align="right"><%= model.formatted_status %></td>
     </tr>
   <% end %>
 </table>

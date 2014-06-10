@@ -9,7 +9,7 @@ class SuppliersControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:suppliers)
+    assert_not_nil assigns(:models)
   end
 
   test "should get new" do

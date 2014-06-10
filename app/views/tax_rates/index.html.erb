@@ -3,19 +3,23 @@
 <% end %>
 
 <div class=header>
-  <div class="header-title header-cells">Tax Rates</div>
-  <div class="header-cells right"><%= link_refresh('tax_rate')%></div>
+  <div class="header-title header-cells"><%= @class.name %></div>
+  <div class="header-cells right"><%= link_refresh %></div>
 </div>
 
 <table width="100%">
+  <th>ID</th>
   <th>Name</th>
   <th>Short Name</th>
   <th style="text-align:right">Rate</th>
-  <% @tax_rates.each do |tax_rate| %>
+  <th style="text-align:right">Status</th>
+  <% @models.each do |model| %>
     <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-      <td><%= tax_rate.name %></td>
-			<td><%= tax_rate.short_name %></td>
-      <td align="right"><%= tax_rate.rate %>%</td>
+      <td><%= link_exo(model) %></td>
+      <td><%= model.name %></td>
+			<td><%= model.short_name %></td>
+      <td align="right"><%= model.rate %>%</td>
+      <td align="right"><%= model.formatted_status %></td>
     </tr>
   <% end %>
 </table>

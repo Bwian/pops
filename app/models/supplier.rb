@@ -1,5 +1,7 @@
 class Supplier < ActiveRecord::Base
   
+  include Exo
+  
   has_many :orders
 
   default_scope { order(:name) }

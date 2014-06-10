@@ -1,5 +1,7 @@
 class Program < ActiveRecord::Base
   
+  include Exo
+  
   has_many :order_items
 
   default_scope { order(:name) }

@@ -17,10 +17,15 @@ class ExoTest < ActionView::TestCase
     test_status('Invalid status - nil', nil)
   end
   
+  test "attribute_list" do
+    assert_equal(1,Account.new.attribute_list.size,'Program')
+  end
+  
   private
   
   def test_status(expected,status)
     @status = status
     assert_equal(expected,formatted_status)
   end
+  
 end

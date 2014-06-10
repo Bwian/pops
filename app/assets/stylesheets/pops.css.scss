@@ -127,6 +127,10 @@ th {
   color:        $main-color;
 }
 
+.link_exo {
+  font-weight:  bold;
+}
+
 td.win, td.draw, td.loss, td.bye, td.pending {
   border:       2px solid $main-color-bg;
 }

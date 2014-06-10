@@ -5,7 +5,7 @@ module ApplicationHelper
   
   def link_list(model)
     return '' unless model
-    name = model.class.name.downcase
+    name = model.class.name.underscore
     link_to("List #{name.titleize.pluralize}", "/#{name.pluralize}", class: LINK_STYLE)
   end
   
@@ -30,7 +30,8 @@ module ApplicationHelper
     authorised_action(DELETE,params[:controller], model) ? link_to('Delete', model, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" ) : ""
   end
   
-  def link_refresh(name)
+  def link_refresh
+    name = params[:controller]
     authorised_action(REFRESH,params[:controller],nil) ? link_to("Refresh #{name.titleize.pluralize}", "/#{name.pluralize}/new", class: LINK_STYLE) : ""
   end
   

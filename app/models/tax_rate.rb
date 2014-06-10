@@ -1,4 +1,7 @@
 class TaxRate < ActiveRecord::Base
+  
+  include Exo
+  
   has_many :order_items
   has_many :accounts
 

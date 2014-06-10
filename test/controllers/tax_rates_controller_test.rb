@@ -9,7 +9,7 @@ class TaxRatesControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:tax_rates)
+    assert_not_nil assigns(:models)
   end
 
   test "should get new" do

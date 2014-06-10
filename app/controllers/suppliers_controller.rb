@@ -1,17 +1,17 @@
-class SuppliersController < ApplicationController
-  # GET /users
-  def index
-    @suppliers = Supplier.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-    end
-  end
+class SuppliersController < ExoController
   
-  # GET /orders/new
-  def new
-    respond_to do |format|
-      format.html { redirect_to(suppliers_url, notice: "Refresh Suppliers option not yet implemented") }
-    end
+  before_filter :setup
+
+private
+
+  def model_params
+    params.require(:supplier).permit(:name, :address1, :address2, :address3, :phone, :fax, :email, :tax_rate_id, :status, :tax_rate_id)
+  end
+
+  def setup
+    @class  = Supplier
+    @model  = Supplier.find(params[:id]) if params[:id]
+    @models = Supplier.all
+    @models_url = "suppliers_url"
   end
 end

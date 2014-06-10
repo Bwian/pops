@@ -30,7 +30,8 @@ class ApplicationHelperTest < ActionView::TestCase
   end
   
   test "link_refresh" do
-    assert_match(/Refresh Suppliers/,link_refresh('supplier'))
+    params[:controller] = 'supplier'
+    assert_match(/Refresh Suppliers/,link_refresh)
   end
   
   test "link_edit" do

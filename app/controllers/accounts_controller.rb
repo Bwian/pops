@@ -1,17 +1,17 @@
-class AccountsController < ApplicationController
-  # GET /users
-  def index
-    @accounts = Account.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-    end
-  end
+class AccountsController < ExoController
   
-  # GET /orders/new
-  def new
-    respond_to do |format|
-      format.html { redirect_to(accounts_url, notice: "Refresh Accounts option not yet implemented") }
-    end
+  before_filter :setup
+
+private
+
+  def model_params
+    params.require(:account).permit(:name, :status, :short_name, :rate)
+  end
+
+  def setup
+    @class  = Account
+    @model  = Account.find(params[:id]) if params[:id]
+    @models = Account.all
+    @models_url = "accounts_url"
   end
 end

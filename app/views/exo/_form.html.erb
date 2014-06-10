@@ -1,0 +1,50 @@
+<div class="admin_form">
+<%= form_for(@model) do |f| %>
+  <fieldset>
+    <legend><%= legend("#{@model.class.name} Details", @readonly) %></legend>
+    <% if @model.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+        <ul>
+          <% @model.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+	
+    <div class="field">
+      <%= f.label :id, 'Id:' %>
+      <div class="po-header">&nbsp;<%= @model.id %></div>
+    </div>
+    
+    <div class="field">
+      <%= f.label :name, 'Name:' %>
+      <%= f.text_field :name, :maxlength => 60 %>
+    </div>
+    
+    <div class="field">
+	    <%= f.label :status, 'Status:' %>
+	    <%= f.select :status, @class::STATUS.invert, {}, { class: "btn btn-primary" } %>
+    </div>
+    
+    <% @model.attribute_list.each_key do |field| %>
+      <div class="field">
+        <%= attribute_label(field) %>
+        <%= attribute_field(f,field) %>
+      </div>
+    <% end %>
+    
+    <div class="actions">
+      <label></label>
+      <%= f.submit nil, class: "btn btn-primary btn-sm" %>
+      <%= link_list(@model) %>
+    </div>
+	
+  	<div class="notice">
+      <label for="notice" > </label>
+      <%= notice %>
+    </div>
+  </fieldset>
+<% end %>
+</div>
