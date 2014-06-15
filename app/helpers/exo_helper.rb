@@ -13,8 +13,10 @@ module ExoHelper
   end
   
   def attribute_field(f,field)
-    if field == 'tax_rate_id'
-      select(:account, field, TaxRate.selection, {}, { class: "btn btn-primary btn-select" })
+    if field =~ /_id$/
+      class_name = field.sub('_id','').camelize
+      klass = Object.const_get(class_name)
+      select(params[:controller].singularize, field, klass.selection, {}, { class: "btn btn-primary btn-select" })
     else
       f.text_field(field)
     end

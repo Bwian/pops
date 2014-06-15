@@ -5,6 +5,7 @@ class ExoHelperTest < ActionView::TestCase
   setup do
     setup_admin_session
     @account = accounts(:one)
+    params[:controller] = 'accounts'
   end
   
   test "link_exo - admin" do
