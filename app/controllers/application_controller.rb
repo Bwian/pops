@@ -46,6 +46,7 @@ class ApplicationController < ActionController::Base
     'items'     => [ALL],
     'users'     => [INDEX, SHOW],
     'suppliers' => [INDEX],
+    'payment_terms'  => [INDEX],
     'programs'  => [INDEX],
     'accounts'  => [INDEX],
     'tax_rates' => [INDEX]

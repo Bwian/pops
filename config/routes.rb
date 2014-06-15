@@ -11,12 +11,12 @@ Pops::Application.routes.draw do
     post 'login'  => :create
     get  'logout' => :destroy
   end
-  
-  resources :suppliers, :except => [:create, :delete, :show]
-  resources :programs,  :except => [:create, :delete, :show]
-  resources :accounts,  :except => [:create, :delete, :show]
-  resources :tax_rates, :except => [:create, :delete, :show]
-  
+
+  resources :accounts,      :except => [:create, :delete, :show]
+  resources :payment_terms, :except => [:create, :delete, :show]
+  resources :programs,      :except => [:create, :delete, :show]    
+  resources :suppliers,     :except => [:create, :delete, :show]
+  resources :tax_rates,     :except => [:create, :delete, :show]  
   resources :users
   
   get  'orders/refresh'      => 'orders#refresh'

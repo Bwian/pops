@@ -1,0 +1,22 @@
+<% if notice %>
+  <p class="notice" ><%= notice %></p>
+<% end %>
+
+<div class=header>
+  <div class="header-title header-cells"><%= @class.name %></div>
+  <div class="header-cells right"><%= link_refresh %></div>
+</div>
+
+<table width="100%">
+  <th>ID</th>
+  <th>Name</th>
+  <th style="text-align:right">Status</th>
+  <% @models.each do |model| %>
+    <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+      <td><%= link_exo(model) %></td>
+      <td><%= model.name %></td>
+      <td align="right"><%= model.formatted_status %></td>
+    </tr>
+  <% end %>
+</table>
+
