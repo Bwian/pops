@@ -2,6 +2,8 @@ class Supplier < ActiveRecord::Base
   
   include Exo
   
+  belongs_to :tax_rate
+  belongs_to :payment_term
   has_many :orders
 
   default_scope { order(:name) }

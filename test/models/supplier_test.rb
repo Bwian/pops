@@ -20,4 +20,12 @@ class SupplierTest < ActiveSupport::TestCase
     assert_equal('105&nbsp;Dana&nbsp;Street, Ballarat&nbsp;Vic&nbsp;3350',supplier.address)
   end
   
+  test "tax rate" do
+    assert_equal('No GST',suppliers(:two).tax_rate.name)
+  end
+  
+  test "payment_term" do
+    assert_equal('Cash Only',suppliers(:two).payment_term.name)
+  end
+  
 end
