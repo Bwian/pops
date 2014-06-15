@@ -1,0 +1,16 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: Cash Only
+  factor: 0
+  status: A
+
+two:
+  name: Net 7 days
+  factor: 7
+  status: N
+
+three:
+  name: 10th of month
+  factor: -10
+  status: N

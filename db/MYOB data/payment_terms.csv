@@ -1,0 +1,23 @@
+STATUSNO,STATUSDESC,CREDIT_FACTOR,STATUS
+0,Cash Only,0,N
+1,Net 7 Days,7,N
+2,20th of Month,-20,N
+4,30th of Month,-30,N
+5,Net 14 Days,14,N
+6,Net 21 Days,21,N
+7,Net 30 Days,30,N
+8,Net 60 Days,60,N
+9,Net 90 Days,90,N
+10,Net 120 Days,120,N
+11,Net 180 Days,180,N
+12,Net 5 days,5,N
+13,Net 16,16,N
+14,Net 17 days,17,N
+15,IMMEDIATE,0,N
+16,Net 15 days,15,N
+17,Net 18 days,18,N
+18,Net 50 days,50,N
+19,Net 28 days,28,N
+20,10th of month,-10,N
+21,14th of month,-14,N
+22,21 days EOM,-21,N

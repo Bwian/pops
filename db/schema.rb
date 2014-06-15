@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140515140827) do
+ActiveRecord::Schema.define(version: 20140615021525) do
 
   create_table "accounts", force: true do |t|
     t.string  "name"
@@ -27,7 +27,6 @@ ActiveRecord::Schema.define(version: 20140515140827) do
     t.integer  "account_id"
     t.integer  "tax_rate_id"
     t.string   "description"
-    t.integer  "quantity"
     t.decimal  "price"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -68,6 +67,12 @@ ActiveRecord::Schema.define(version: 20140515140827) do
   add_index "orders", ["processor_id"], name: "index_orders_on_processor_id"
   add_index "orders", ["supplier_id"], name: "index_orders_on_supplier_id"
 
+  create_table "payment_terms", force: true do |t|
+    t.string  "name"
+    t.integer "factor"
+    t.string  "status"
+  end
+
   create_table "programs", force: true do |t|
     t.string "name"
     t.string "status"
@@ -83,6 +88,7 @@ ActiveRecord::Schema.define(version: 20140515140827) do
     t.string  "email"
     t.integer "tax_rate_id"
     t.string  "status"
+    t.integer "payment_term_id"
   end
 
   create_table "tax_rates", force: true do |t|

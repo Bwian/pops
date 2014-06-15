@@ -7,7 +7,6 @@ one:
   account: one
   tax_rate_id: 32 
   description: First Draft Item
-  quantity: 1
   price: 4.95
 
 two:
@@ -16,7 +15,6 @@ two:
   account: two
   tax_rate_id: 34
   description: Second Draft Item
-  quantity: 1
   price: 9.99
 
 three:
@@ -25,7 +23,6 @@ three:
   account: one
   tax_rate_id: 32 
   description: First Approved Item
-  quantity: 1
   price: 4.95 
 
 four:
@@ -34,7 +31,6 @@ four:
   account_id: 5
   tax_rate_id: 33 
   description: Second Approved Item
-  quantity: 1
   price: 4.95
   
  

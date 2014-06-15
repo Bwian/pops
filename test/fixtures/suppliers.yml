@@ -10,6 +10,7 @@ zero:
   fax: 
   email: 
   tax_rate_id: -1
+  payment_term_id: one
   status: A
 
 one:
@@ -21,6 +22,7 @@ one:
   fax: 
   email: 
   tax_rate_id: -1
+  payment_term_id: one
   status: A
   
 two:
@@ -32,6 +34,7 @@ two:
   fax: 
   email: 
   tax_rate_id: 34
+  payment_term_id: one
   status: N
   
 three:
@@ -43,4 +46,5 @@ three:
   fax: 
   email: 
   tax_rate_id: 34
+  payment_term_id: one
   status: D
