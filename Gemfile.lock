@@ -142,7 +142,7 @@ DEPENDENCIES
   prawn-print
   pry
   pry-nav
-  rails (>= 4.1.1)
+  rails (~> 4.1.1)
   sass-rails (~> 4.0.0)
   sdoc
   sqlite3

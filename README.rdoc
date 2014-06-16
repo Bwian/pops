@@ -6,13 +6,18 @@ Although technically a public project, POPS is being developed for a specific No
 POPS is built on the Ruby on Rails web framework and uses Twitter Bootstrap as the UI framework.
 
 === Dependencies
-* Ruby 2.0.0
-* Rails 4.0.0
-* Bootstrap 3.0
+* Ruby 2 (latest port 2.1.2)
+* Rails 4 (latest port 4.1.1)
+* Twitter Bootstrap 3.0
 
 === Deployment
 * Run _bundle_ _install_ to update third-party gems.
+* Run _rake_ _db:setup_ 
 
 ==== Database Creation
-* To allow initial access to the system, running _rake_ _db:seed_ which will create an _admin_ user with the password _password_.  This user should be used to set up another admin user, then deleted.
+* To allow initial access to the system, running _rake_ _db:seed_ which will create an _admin_ user with the password _password_.  (Note _db:seed_ will be run automatically as part of _db:setup_)  This user should be used to set up another admin user, then deleted.
+
+==== Test Data
+* TODO: stuff about loading dummy master table data
+* Once users, suppliers, programs, accounts and tax rates have been setup or loaded, test data may be created by running random_load.rb from the _db_ directory.  The script requires two arguments - the first being the order status being created (D,S,A or P) and the second the number of records of the provides status to be created.  Respective defaults are D and 1.
 
