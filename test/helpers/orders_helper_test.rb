@@ -5,6 +5,7 @@ class OrdersHelperTest < ActionView::TestCase
   setup do
     setup_admin_session
     @order = orders(:draft)
+    @supplier = suppliers(:zero)
   end
   
   test "link_action draft" do
@@ -63,4 +64,16 @@ class OrdersHelperTest < ActionView::TestCase
   test 'order_sort_header' do
     assert_includes(order_sort_header(:id), 'orders?sort=id')
   end
+  
+  test 'calculate_payment_date - simple' do
+    assert_equal(Date.new(2014,6,16),calculate_payment_date(Date.new(2014,6,16),@supplier))
+    @supplier.payment_term = payment_terms(:two)
+    assert_equal(Date.new(2014,6,23),calculate_payment_date(Date.new(2014,6,16),@supplier))
+  end
+  
+  test 'calculate_payment_date - complex' do
+    @supplier.payment_term = payment_terms(:three)
+    assert_equal(Date.new(2014,7,10),calculate_payment_date(Date.new(2014,6,16),@supplier))
+  end
+  
 end

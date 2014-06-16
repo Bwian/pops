@@ -103,6 +103,11 @@ module OrdersHelper
   def html_newlines(text)
     text.gsub("\n","</br>").html_safe
   end
+  
+  def calculate_payment_date(invoice_date,supplier)
+    factor = supplier.payment_term.factor || 30
+    factor < 0 ? invoice_date.next_month.change(day: factor.abs) : invoice_date + factor.days
+  end
     
   private
   
