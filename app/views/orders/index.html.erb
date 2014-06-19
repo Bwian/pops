@@ -22,14 +22,14 @@
         <%= select(:order_filter, :role, roles(), {}, { onchange: "this.form.submit()", class: "btn btn-primary roles" } )%>
       </div>
       <div class="header-cells">
-	<%= hidden_field :order_filter, :draft, value: "0" %>
-	<%= hidden_field :order_filter, :submitted, value: "0" %>
-	<%= hidden_field :order_filter, :approved, value: "0" %>
-	<%= hidden_field :order_filter, :processed, value: "0" %>
+				<%= hidden_field :order_filter, :draft, value: "0" %>
+				<%= hidden_field :order_filter, :submitted, value: "0" %>
+				<%= hidden_field :order_filter, :approved, value: "0" %>
+				<%= hidden_field :order_filter, :processed, value: "0" %>
         <div class="ck-button">
           <label>
             <%= check_box :order_filter, :draft, onchange: "this.form.submit()", include_hidden: false %>
-            <span>Draft</span>
+						<span>Draft</span>
           </label>
           <label>
             <%= check_box :order_filter, :submitted, onchange: "this.form.submit()", include_hidden: false %>

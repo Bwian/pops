@@ -51,22 +51,26 @@
                    { disabled: @readonly, class: "btn btn-primary" } %>
 	  </div>
     <div class="field">
+      <%= f.hidden_field :admin, value: "0" %>
+      <%= f.hidden_field :processor, value: "0" %>
+      <%= f.hidden_field :approver, value: "0" %>
+      <%= f.hidden_field :creator, value: "0" %>
       <label>Permissions:</label>
       <div class="ck-button">
         <label>
-          <%= f.check_box :admin, {disabled: @readonly} %>
+          <%= f.check_box :admin, disabled: @readonly, include_hidden: false %>
           <span>Administrator</span>
         </label>
         <label>
-          <%= f.check_box :processor, {disabled: @readonly} %>
+          <%= f.check_box :processor, disabled: @readonly, include_hidden: false %>
           <span>Processor</span>
         </label>
         <label>
-          <%= f.check_box :approver, {disabled: @readonly} %>
+          <%= f.check_box :approver, disabled: @readonly, include_hidden: false %>
           <span>Approver</span>
         </label>
         <label>
-          <%= f.check_box :creator, {disabled: @readonly} %>
+          <%= f.check_box :creator, disabled: @readonly, include_hidden: false %>
           <span>Creator</span>
         </label>
       </div>
