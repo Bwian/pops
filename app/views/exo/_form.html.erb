@@ -1,7 +1,7 @@
 <div class="admin_form">
 <%= form_for(@model) do |f| %>
   <fieldset>
-    <legend><%= legend("#{@model.class.name} Details", @readonly) %></legend>
+    <legend><%= legend("#{@model.class.name.titleize} Details", @readonly) %></legend>
     <% if @model.errors.any? %>
       <div id="error_explanation">
         <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -14,7 +14,7 @@
     <% end %>
 	
     <div class="field">
-      <%= f.label :id, 'Id:' %>
+      <%= f.label :id, 'Id:', class: "po-label" %>
       <div class="po-header">&nbsp;<%= @model.id %></div>
     </div>
     

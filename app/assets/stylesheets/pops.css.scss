@@ -43,6 +43,7 @@ label {
   float: left;
   font-weight: normal;
   text-align: right;
+  vertical-align: top;
   padding-top: 0.2em;
   margin-right: 0.1em;
   display: block;
@@ -164,6 +165,10 @@ td.win, td.draw, td.loss, td.bye, td.pending {
   font-size: large;
   color: $error-color;
   margin-bottom: 1.0em;
+}
+
+.po-label {
+  padding-top: 0em;
 }
 
 .text {
