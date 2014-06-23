@@ -122,6 +122,10 @@ class Order < ActiveRecord::Base
     self.status == OrderStatus::PROCESSED
   end
   
+  def authorised?
+    self.status == OrderStatus::APPROVED || self.status == OrderStatus::PROCESSED
+  end
+  
   def to_json
     oj = self.as_json
     oj["status"]          = self.status_name  

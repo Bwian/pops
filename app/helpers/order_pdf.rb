@@ -28,7 +28,7 @@ class OrderPdf
     (data.size..15).each { data << [' ',' ',' ',' '] }
     
     details(order,data[0..14])
-    if line_count <= 15
+    if line_count <= 15 
       totals(order)
       footer(order)
     else
@@ -41,6 +41,8 @@ class OrderPdf
   end
 
   def header(order)
+    watermark unless order.authorised?
+    
     @pdf.table([
 			[{:image => "#{Rails.root}/app/assets/images/UCB-grayscale.jpg", :scale => 0.07},
        {:content => "UnitingCare Ballarat\n<font size='8'>ABN: 15 562 149 440</font>\nPO Box 608\nBallarat  Vic  3353\nTelephone: (03) 5332 1286\nFax: (03) 5332 1055", :inline_format => true},   
@@ -86,7 +88,7 @@ class OrderPdf
 		end
   end
   
-  def continued(order)
+  def continued(order)   
     contact = "#{order.creator.name} - #{order.creator.phone} - #{order.creator.email}"
     data = [
       ['For enquiries, please contact:',' ','Continued'],
@@ -137,12 +139,12 @@ class OrderPdf
       cells.padding = 0 
     end
     
+    approved = order.authorised? ? "#{order.approver.name}\n#{order.approver.phone}" : "Not yet approved"
     @pdf.move_down(10)
   	data = [
   	  ['Invoice to:','Deliver to:','Authorised by:'],
       ["Finance Department\nUnitingCare Ballarat\nPO Box 608\nBallarat  Vic  3353\nor accounts@ucare.org.au",
-       "#{order.delivery_address}",
-       "#{order.approver.name}\n#{order.approver.phone}"]
+       "#{order.delivery_address}", approved]
   	]
     @pdf.table(data, 
 			:cell_style => {:inline_format => true},
@@ -151,13 +153,22 @@ class OrderPdf
       cells.padding = [5,0,0,0] 
       row(0).font_style = :bold_italic 
       column(2).style(:align => :right)
+    end    
+  end
+  
+  def watermark
+    @pdf.rotate(45, origin: [100,150]) do
+      @pdf.fill_color "CFCFCF"
+      @pdf.font("Times-Roman", :size => 72, :font_style => :bold) do
+        @pdf.draw_text "Unauthorised", :at => [150,150]
+      end
+      @pdf.fill_color "000000"
     end
   end
   
   def format_date(date)
     date ? "#{date.strftime('%d %b %Y')}" : ''
   end
-  
   
   def widths(cols)
     column_widths = []

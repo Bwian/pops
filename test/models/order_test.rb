@@ -109,6 +109,14 @@ class OrderTest < ActiveSupport::TestCase
     assert_not(@draft.processed?)
   end
   
+  test 'authorised?' do
+    assert_not(@draft.authorised?,'Draft')
+    assert_not(@submitted.authorised?,'Submitted')
+    assert(@approved.authorised?,'Approved')
+    @approved.status = OrderStatus::PROCESSED
+    assert(@approved.authorised?,'Processed')
+  end
+  
   test 'approver_present' do
     @submitted.approver_id = nil
     assert !@submitted.save, "Saved the order without an approver"
