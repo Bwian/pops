@@ -4,7 +4,7 @@ draft:
   supplier_id: 0
   supplier_name: Joe's Miscellaneous Oddments
   invoice_no: 
-  invoice_date: 
+  invoice_date: 2013-11-20
   payment_date: 
   reference: 
   creator: brian
@@ -34,7 +34,7 @@ submitted:
   supplier: two
   supplier_name: 
   invoice_no: 
-  invoice_date: 
+  invoice_date: 2013-12-01
   payment_date: 
   reference: 
   creator: sean

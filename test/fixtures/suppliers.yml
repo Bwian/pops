@@ -34,7 +34,7 @@ two:
   fax: 
   email: 
   tax_rate_id: 34
-  payment_term: one
+  payment_term: two
   status: N
   
 three:

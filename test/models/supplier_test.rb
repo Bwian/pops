@@ -25,7 +25,7 @@ class SupplierTest < ActiveSupport::TestCase
   end
   
   test "payment_term" do
-    assert_equal('Cash Only',suppliers(:two).payment_term.name)
+    assert_equal('Net 7 days',suppliers(:two).payment_term.name)
   end
   
 end

@@ -1,0 +1,5 @@
+    <div id="payment_date" class="field">
+      <%= label :order, :payment_date, 'Payment Date:' %>
+      <%= date_select :order, :payment_date, {}, 
+            { disabled: @readonly, class: "btn btn-primary" } %>
+    </div>

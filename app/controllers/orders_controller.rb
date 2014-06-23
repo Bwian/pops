@@ -198,6 +198,14 @@ class OrdersController < ApplicationController
     end
   end
   
+  def payment_date
+    @order = Order.new(order_params)
+    @order.set_payment_date
+    respond_to do |format|
+      format.js
+    end
+  end
+  
   private
   
   def order_params

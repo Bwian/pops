@@ -25,3 +25,11 @@ function show_actions(flag) {
     $("#action_dropdown").show();
   }  
 }
+
+function set_payment_date() {
+  $.ajax({
+    url:  "payment_date",
+    type: "POST",
+    data: $('form').serialize()
+  });
+}

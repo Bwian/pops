@@ -57,6 +57,8 @@ Pops::Application.routes.draw do
   patch 'items/:id/program_select'         => 'items#program_select'
   post  'items/program_select'             => 'items#program_select'
   
+  patch 'orders/:id/payment_date' => 'orders#payment_date'
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

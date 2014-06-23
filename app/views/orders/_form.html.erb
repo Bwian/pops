@@ -23,7 +23,7 @@
         </p>
       </div>
       <div class="field">
-        <%= f.label :id, 'Order:' %>
+        <%= f.label :id, 'Order:', class: "po-label" %>
         <div class="po-header">&nbsp;<%= @order.id %> - <%= @order.status_name %></div>
       </div>
     <% end %>
@@ -44,13 +44,11 @@
     <div class="field">
       <%= f.label :invoice_date, 'Invoice Date:' %>
       <%= f.date_select :invoice_date, {}, 
-            { disabled: @readonly, class: "btn btn-primary" } %>
+            { disabled: @readonly, class: "btn btn-primary", onchange: "javascript:set_payment_date()" } %>
     </div>
-    <div class="field">
-      <%= f.label :payment_date, 'Payment Date:' %>
-      <%= f.date_select :payment_date, {}, 
-            { disabled: @readonly, class: "btn btn-primary" } %>
-    </div>
+    
+    <%= render 'payment_date' %>
+    
     <div class="field">
       <%= f.label :reference, 'Reference:' %>
       <%= f.text_field :reference, :maxlength => 20, readonly: @readonly %>
