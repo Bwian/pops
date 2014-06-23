@@ -158,4 +158,21 @@ class OrderTest < ActiveSupport::TestCase
     assert(@submitted .add_notes?,'Submitted')
     assert_not(Order.new.add_notes?,'New')
   end
+  
+  test 'set_payment_date - nil' do
+    @approved.set_payment_date
+    assert_nil(@submitted.payment_date)
+  end
+  
+  test 'set_payment_date - simple' do
+    @submitted.set_payment_date
+    assert_equal(Date.new(2013,12,8),@submitted.payment_date)
+  end
+  
+  test 'set_payment_date - complex' do
+    @submitted.supplier.payment_term = payment_terms(:three)
+    @submitted.set_payment_date
+    assert_equal(Date.new(2014,1,10),@submitted.payment_date)
+  end
+  
 end

@@ -65,15 +65,4 @@ class OrdersHelperTest < ActionView::TestCase
     assert_includes(order_sort_header(:id), 'orders?sort=id')
   end
   
-  test 'calculate_payment_date - simple' do
-    assert_equal(Date.new(2014,6,16),calculate_payment_date(Date.new(2014,6,16),@supplier))
-    @supplier.payment_term = payment_terms(:two)
-    assert_equal(Date.new(2014,6,23),calculate_payment_date(Date.new(2014,6,16),@supplier))
-  end
-  
-  test 'calculate_payment_date - complex' do
-    @supplier.payment_term = payment_terms(:three)
-    assert_equal(Date.new(2014,7,10),calculate_payment_date(Date.new(2014,6,16),@supplier))
-  end
-  
 end

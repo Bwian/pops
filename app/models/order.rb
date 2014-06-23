@@ -176,6 +176,13 @@ class Order < ActiveRecord::Base
     notes.gsub(/\n{3,}/,"\n\n")
   end
   
+  def set_payment_date
+    if self.invoice_date
+      factor = self.supplier.payment_term.factor || 30
+      self.payment_date = factor < 0 ? self.invoice_date.next_month.change(day: factor.abs) : self.invoice_date + factor.days
+    end
+  end
+  
   private
   
   def diff_message(from,to)
