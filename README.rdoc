@@ -15,7 +15,7 @@ POPS is built on the Ruby on Rails web framework and uses Twitter Bootstrap as t
 * Run <em>rake db:setup</em> 
 
 ==== Database Creation
-* To allow initial access to the system, running <em>rake db:seed</em> which will create an _admin_ user with the password _password_.  (Note _db:seed_ will be run automatically as part of _db:setup_)  This user should be used to set up another admin user, then deleted.
+* To allow initial access to the system, running <em>rake db:seed</em> which will create an _admin_ user with the password _password_.  (Note <em>db:seed</em> will be run automatically as part of <em>db:setup</em>)  This user should be used to set up another admin user, then deleted.
 
 ==== Test Data
 * Test data for the master tables is available in <em><table_name>.csv</em> files in the <em>db/MYOB data</em> directory.  To import the data into the _sqlite3_ development database, open the development database with _sqlite3_ then use the .import command.  eg. <em>.import /tmp/brianc/tax_rates.csv tax_rates</em>
