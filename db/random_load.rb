@@ -72,7 +72,6 @@ while order_count > 0
       item.program_id = programs[rand(programs.size)]
       item.account_id = accounts[rand(accounts.size)]
       item.tax_rate_id = tax_rates[rand(tax_rates.size)]
-      item.quantity = 1
       details = item_details[rand(item_details.size)]
       item.description = details[0]
       item.price = details[1]
