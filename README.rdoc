@@ -11,13 +11,13 @@ POPS is built on the Ruby on Rails web framework and uses Twitter Bootstrap as t
 * Twitter Bootstrap 3.0
 
 === Deployment
-* Run _bundle install_ to update third-party gems.
-* Run _rake db:setup_ 
+* Run <em>bundle install</em> to update third-party gems.
+* Run <em>rake db:setup</em> 
 
 ==== Database Creation
-* To allow initial access to the system, running _rake db:seed_ which will create an _admin_ user with the password _password_.  (Note _db:seed_ will be run automatically as part of _db:setup_)  This user should be used to set up another admin user, then deleted.
+* To allow initial access to the system, running <em>rake db:seed</em> which will create an _admin_ user with the password _password_.  (Note <em>db:seed</em> will be run automatically as part of <em>db:setup</em>)  This user should be used to set up another admin user, then deleted.
 
 ==== Test Data
-* Test data for the master tables is available in <table_name>.csv files int thhe db/MYOB data directory.  To import the data into the _sqlite3_ development database, open the development database with _sqlite3_ then use the .import command.  eg. .import /tmp/brianc/tax_rates.csv tax_rates
-* Once users, suppliers, programs, accounts and tax rates have been setup or loaded, test data may be created by running random_load.rb from the _db_ directory.  The script requires two arguments - the first being the order status being created (D,S,A or P) and the second the number of records of the provides status to be created.  Respective defaults are D and 1.
+* Test data for the master tables is available in <em><table_name>.csv</em> files in the <em>db/MYOB data</em> directory.  To import the data into the _sqlite3_ development database, open the development database with _sqlite3_ then use the .import command.  eg. <em>.import /tmp/brianc/tax_rates.csv tax_rates</em>
+* Once users, suppliers, programs, accounts and tax rates have been setup or loaded, test data may be created by running <em>random_load.rb</em> from the _db_ directory.  The script requires two arguments - the first being the order status being created (D,S,A or P) and the second the number of records of the provides status to be created.  Respective defaults are D and 1.
 
