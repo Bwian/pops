@@ -117,8 +117,9 @@ class OrdersController < ApplicationController
         save_notes(params)
         format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Submitted.") }
       else
-        find_order
-        format.html { render action: "edit" }
+        @order.to_draft
+        @readonly = true
+        format.html { render action: "show" }
       end
     end
   end
@@ -152,8 +153,9 @@ class OrdersController < ApplicationController
         format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Approved. #{get_notice(message)}") }
         message.deliver if message && message.valid?
       else
-        find_order
-        format.html { render action: "edit" }
+        @order.to_submitted
+        @readonly = true
+        format.html { render action: "show" }
       end
     end
   end
@@ -166,8 +168,9 @@ class OrdersController < ApplicationController
       if @order.save
         format.html { redirect_to(@order, notice: "Order #{@order.id} set to Processed.") }
       else
-        find_order
-        format.html { render action: "edit" }
+        @order.reset_approved
+        @readonly = true
+        format.html { render action: "show" }
       end
     end
   end
