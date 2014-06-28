@@ -12,7 +12,8 @@ draft:
   approver: brian 
   approved_at: 
   processor: 
-  processed_at: 
+  processed_at:
+  approved_amount: 
   status: D
 
 invalid:
@@ -27,7 +28,8 @@ invalid:
   approver: 
   approved_at: 
   processor: 
-  processed_at: 
+  processed_at:
+  approved_amount: 
   status: 
     
 submitted:
@@ -43,6 +45,7 @@ submitted:
   approved_at: 
   processor: 
   processed_at: 
+  approved_amount:
   status: S
   
 approved:
@@ -57,7 +60,8 @@ approved:
   approver: brian 
   approved_at: 2013-11-10 22:15:18
   processor: 
-  processed_at: 
+  processed_at:
+  approved_amount: 4.95
   status: A
   
 processed:
@@ -73,6 +77,7 @@ processed:
   approved_at: 2013-11-10 22:15:18
   processor: brian
   processed_at: 2013-11-11 22:15:18
+  approved_amount:
   status: P
   
 no_items:
@@ -87,5 +92,6 @@ no_items:
   approver: brian 
   approved_at: 2013-11-10 22:15:18
   processor: 
-  processed_at: 
+  processed_at:
+  approved_amount: 12.34 
   status: A

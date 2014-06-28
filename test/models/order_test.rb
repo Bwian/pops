@@ -82,9 +82,16 @@ class OrderTest < ActiveSupport::TestCase
     assert_equal(OrderStatus::APPROVED,@submitted.status)
   end
   
-  test 'to_processed' do
+  test 'to_processed and reset_approved' do
     @approved.to_processed(@brian.id)
     assert_equal(OrderStatus::PROCESSED,@approved.status)
+    @approved.reset_approved
+    assert_equal(OrderStatus::APPROVED,@approved.status)
+  end
+  
+  test 'set approved_amount' do
+    @draft.to_approved(@brian.id)
+    assert_in_delta(14.94,@draft.approved_amount,0.001)
   end
   
   test 'draft?' do
@@ -117,15 +124,30 @@ class OrderTest < ActiveSupport::TestCase
     assert(@approved.authorised?,'Processed')
   end
   
+  test 'processed_amount_ok?' do
+    assert_not(@draft.processed_amount_ok?,'Nil approved_amount')
+    assert_not(@approved.processed_amount_ok?,'Higher than approved_amount')
+    @approved.approved_amount = 14.95
+    assert(@approved.processed_amount_ok?,'Equal to approved_amount')
+  end
+  
   test 'approver_present' do
     @submitted.approver_id = nil
-    assert !@submitted.save, "Saved the order without an approver"
+    assert_not(@submitted.save)
+    assert(@submitted.errors.messages[:approver_id])
   end
   
   test 'approver_not_processor' do
     @approved.to_processed(@brian.id)
     @approved.processor_id = @approved.approver_id
-    assert !@approved.save, "Saved the order with processor the same as the approver"
+    assert_not(@approved.save)
+    assert(@approved.errors.messages[:processor_id])
+  end
+  
+  test 'processor amount too high' do
+    @approved.to_processed(@brian.id)
+    assert_not(@approved.save)
+    assert(@approved.errors.messages[:approved_amount])
   end
   
   test 'dirty and send' do
@@ -182,5 +204,4 @@ class OrderTest < ActiveSupport::TestCase
     @submitted.set_payment_date
     assert_equal(Date.new(2014,1,10),@submitted.payment_date)
   end
-  
 end

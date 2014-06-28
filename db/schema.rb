@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140615021525) do
+ActiveRecord::Schema.define(version: 20140627033046) do
 
   create_table "accounts", force: true do |t|
     t.string  "name"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 20140615021525) do
     t.string   "status"
     t.datetime "updated_at"
     t.text     "delivery_address"
+    t.decimal  "approved_amount"
   end
 
   add_index "orders", ["approver_id"], name: "index_orders_on_approver_id"

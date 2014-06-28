@@ -12,7 +12,7 @@ class Order < ActiveRecord::Base
   has_many :notes
   
   validates :supplier_id, :status, presence: true
-  validate :approver_present, :approver_not_processor
+  validate :approver_present, :approver_not_processor, :processor_amount_exceeded
   
   before_save :set_supplier
   
@@ -22,6 +22,10 @@ class Order < ActiveRecord::Base
   
   def approver_not_processor
     errors.add(:processor_id, "must not be the same as Approver") if !self.processor_id.nil? && self.approver_id == self.processor_id
+  end
+  
+  def processor_amount_exceeded
+    errors.add(:approved_amount, "has been exceeded by more than 10%.  Please resubmit for approval") if processed? && !processed_amount_ok? 
   end
     
   def status_name
@@ -95,6 +99,11 @@ class Order < ActiveRecord::Base
   def to_approved(user_id) 
     self.approver_id  = user_id if status == OrderStatus::SUBMITTED
     self.approved_at  = Time.now
+    self.approved_amount = self.grandtotal
+    reset_approved
+  end
+  
+  def reset_approved
     self.processor_id = nil
     self.processed_at = nil
     self.status       = OrderStatus::APPROVED
@@ -124,6 +133,10 @@ class Order < ActiveRecord::Base
   
   def authorised?
     self.status == OrderStatus::APPROVED || self.status == OrderStatus::PROCESSED
+  end
+  
+  def processed_amount_ok?
+    self.approved_amount? ? self.approved_amount * 1.1 >= self.grandtotal : false
   end
   
   def to_json
@@ -185,6 +198,10 @@ class Order < ActiveRecord::Base
       factor = self.supplier.payment_term.factor || 30
       self.payment_date = factor < 0 ? self.invoice_date.next_month.change(day: factor.abs) : self.invoice_date + factor.days
     end
+  end
+  
+  def amount_approved?
+    
   end
   
   private
