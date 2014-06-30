@@ -68,6 +68,7 @@ class OrdersController < ApplicationController
         end
         format.html { redirect_to(@order, notice: "Order #{@order.id} was successfully updated. #{get_notice(message)}") }
       else
+        reload_if_stale(@order)
         format.html { render action: "edit" }
       end
     end
@@ -226,7 +227,8 @@ class OrdersController < ApplicationController
       :processor_id, 
       :processed_at,
       :delivery_address,
-      :notes) 
+      :notes,
+      :lock_version) 
   end
   
   def where_parameters
@@ -287,4 +289,5 @@ class OrdersController < ApplicationController
   def get_notice(message)
     message ? message.notice : ''
   end
+  
 end

@@ -204,4 +204,14 @@ class OrderTest < ActiveSupport::TestCase
     @submitted.set_payment_date
     assert_equal(Date.new(2014,1,10),@submitted.payment_date)
   end
+  
+  test 'optimistic locking' do
+    o1 = Order.find(@draft.id)
+    o2 = Order.find(@draft.id)
+    o1.reference = 'changed o1'
+    o1.save
+    o2.reference = 'changed o2'
+    assert_not(o2.save)
+    assert(o2.errors.messages[:locking_error])
+  end
 end

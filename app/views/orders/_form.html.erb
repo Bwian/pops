@@ -2,7 +2,9 @@
 <%= form_for(@order) do |f| %>
   <fieldset>
     <legend><%= legend("Order Details", @readonly) %></legend>
-
+    
+    <%= f.hidden_field :lock_version %>
+    
     <% if @order.errors.any? %>
       <div id="error_explanation">
         <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>

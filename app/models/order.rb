@@ -16,6 +16,15 @@ class Order < ActiveRecord::Base
   
   before_save :set_supplier
   
+  def save
+    begin
+      super
+    rescue ActiveRecord::StaleObjectError
+      errors.add(:locking_error, "- Order changed by another user")
+      return false
+    end
+  end
+  
   def approver_present
     errors.add(:approver_id, "must be present") if self.approver_id.nil? && self.status == OrderStatus::SUBMITTED
   end
@@ -198,10 +207,6 @@ class Order < ActiveRecord::Base
       factor = self.supplier.payment_term.factor || 30
       self.payment_date = factor < 0 ? self.invoice_date.next_month.change(day: factor.abs) : self.invoice_date + factor.days
     end
-  end
-  
-  def amount_approved?
-    
   end
   
   private

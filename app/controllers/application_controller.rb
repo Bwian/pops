@@ -61,4 +61,10 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def reload_if_stale(model)
+    if model.errors.messages[:locking_error]
+      model.reload
+      save_json(model.class.name.downcase,model)
+    end
+  end
 end
