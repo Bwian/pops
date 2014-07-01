@@ -58,6 +58,7 @@ class ItemsController < ApplicationController
         add_notes('item',@item)
         format.html { redirect_to(order_url(:id => @item.order_id, notice: "Item was successfully updated.")) }
       else
+        reload_if_stale(@item)
         format.html { render action: "edit" }
       end
     end
@@ -113,7 +114,8 @@ class ItemsController < ApplicationController
       :tax_rate_id,
       :description,
       :quantity,
-      :price
+      :price,
+      :lock_version
      ) 
   end
   

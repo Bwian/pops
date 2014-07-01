@@ -14,6 +14,15 @@ class Item < ActiveRecord::Base
             :price, 
             presence: true
   
+  def save
+    begin
+      super
+    rescue ActiveRecord::StaleObjectError
+      errors.add(:locking_error, "- Item changed by another user")
+      return false
+    end
+  end
+            
   def gst
     rate = self.tax_rate_id ? self.tax_rate.rate : 0.0
     p = self.price ? self.price : 0.0

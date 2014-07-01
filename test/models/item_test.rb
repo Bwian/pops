@@ -88,4 +88,14 @@ class ItemTest < ActiveSupport::TestCase
     ijsh = ActiveSupport::JSON.decode(ijs)
     assert(ij.eql?ijsh)
   end
+  
+  test 'optimistic locking' do
+    i1 = Item.find(@item1.id)
+    i2 = Item.find(@item1.id)
+    i1.description = 'changed i1'
+    i1.save
+    i2.description = 'changed i2'
+    assert_not(i2.save)
+    assert(i2.errors.messages[:locking_error])
+  end
 end

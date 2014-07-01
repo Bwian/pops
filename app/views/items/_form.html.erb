@@ -15,7 +15,9 @@
       </div>
     <% end %>
 	     
-    <%= f.hidden_field(:order_id) %>
+    <%= f.hidden_field :order_id %>
+    <%= f.hidden_field :lock_version %>
+    
     <div>
       <p class="atby">
         <% @order.atby.each do |note| %>
