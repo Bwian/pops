@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
+
   protect_from_forgery with: :exception
   
   before_filter :authorise
@@ -42,14 +41,14 @@ class ApplicationController < ActionController::Base
   NONE  = 'none'
 
   ADMIN = {
-    'orders'    => [ALL],
-    'items'     => [ALL],
-    'users'     => [INDEX, SHOW],
-    'suppliers' => [INDEX],
-    'payment_terms'  => [INDEX],
-    'programs'  => [INDEX],
-    'accounts'  => [INDEX],
-    'tax_rates' => [INDEX]
+    'orders'        => [ALL],
+    'items'         => [ALL],
+    'users'         => [INDEX, SHOW],
+    'suppliers'     => [INDEX],
+    'payment_terms' => [INDEX],
+    'programs'      => [INDEX],
+    'accounts'      => [INDEX],
+    'tax_rates'     => [INDEX]
   }
 
   def admin_action

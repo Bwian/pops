@@ -147,6 +147,7 @@ class OrdersController < ApplicationController
   # POST /orders/1/approve
   def approve
     @order.to_approved(session[:user_id])
+    add_notes('order',@order) if @order.notes.any?
     message = @order.sendmail(session[:user_id])
     
     respond_to do |format|
