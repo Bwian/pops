@@ -75,7 +75,6 @@ class OrdersControllerTest < ActionController::TestCase
     assert_difference('Order.count', -1) do
       delete :destroy, id: @order.to_param
     end
-
     assert_redirected_to orders_path
   end
   
@@ -85,6 +84,7 @@ class OrdersControllerTest < ActionController::TestCase
     end
     assert_redirected_to orders_path
   end
+  
   # TODO: change to handle js call
   # test "should change submitted to draft" do
   #   @order = orders(:submitted)

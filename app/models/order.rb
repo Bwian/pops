@@ -162,6 +162,7 @@ class Order < ActiveRecord::Base
     oj = oj.delete_if { |key,value| key =~ /_id$/ }
     oj.delete("updated_at")
     oj.delete("supplier_name")
+    oj.delete("lock_version")
     oj.update(oj) { |key,value| value.nil? ? '' : value }
     oj
   end

@@ -73,7 +73,8 @@ class Item < ActiveRecord::Base
     json['tax_rate']     = "#{self.tax_rate_name} (#{self.tax_rate_id})"    
     json.delete('program_id')
     json.delete('account_id')
-    json.delete('tax_rate_id')    
+    json.delete('tax_rate_id')
+    json.delete('lock_version')    
     json = json.delete_if { |key,value| key =~ /_at$/ }
     json
   end
