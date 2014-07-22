@@ -23,4 +23,8 @@ module Exo
     
     list
   end 
+  
+  def name_id
+    "#{name} (#{id})"
+  end
 end

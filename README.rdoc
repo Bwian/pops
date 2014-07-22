@@ -19,17 +19,19 @@ POPS is built on the Ruby on Rails web framework and uses Twitter Bootstrap as t
 
 ==== Test Data
 * Test data for the master tables is available in <em><table_name>.csv</em> files in the <em>db/MYOB data</em> directory.  To import the data into the _sqlite3_ development database, open the development database with _sqlite3_ then use the .import command.  eg. <em>.import /tmp/brianc/tax_rates.csv tax_rates</em>
-* Once users, suppliers, programs, accounts and tax rates have been setup or loaded, test data may be created by running <em>random_load.rb</em> from the _db_ directory.  The script requires two arguments - the first being the order status being created (D,S,A or P) and the second the number of records of the provides status to be created.  Respective defaults are D and 1.
+* Once users, suppliers, programs, accounts and tax rates have been setup or loaded, test data may be created by running <em>random_load.rb</em> from the _db_ directory.  The script requires two arguments - the first being the order status being created (D,S,A or P) and the second the number of records of the provided status to be created.  Respective defaults are D and 1.
 
 ==== SQL Server Access
 MYOB Exo uses an SQL Server database which POPS accesses to:
 * create creditor invoices in Exo using POPS data
 * update POPS subsets of Exo tables (suppliers, programs etc.)
 
-Remote access to SQL Server is usually not enabled by default.  Here are some set up hints for SQL Server {2008}[http://blogs.msdn.com/b/walzenbach/archive/2010/04/14/how-to-enable-remote-connections-in-sql-server-2008.aspx] and {2012 Express}[http://stackoverflow.com/questions/11278114/enable-remote-connections-for-sql-server-express-2012].  
+Remote access to SQL Server is usually not enabled by default.  These links contain useful set up information for SQL Server {2008}[http://blogs.msdn.com/b/walzenbach/archive/2010/04/14/how-to-enable-remote-connections-in-sql-server-2008.aspx] and {2012 Express}[http://stackoverflow.com/questions/11278114/enable-remote-connections-for-sql-server-express-2012].  
 
 SQL Server access is achieved through FreeTDS libraries (freetds.org).  To install these libraries on ubuntu:
 * sudo apt-get freetds-dev freetds-bin
 * <em>tsql -C</em> to test the installation
 * edit /etc/freetds/freetds.conf to setup server configuration
-* <em>tsql -S server -U user -P password</em> to connect to SQL Server.  More information on testing is available at http://freetds.schemamania.org/userguide/confirminstall.htm 
+* <em>tsql -S server -U user -P password</em> to connect to SQL Server.  More information on testing is available {here}[http://freetds.schemamania.org/userguide/confirminstall.htm].
+
+The {tiny_tds}[https://github.com/rails-sqlserver/tiny_tds] gem provides low-level connection to SQL Server.  Run <em>gem install tiny_tds</em> to install it.  If it works, terrific!  If not, you'll have to build your own by using <em>git</em> to clone the {repository}[https://github.com/rails-sqlserver/tiny_tds.git], and the MiniPortile instructions in the {gem}[https://github.com/rails-sqlserver/tiny_tds]'s README to roll your own.

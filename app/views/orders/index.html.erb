@@ -62,7 +62,7 @@
       <th><%= order_sort_header(:status) %></th> 
       <% @orders.each do |order| %>
         <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-          <td><b><%= link_to(order.id, order) %></b></td>
+          <td><%= link_to(order.id, order, class: "link_hilight") %></td>
           <td><%= order.supplier_name %></td>
           <td><%= order.invoice_no %></td>
           <td align="right"><%= order.formatted_grandtotal %></td>

@@ -10,7 +10,7 @@ class Account < ActiveRecord::Base
   @@selection = nil
   
   def self.selection
-    @@selection ||= Account.where(status: ['A','N']).map { |a| [a.name, a.id] }
+    @@selection ||= Account.where(status: ['A','N']).map { |a| [a.name_id, a.id] }
   end
   
   def self.reset_selection

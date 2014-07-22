@@ -9,11 +9,10 @@ class Program < ActiveRecord::Base
   @@selection = nil
   
   def self.selection
-    @@selection ||= Program.where(status: ['A','N']).map { |p| [p.name, p.id] }
+    @@selection ||= Program.where(status: ['A','N']).map { |p| [p.name_id, p.id] }
   end
   
   def self.reset_selection
     @@selection = nil  # force reload
-  end
-  
+  end 
 end

@@ -116,7 +116,7 @@ class OrdersController < ApplicationController
     respond_to do |format|
       if @order.save
         save_notes(params)
-        format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Submitted.") }
+        format.html { redirect_to(@order, notice: "Order #{@order.id} set to Submitted.") }
       else
         @order.to_draft
         @readonly = true
@@ -152,7 +152,7 @@ class OrdersController < ApplicationController
     
     respond_to do |format|
       if @order.save
-        format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Approved. #{get_notice(message)}") }
+        format.html { redirect_to(@order, notice: "Order #{@order.id} set to Approved. #{get_notice(message)}") }
         message.deliver if message && message.valid?
       else
         @order.to_submitted
@@ -168,7 +168,7 @@ class OrdersController < ApplicationController
     
     respond_to do |format|
       if @order.save
-        format.html { redirect_to(@order, notice: "Order #{@order.id} set to Processed.") }
+        format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Processed.") }
       else
         @order.reset_approved
         @readonly = true

@@ -99,16 +99,16 @@
   <% if @order.items.any? %>
     <div class="itemlist">
       <table width="100%">
-        <th>Description</th>
+        <th>Program</th>
         <th>Account</th>
-        <th style="text-align: center">Program</th>
+        <th>Description</th>
         <th style="text-align: center">GST</th>
         <th style="text-align: right">Total</th>
         <% @order.items.each do |item| %>
           <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-            <td><b><%= link_to(item.description,item) %></b></td>
+            <td><%= item.program_name %></td>
             <td><%= item.account_name %></td>
-            <td align="center"><%= item.program_code %></td>
+            <td><%= link_to(item.description,item,class: "link_hilight") %></td> 
             <td align="center"><%= item.tax_rate_short_name %></td>
             <td align="right"><%= item.formatted_subtotal %></td>
           </tr>

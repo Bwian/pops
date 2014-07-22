@@ -46,7 +46,7 @@ class Item < ActiveRecord::Base
   end
   
   def program_name
-    self.program ? self.program.name : "Missing Program #{self.program_id}"
+    self.program ? "#{self.program.name} (#{self.program_id})" : "Missing Program #{self.program_id}"
   end
   
   def program_code
@@ -54,7 +54,7 @@ class Item < ActiveRecord::Base
   end
   
   def account_name
-    self.account ? self.account.name : "Missing Account #{self.account_id}"
+    self.account ? "#{self.account.name} (#{self.account_id})" : "Missing Account #{self.account_id}"
   end  
   
   def tax_rate_name

@@ -107,6 +107,11 @@ th {
   color: $error-color;
 }
 
+.link_hilight {
+  color: $error-color;
+  font-weight: bold;
+}
+
 .list_line_even {
 	background:   $main-color-bg;
   height:       2em;
