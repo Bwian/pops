@@ -9,8 +9,9 @@ class ExoController < ApplicationController
 
   # GET /orders/new
   def new
+    eu = ExoUpdater.new(@class.name,[])
     respond_to do |format|
-      format.html { redirect_to(send(@models_url), notice: "Refresh option not yet implemented") }
+      format.html { redirect_to(send(@models_url), notice: eu.notice) }
     end
   end
   

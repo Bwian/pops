@@ -6,7 +6,6 @@ module ExoHelper
     authorised_action(EDIT,params[:controller], model) ? link_to(model.id, "/#{name.pluralize}/#{model.id}/edit", class: 'link_exo') : model.id
   end
   
-  
   def attribute_label(field)
     label = label_tag field
     label.sub('</',':</').html_safe
