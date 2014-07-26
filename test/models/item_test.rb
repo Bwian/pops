@@ -43,7 +43,7 @@ class ItemTest < ActiveSupport::TestCase
   end
   
   test 'program_name found' do
-    assert_equal('Program One',@item1.program_name)
+    assert(@item1.program_name.start_with? 'Program One')
   end
   
   test 'program_name not found' do
@@ -56,7 +56,7 @@ class ItemTest < ActiveSupport::TestCase
   end
   
   test 'account_name found' do
-    assert_equal('Account One',@item1.account_name)
+    assert(@item1.account_name.start_with? 'Account One')
   end
   
   test 'account_name not found' do

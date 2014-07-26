@@ -82,7 +82,7 @@ class OrdersControllerTest < ActionController::TestCase
     assert_difference("Order.where(status: 'S').count", 1) do
       put :submit, id: @order.to_param, order: @order.attributes
     end
-    assert_redirected_to orders_path
+    assert_redirected_to order_path
   end
   
   # TODO: change to handle js call
