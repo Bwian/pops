@@ -51,3 +51,6 @@ gem 'pry-nav', group: [:development, :test]
 gem 'prawn'
 gem 'prawn-print'
 
+# SQL Server access
+gem 'tiny_tds'
+

@@ -9,16 +9,23 @@ class ExoController < ApplicationController
 
   # GET /orders/new
   def new
-    eu = ExoUpdater.new(@class.name,[])
+    agent = ExoAgent.new
+    data = agent.extract(@class,'acacia')
+    if data
+      eu = ExoUpdater.new(@class,data)
+      notice = eu.notice
+    else
+      notice = agent.notice
+    end
+    
     respond_to do |format|
-      format.html { redirect_to(send(@models_url), notice: eu.notice) }
+      format.html { redirect_to(send(@models_url), notice: notice) }
     end
   end
   
   # GET /users/1
   def show
     @readonly = true
-
     respond_to do |format|
       format.html # show.html.erb
     end
