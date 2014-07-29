@@ -46,6 +46,7 @@ class ExoAgent
       end
       rows << row
     end
+    @connection.close
     rows
   end
   
@@ -71,7 +72,7 @@ class ExoAgent
         password: @password,
         login_timeout: @login_timeout
       )  
-      @connection.execute("use [@database]").do
+      @connection.execute("use [#{@database}]").do
     rescue TinyTds::Error
       @notice = "Connection to SQL Server database [#{@database}] at #{@host}:#{@port} failed"
       return false
