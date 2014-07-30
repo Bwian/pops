@@ -33,7 +33,7 @@
     <div class="field">
 	    <%= f.label :supplier_id, 'Supplier:' %>
 	    <%= f.select :supplier_id, Supplier.selection, { prompt: 'Select a supplier' },
-            { disabled: @readonly, class: "btn btn-primary", onchange: "javascript:show_supplier()", autofocus: true } %>
+            { disabled: @readonly, class: "btn btn-primary", onchange: "javascript:show_supplier();set_payment_date()", autofocus: true } %>
 	  </div>
     <div id="supplier" class="field">
       <%= f.label :supplier_name, 'Supplier Name:' %>

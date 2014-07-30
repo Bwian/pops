@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
 
   include NotesHelper
   
-  before_filter :find_order, except: %w[index new create refresh]
+  before_filter :find_order, except: %w[index new create refresh payment_date]
   before_filter :authorised_action, only: %w[new edit]
   
   # GET /orders

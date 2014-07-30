@@ -5,7 +5,7 @@ class SuppliersController < ExoController
 private
 
   def model_params
-    params.require(:supplier).permit(:name, :address1, :address2, :address3, :phone, :fax, :email, :tax_rate_id, :status, :tax_rate_id)
+    params.require(:supplier).permit(:name, :address1, :address2, :address3, :phone, :fax, :email, :tax_rate_id, :payment_term_id, :status)
   end
 
   def setup
