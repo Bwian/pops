@@ -10,8 +10,6 @@ class SupplierTest < ActiveSupport::TestCase
     supplier.status = 'N'
     supplier.save
     
-    assert_equal(3, Supplier.selection.count)
-    Supplier.reset_selection
     assert_equal(4, Supplier.selection.count)
   end
   

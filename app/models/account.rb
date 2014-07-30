@@ -13,7 +13,8 @@ class Account < ActiveRecord::Base
     @@selection ||= Account.where(status: ['A','N']).map { |a| [a.name_id, a.id] }
   end
   
-  def self.reset_selection
-    @@selection = nil  # force reload
+  def save
+    @@selection = nil
+    super
   end
 end

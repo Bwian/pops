@@ -39,7 +39,6 @@ class ExoController < ApplicationController
   def update
     respond_to do |format|
       if @model.update_attributes(model_params)
-        @class.reset_selection
         format.html { redirect_to(send(@models_url), notice: "#{@class.name} #{@model.name} was successfully updated.") }
       else
         format.html { render action: "edit" }

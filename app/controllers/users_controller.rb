@@ -39,7 +39,6 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        User.reset_selection
         format.html { redirect_to(users_url, notice: "User #{@user.name} was successfully created.") }
       else
         format.html { render action: "new" }
@@ -51,7 +50,6 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update_attributes(user_params)
-        User.reset_selection
         format.html { redirect_to(users_url, notice: "User #{@user.name} was successfully updated.") }
       else
         format.html { render action: "edit" }
@@ -62,7 +60,6 @@ class UsersController < ApplicationController
   # DELETE /users/1
   def destroy
     @user.destroy
-    User.reset_selection
 
     respond_to do |format|
       format.html { redirect_to(users_url) }

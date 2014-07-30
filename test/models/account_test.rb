@@ -9,8 +9,6 @@ class AccountTest < ActiveSupport::TestCase
     account.status = 'N'
     account.save
     
-    assert_equal(5, Account.selection.count)
-    Account.reset_selection
     assert_equal(6, Account.selection.count)
   end
   

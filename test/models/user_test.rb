@@ -72,8 +72,6 @@ class UserTest < ActiveSupport::TestCase
     user.approver = true
     user.save
     
-    assert_equal(count, User.selection.count)
-    User.reset_selection
     assert_equal(count + 1, User.selection.count)
   end
   

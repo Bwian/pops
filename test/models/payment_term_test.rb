@@ -10,8 +10,6 @@ class PaymentTermTest < ActiveSupport::TestCase
     payment_term.status = 'N'
     payment_term.save
     
-    assert_equal(3, PaymentTerm.selection.count)
-    PaymentTerm.reset_selection
     assert_equal(4, PaymentTerm.selection.count)
   end
 end

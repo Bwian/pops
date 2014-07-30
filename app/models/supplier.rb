@@ -14,8 +14,9 @@ class Supplier < ActiveRecord::Base
     @@selection ||= Supplier.where(status: ['A','N']).map { |s| [s.name, s.id] }
   end
   
-  def self.reset_selection
-    @@selection = nil  # force reload
+  def save
+    @@selection = nil
+    super
   end
   
   # Return address as one string with spaces in each line set to &nbsp

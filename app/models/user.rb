@@ -23,8 +23,14 @@ class User < ActiveRecord::Base
     @@selection ||= User.where(approver: true).map { |s| [s.name, s.id] }
   end
   
-  def self.reset_selection
+  def save
     @@selection = nil  # force reload
+    super
+  end
+  
+  def destroy
+    @@selection = nil  # force reload
+    super
   end
   
   def password=(password)

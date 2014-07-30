@@ -11,7 +11,8 @@ class PaymentTerm < ActiveRecord::Base
     @@selection ||= PaymentTerm.where(status: ['A','N']).map { |p| [p.name, p.id] }
   end
   
-  def self.reset_selection
-    @@selection = nil  # force reload
+  def save
+    @@selection = nil
+    super
   end
 end

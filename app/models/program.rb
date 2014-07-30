@@ -12,7 +12,8 @@ class Program < ActiveRecord::Base
     @@selection ||= Program.where(status: ['A','N']).map { |p| [p.name_id, p.id] }
   end
   
-  def self.reset_selection
-    @@selection = nil  # force reload
-  end 
+  def save
+    @@selection = nil
+    super
+  end
 end

@@ -9,8 +9,6 @@ class ProgramTest < ActiveSupport::TestCase
     program.status = 'N'
     program.save
     
-    assert_equal(5, Program.selection.count)
-    Program.reset_selection
     assert_equal(6, Program.selection.count)
   end
 end

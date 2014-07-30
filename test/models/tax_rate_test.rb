@@ -9,8 +9,6 @@ class TaxRateTest < ActiveSupport::TestCase
     tax_rate.status = 'N'
     tax_rate.save
     
-    assert_equal(3, TaxRate.selection.count)
-    TaxRate.reset_selection
     assert_equal(4, TaxRate.selection.count)
   end
 end
