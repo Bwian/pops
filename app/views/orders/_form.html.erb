@@ -150,5 +150,13 @@
   <% end %>
 <% end %>
 </div>
-<style onload="javascript:show_actions(<%= @readonly %>);show_supplier()"></style>
+
+<script>
+	function init()
+	{
+		show_actions(<%= @readonly %>);
+		show_supplier();
+	}
+	window.onload=init;
+</script>
 
