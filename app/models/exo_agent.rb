@@ -7,7 +7,7 @@ class ExoAgent
   
   def initialize
     @names  = {    
-      'Account'     => 'GL_ACCS',
+      'Account'     => 'GLACCS',
       'PaymentTerm' => 'CREDIT_STATUSES',
       'Program'     => 'BRANCHES',
       'Supplier'    => 'CR_ACCS',
