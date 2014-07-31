@@ -33,7 +33,7 @@
     <div class="field">
 	    <%= f.label :supplier_id, 'Supplier:' %>
 	    <%= f.select :supplier_id, Supplier.selection, { prompt: 'Select a supplier' },
-            { disabled: @readonly, class: "btn btn-primary", onchange: "javascript:show_supplier();set_payment_date()", autofocus: true } %>
+            { disabled: @readonly, class: "btn btn-primary btn-sm", onchange: "javascript:show_supplier();set_payment_date()", autofocus: true } %>
 	  </div>
     <div id="supplier" class="field">
       <%= f.label :supplier_name, 'Supplier Name:' %>
@@ -46,7 +46,7 @@
     <div class="field">
       <%= f.label :invoice_date, 'Invoice Date:' %>
       <%= f.date_select :invoice_date, {}, 
-            { disabled: @readonly, class: "btn btn-primary", onchange: "javascript:set_payment_date()" } %>
+            { disabled: @readonly, class: "btn btn-primary btn-sm", onchange: "javascript:set_payment_date()" } %>
     </div>
     
     <%= render 'payment_date' %>
@@ -58,7 +58,7 @@
 	  <div class="field">
 	    <%= f.label :approver_id, 'Approver:' %>
 	    <%= f.select :approver_id, User.selection, { prompt: 'Select an approver' },
-            { disabled: @readonly || @order.approved?, class: "btn btn-primary" } %>
+            { disabled: @readonly || @order.approved?, class: "btn btn-primary btn-sm" } %>
 	  </div>
     <div class="field">
       <%= f.label :delivery_address, 'Deliver to:' %>

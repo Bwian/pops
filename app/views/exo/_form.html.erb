@@ -25,7 +25,7 @@
     
     <div class="field">
 	    <%= f.label :status, 'Status:' %>
-	    <%= f.select :status, @class::STATUS.invert, {}, { class: "btn btn-primary" } %>
+	    <%= f.select :status, @class::STATUS.invert, {}, { class: "btn btn-primary btn-sm" } %>
     </div>
     
     <% @model.attribute_list.each_key do |field| %>
