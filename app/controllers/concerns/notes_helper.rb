@@ -25,23 +25,21 @@ module NotesHelper
         else
           action = 'changed'
         end
-             
-        note = Note.new
-        note.order_id = order_id
-        note.user_id = session[:user_id]
-        note.info = "#{name.capitalize} #{action}:\n #{diff}"
-        note.save
+        
+        save_notes(order_id,"#{name.capitalize} #{action}:\n #{diff}")
       end
     end
     session.delete(key)
   end
   
-  def save_notes(params)
-    notes = params[:order_notes]
-    return if notes.nil?
-    
+  def save_user_notes(params)
+    return if params[:order_notes].nil?
+    save_notes(params[:id],params[:order_notes])
+  end
+  
+  def save_notes(order_id,notes)
     note = Note.new
-    note.order_id = params[:id]
+    note.order_id = order_id
     note.user_id = session[:user_id]
     note.info = notes
     note.save

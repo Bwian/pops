@@ -48,7 +48,7 @@ class OrdersController < ApplicationController
     respond_to do |format|
       if @order.save
         params[:id] = @order.id
-        save_notes(params)
+        save_user_notes(params)
         format.html { redirect_to new_order_item_path(@order) }
       else
         format.html { render action: "new" }
@@ -61,7 +61,7 @@ class OrdersController < ApplicationController
     respond_to do |format|
       if @order.update_attributes(order_params)
         add_notes('order',@order)
-        save_notes(params)
+        save_user_notes(params)
         if params[:order_notes]
           message = @order.sendmail(session[:user_id])
           message.deliver if message && message.valid?
@@ -92,7 +92,7 @@ class OrdersController < ApplicationController
   def redraft
     @order.to_draft
     add_notes('order',@order)
-    save_notes(params)
+    save_user_notes(params)
     message = @order.sendmail(session[:user_id])  
     
     respond_to do |format|
@@ -115,7 +115,7 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
-        save_notes(params)
+        save_user_notes(params)
         format.html { redirect_to(@order, notice: "Order #{@order.id} set to Submitted.") }
       else
         @order.to_draft
@@ -128,7 +128,7 @@ class OrdersController < ApplicationController
   def resubmit
     @order.to_submitted
     add_notes('order',@order)
-    save_notes(params)
+    save_user_notes(params)
     message = @order.sendmail(session[:user_id])
 
     respond_to do |format|
