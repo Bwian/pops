@@ -2,7 +2,7 @@ require 'tiny_tds'
 
 class ExoAgent
   
-  NIL = 'nil'
+  NIL = 'NULL'
   
   attr_reader :notice
   attr_writer :host, :port, :user, :database
@@ -57,15 +57,15 @@ class ExoAgent
     
     invoice_id = insert('ACS_Create_CrInv_Hdr_Record',
       order.supplier_id,
-      DateTime.now, # or order.invoice_date ???
-      order.invoice_no || NIL,
-      order.reference,
+      quote(Date.today.to_s), # or order.invoice_date ???
+      quote(order.invoice_no),
+      quote(order.reference),
       NIL, # REF2
-      order.subtotal,
-      order.gst, # or grandtotal ???
+      order.format_subtotal,
+      order.format_gst, # or grandtotal ???
       0.0, # MANUAL_ROUNDING
       NIL, # SALESNO
-      order.payment_date || NIL,
+      quote(order.payment_date),
       NIL, # X_SIMPRO_ID
       NIL, # X_SIMPRO_COMPANY
       NIL  # BRANCHNO
@@ -76,16 +76,16 @@ class ExoAgent
     @order.items.each do |item|
       return false if !insert('ACS_Create_CrInv_GLLine_Record',
       order.supplier_id,
-      order.invoice_no,
+      quote(order.invoice_no),
       invoice_id,
       item.program_id,
       item.account_id,
       NIL, # GLSUBACC
       item.description,
       1.0, # QUANTITY
-      item.price,
+      item.formatted_price,
       item.tax_rate_id,
-      DateTime.now, # or something else ???
+      quote(Date.today.to_s), # or something else ???
       NIL # LINKED_STOCKCODE
       )
     end
@@ -130,29 +130,33 @@ class ExoAgent
         login_timeout: @login_timeout
       )  
       @connection.execute("use [#{@database}]").do
-    rescue TinyTds::Error
-      @notice = "Could not create connection to SQL Server database [#{@database}] at #{@host}:#{@port}e"
+    rescue TinyTds::Error => excp
+      @notice = "Could not create connection to SQL Server database [#{@database}] at #{@host}:#{@port} due to: #{excp.message}"
       return false
     end
     return true
   end
   
-  def insert(proc,args)
+  def insert(proc,*args)
     exec = "[#{proc}] #{args.join(' ')}"
-    stmt = "declare @SeqNo int; exec #{exec} ; select @SeqNo as seqno;"
+    stmt = "declare @SeqNo int; exec #{exec},@SeqNo OUTPUT; select @SeqNo as seqno;"
     seqno = nil
     begin
-      result = client.execute(stmt)
+      result = @connection.execute(stmt)
       result.each(:symbolize_keys => true) do |row|
         seqno = row[:seqno]
       end
-    rescue TinyTds::Error
-      @notice = "Error processing: #{exec}"
+    rescue TinyTds::Error => excp
+      @notice = "Error (#{excp.message}) processing: #{exec}"
       return nil
     end
     @notice = "Insert failed: #{exec}" unless seqno
     
     return seqno
+  end
+  
+  def quote(vbl)
+    "'#{vbl}'"
   end
   
 end
