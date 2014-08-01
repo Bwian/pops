@@ -57,15 +57,15 @@ class ExoAgent
     
     invoice_id = insert('ACS_Create_CrInv_Hdr_Record',
       order.supplier_id,
-      quote(Date.today.to_s), # or order.invoice_date ???
+      quote(order.invoice_date.to_s), # or today ???
       quote(order.invoice_no),
       quote(order.reference),
-      NIL, # REF2
-      order.format_subtotal,
-      order.format_gst, # or grandtotal ???
+      quote("PO-#{order.id}"), # REF2
+      order.formatted_subtotal,
+      order.formatted_gst, # or grandtotal ???
       0.0, # MANUAL_ROUNDING
       NIL, # SALESNO
-      quote(order.payment_date),
+      quote(order.payment_date.to_s),
       NIL, # X_SIMPRO_ID
       NIL, # X_SIMPRO_COMPANY
       NIL  # BRANCHNO
@@ -73,7 +73,7 @@ class ExoAgent
 
     return false if !invoice_id
     
-    @order.items.each do |item|
+    order.items.each do |item|
       return false if !insert('ACS_Create_CrInv_GLLine_Record',
       order.supplier_id,
       quote(order.invoice_no),
@@ -81,7 +81,7 @@ class ExoAgent
       item.program_id,
       item.account_id,
       NIL, # GLSUBACC
-      item.description,
+      quote(item.description),
       1.0, # QUANTITY
       item.formatted_price,
       item.tax_rate_id,
@@ -138,7 +138,7 @@ class ExoAgent
   end
   
   def insert(proc,*args)
-    exec = "[#{proc}] #{args.join(' ')}"
+    exec = "[#{proc}] #{args.join(', ')}"
     stmt = "declare @SeqNo int; exec #{exec},@SeqNo OUTPUT; select @SeqNo as seqno;"
     seqno = nil
     begin
