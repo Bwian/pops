@@ -14,13 +14,13 @@ class ExoAgentTest < ActionView::TestCase
   end
   
   test "connection should fail" do 
-    assert_not(@agent.extract(Program,'password'))
-    assert(@agent.notice =~ /Connection to SQL Server database .* failed/)
+    assert_not(@agent.extract(Program))
+    assert(@agent.notice.start_with? "Could not create connection to SQL Server database")
   end
   
   test "invalid configuration" do
     @agent.host = nil
-    assert_not(@agent.extract(Program,'password'))
+    assert_not(@agent.extract(Program))
     assert(@agent.notice =~ /.* invalid - missing host/)
   end
 

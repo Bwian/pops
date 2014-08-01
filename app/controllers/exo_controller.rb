@@ -10,7 +10,7 @@ class ExoController < ApplicationController
   # GET /orders/new
   def new
     agent = ExoAgent.new
-    data = agent.extract(@class,'acacia')
+    data = agent.extract(@class)
     if data
       eu = ExoUpdater.new(@class,data)
       notice = eu.notice

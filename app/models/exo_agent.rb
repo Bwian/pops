@@ -6,13 +6,14 @@ class ExoAgent
   attr_writer :host, :port, :user, :database
   
   def initialize
-    @names  = {    
+    @names = {    
       'Account'     => 'GLACCS',
       'PaymentTerm' => 'CREDIT_STATUSES',
       'Program'     => 'BRANCHES',
       'Supplier'    => 'CR_ACCS',
       'TaxRate'     => 'TAX_RATES'     
     }
+    
     @tables = {
       'Account'     => { ACCNO: :id, NAME: :name, TAXSTATUS: :tax_rate_id },
       'PaymentTerm' => { STATUSNO: :id, STATUSDESC: :name, CREDIT_FACTOR: :factor },
@@ -28,12 +29,11 @@ class ExoAgent
     @port = 1433
     @login_timeout = 1
     @user = 'exouser'
-    @password = nil
+    @password = 'acacia'
     @database = 'EXO_UCB_TEST'
   end
   
-  def extract(table,password)
-    @password = password
+  def extract(table)
     return nil unless connect
     
     results = @connection.execute(build_select(table))
@@ -48,6 +48,13 @@ class ExoAgent
     end
     @connection.close
     rows
+  end
+  
+  def complete(order)
+    return false unless connect
+    
+    @connection.close
+    return true
   end
   
   private
@@ -74,7 +81,7 @@ class ExoAgent
       )  
       @connection.execute("use [#{@database}]").do
     rescue TinyTds::Error
-      @notice = "Connection to SQL Server database [#{@database}] at #{@host}:#{@port} failed"
+      @notice = "Could not create connection to SQL Server database [#{@database}] at #{@host}:#{@port}e"
       return false
     end
     return true

@@ -164,10 +164,19 @@ class OrdersController < ApplicationController
   
   # POST /orders/1/complete
   def complete
+    agent = ExoAgent.new
     @order.to_processed(session[:user_id])
+    completed = true
+    if @order.valid? && !agent.complete(@order)
+      @order.errors.add(:processing_failed," - #{agent.notice}")
+      save_notes(@order.id,"Processing failed - #{agent.notice}")
+      completed = false
+    else
+      completed = @order.save
+    end
     
     respond_to do |format|
-      if @order.save
+      if completed
         format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Processed.") }
       else
         @order.reset_approved
