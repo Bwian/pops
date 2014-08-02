@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require "#{File.dirname(__FILE__)}/../config/environment"
+require "#{File.dirname(__FILE__)}/../../config/environment"
 
 DEFAULT_TAX_RATE = 32
 
