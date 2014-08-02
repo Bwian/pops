@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 require 'tiny_tds'
+require 'pry'
 
 class StoredProcedure
   
@@ -20,6 +21,7 @@ class StoredProcedure
     rescue TinyTds::Error => excp
       puts excp.message
     end
+    out
   end
   
   def list_sps(filter)
@@ -40,8 +42,12 @@ class StoredProcedure
       puts 'Invalid selection'
     else
       idx -= 1
-      puts @filtered_list[idx]
     end  
+	
+    result = @connection.execute("sp_helptext #{@filtered_list[idx]}")
+	  result.each(:symbolize_keys => true) do |row|
+		  puts row[:Text]
+	  end
   end
 
   def go
@@ -72,8 +78,6 @@ class Select
   def initialize(connection,db)
     @connection = connection
     @db = db
-    @main_list = build_list
-    @filtered_list = []
   end
   
   def get_results(stmt)
@@ -81,7 +85,7 @@ class Select
       result = @connection.execute(stmt)
       result.each(:symbolize_keys => true) do |row|
         row.each do |key,value|
-          printf('%20d: %s',key,value)
+          printf("%20s: %s\n",key,value)
         end
         puts
       end
@@ -115,11 +119,11 @@ puts "Using #{db}"
 
 begin
   connection = TinyTds::Client.new(username: 'exouser', password: 'acacia', dataserver: 'ucfinance')
-  connection.execute("[#{db}]").do
+  connection.execute("use [#{db}]").do
 rescue TinyTds::Error => excp
   puts "Can't connect to database [#{db}] - #{excp.message}"
   exit
 end
 
-obj = klass.new(connection)
+obj = klass.new(connection,db)
 obj.go
