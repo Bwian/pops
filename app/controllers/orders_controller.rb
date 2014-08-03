@@ -9,30 +9,18 @@ class OrdersController < ApplicationController
   def index
     @order_filter = session[:order_filter] || OrderFilter.new(session[:user_id])
     @orders = @order_filter.faults.any? ? Order.none : Order.where(where_parameters).limit(100).joins(join_user(params[:sort])).order(sort_order(params[:sort]))
-
-    respond_to do |format|
-      format.html # index.html.erb
-    end
   end
 
   # GET /orders/1
   def show
     @readonly = true
     save_json('order',@order)
-
-    respond_to do |format|
-      format.html # show.html.erb
-    end
   end
 
   # GET /orders/new
   def new
     @order = Order.new
     @order.approver_id = User.find(session[:user_id]).approver_id
-
-    respond_to do |format|
-      format.html # new.html.erb
-    end
   end
 
   # GET /orders/1/edit

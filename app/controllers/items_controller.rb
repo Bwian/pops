@@ -10,10 +10,6 @@ class ItemsController < ApplicationController
   def show  
     @readonly = true
     save_json('item',@item)
-
-    respond_to do |format|
-      format.html # show.html.erb
-    end
   end
 
   # GET /items/new
@@ -24,10 +20,6 @@ class ItemsController < ApplicationController
     @item.program_id = session[:program_id]
     @item.account_id = session[:account_id]
     @order = @item.order
-    
-    respond_to do |format|
-      format.html # new.html.erb
-    end
   end
 
   # GET /items/1/edit
