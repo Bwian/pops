@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
 
   include NotesHelper
   
-  before_filter :find_order, except: %w[index new create refresh payment_date]
+  before_filter :find_order, except: %w[index new create refresh payment_date delivery]
   before_filter :authorised_action, only: %w[new edit]
   
   # GET /orders
@@ -203,6 +203,13 @@ class OrdersController < ApplicationController
   def payment_date
     @order = Order.new(order_params)
     @order.set_payment_date
+    respond_to do |format|
+      format.js
+    end
+  end
+  
+  def delivery
+    @delivery = params[:delivery_id].empty? ? Delivery.new : Delivery.find(params[:delivery_id])
     respond_to do |format|
       format.js
     end

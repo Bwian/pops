@@ -60,9 +60,14 @@
 	    <%= f.select :approver_id, User.selection, { prompt: 'Select an approver' },
             { disabled: @readonly || @order.approved?, class: "btn btn-primary btn-sm" } %>
 	  </div>
+	  <div class="field">
+	    <%= label_tag :delivery_id, 'Deliver to:' %>
+	    <%= select_tag :delivery_id, options_for_select(Delivery.selection), 
+            { include_blank: true, disabled: @readonly, class: "btn btn-primary btn-sm delivery", onchange: "javascript: set_delivery_address()" } %>
+	  </div>
     <div class="field">
-      <%= f.label :delivery_address, 'Deliver to:' %>
-      <%= f.text_area :delivery_address, cols: 40, rows: 5, readonly: @readonly %>
+      <%= label_tag '' %>
+      <%= f.text_area :delivery_address, rows: 5, readonly: @readonly, class: "delivery" %>
     </div>
     <div class="actions">
       <label></label>

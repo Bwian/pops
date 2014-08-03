@@ -33,3 +33,11 @@ function set_payment_date() {
     data: $('form').serialize()
   });
 }
+
+function set_delivery_address() {
+  $.ajax({
+    url:  "delivery",
+    type: "POST",
+    data: $('form').serialize()
+  });
+};
