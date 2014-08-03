@@ -15,7 +15,7 @@ module ExoHelper
     if field =~ /_id$/
       class_name = field.sub('_id','').camelize
       klass = Object.const_get(class_name)
-      f.select field, klass.selection, { include_blank: true }, { class: "btn btn-primary" }
+      f.select field, klass.selection, { include_blank: true }, { class: "btn btn-primary btn-sm" }
     else
       f.text_field(field)
     end
