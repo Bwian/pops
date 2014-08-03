@@ -1,0 +1,41 @@
+<div class="admin_form">
+<%= form_for(@delivery) do |f| %>
+  <fieldset>
+    <legend><%= legend("Delivery Details", @readonly) %></legend>
+    <% if @delivery.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@delivery.errors.count, "error") %> prohibited this delivery from being saved:</h2>
+        <ul>
+          <% @delivery.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+	
+    <div class="field">
+      <%= f.label :name, 'Name:' %>
+      <%= f.text_field :name, readonly: @readonly %>
+    </div>
+    <div class="field">
+      <%= f.label :address, 'Address:' %>
+      <%= f.text_area :address, cols: 40, rows: 5, readonly: @readonly %>
+    </div>
+    </br>
+    <div class="actions">
+      <label></label>
+  		<% if @readonly %>
+        <%= link_edit(@delivery) %>&nbsp;<%= link_delete(@delivery) %>
+      <% else %>
+        <%= f.submit nil, class: "btn btn-primary btn-sm" %>
+      <% end %>
+      <%= link_list(@delivery) %>
+    </div>
+	
+  	<div class="notice">
+      <label for="notice" > </label>
+      <%= notice %>
+    </div>
+  </fieldset>
+<% end %>
+</div>

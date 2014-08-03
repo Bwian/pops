@@ -1,0 +1,17 @@
+<% if notice %>
+  <p class="notice" ><%= notice %></p>
+<% end %>
+
+<div class=header>
+  <div class="header-title header-cells">Delivery Addresses</div>
+  <div class="header-cells right"><%= link_new('delivery')%></div>
+</div>
+
+<table width="100%">
+  <% @deliveries.each do |delivery| %>
+    <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+      <td><b><%= link_to(delivery.name, delivery) %></b></td>
+      <td><%= delivery.address %></td>
+    </tr>
+  <% end %>
+</table>

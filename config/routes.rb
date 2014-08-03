@@ -1,5 +1,5 @@
 Pops::Application.routes.draw do
-  
+
   root 'orders#index'
   
   controller :welcome do
@@ -18,6 +18,7 @@ Pops::Application.routes.draw do
   resources :suppliers,     :except => [:create, :delete, :show]
   resources :tax_rates,     :except => [:create, :delete, :show]  
   resources :users
+  resources :deliveries
   
   get  'orders/refresh'      => 'orders#refresh'
   get  'orders/:id/print'    => 'orders#print', :defaults => { :format => 'pdf' }
