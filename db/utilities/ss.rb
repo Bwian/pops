@@ -9,6 +9,9 @@ class StoredProcedure
     @db = db
     @main_list = build_list
     @filtered_list = []
+    puts 'Select from list or enter partial name to filter list'
+    puts '0 - clear filter'
+    puts 'q - quit'
   end
   
   def build_list
@@ -78,6 +81,11 @@ class Select
   def initialize(connection,db)
     @connection = connection
     @db = db
+    puts 'Enter query stmt'
+    puts 'l - last CR_TRANS insert'
+    puts '/ - repeat last query'
+    puts 'q - quit'
+    puts
   end
   
   def get_results(stmt)
@@ -95,11 +103,22 @@ class Select
   end
   
   def go
+    last_input = ''
     loop do
       'Select: '.display
       input = $stdin.gets.chomp
-      exit if input == 'q'
-      get_results(input)
+      case input
+        when 'q'
+          exit
+        when 'l'
+          get_results('select * from CR_TRANS where SEQNO = (select max(SEQNO) from CR_TRANS)')
+          get_results('select * from CR_INVLINES where HDR_SEQNO = (select max(SEQNO) from CR_TRANS)')
+        when '/'
+          get_results(input)
+        else
+          get_results(input)
+          last_input = input
+      end
     end  
   end
 end
