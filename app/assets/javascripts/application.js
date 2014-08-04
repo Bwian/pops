@@ -14,3 +14,11 @@
 //= require jquery_ujs
 // require turbolinks
 //= require_tree .
+
+function order_search() {
+  $.ajax({
+    url:  '/orders/' + $("#order_search").val() +'/search',
+    type: "GET"
+  });
+};
+  

@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
 
   include NotesHelper
   
-  before_filter :find_order, except: %w[index new create refresh payment_date delivery]
+  before_filter :find_order, except: %w[index new create refresh search payment_date delivery]
   before_filter :authorised_action, only: %w[new edit]
   
   # GET /orders
@@ -25,6 +25,19 @@ class OrdersController < ApplicationController
 
   # GET /orders/1/edit
   def edit
+  end
+  
+  def search
+    if Order.exists?(params[:id])
+      @order = Order.find(params[:id])
+      url = order_url
+    else
+      url = orders_url
+    end
+
+    respond_to do |format|
+      format.js { render :js => "window.location = '#{url}'" }
+    end
   end
 
   # POST /orders

@@ -35,6 +35,11 @@ module ApplicationHelper
     authorised_action(REFRESH,params[:controller],nil) ? link_to("Refresh #{name.titleize.pluralize}", "/#{name.pluralize}/new", class: LINK_STYLE) : ""
   end
   
+  def search
+    return '' unless session[:user_id]
+    text_field_tag(:order_search, nil, class: "form-control search", placeholder: "PO #", onchange: "javascript:order_search()")
+  end
+  
   def link_logoutin
     return '' if request.fullpath == '/login'
     if session[:user_id]  
