@@ -1,8 +1,8 @@
 <div>    
-  <% if notice %>
-    <p class="notice" ><%= notice %></p>
-  <% end %>
-  
+  <% flash.each do |name, msg| -%>
+    <%= content_tag :p, msg, class: name %>
+  <% end -%>
+      
   <% if @order_filter.faults.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@order_filter.faults.count, "error") %> prevented orders from being displayed:</h2>
@@ -14,8 +14,7 @@
     </div>
   <% end %>
   
-  <%= form_tag("/orders/refresh", method: :post) do %>    
-    
+  <%= form_tag("/orders/refresh", method: :post) do %>        
     <div class=header>
       <div class="header-title header-cells">Orders</div>
       <div class="header-cells">

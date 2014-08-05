@@ -33,9 +33,10 @@ class OrdersController < ApplicationController
       url = order_url
     else
       url = orders_url
+      flash.alert = "Could not find order #{params[:id]}"
     end
 
-    respond_to do |format|
+    respond_to do |format|  
       format.js { render :js => "window.location = '#{url}'" }
     end
   end

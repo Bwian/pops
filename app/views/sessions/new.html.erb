@@ -14,14 +14,15 @@
 			</div>
 			
 			<div class="actions">
-				<label>&nbsp;</label>        
+				<label> </label>        
 				<%= submit_tag "Login", class: "btn btn-primary btn-sm" %>
 			</div>
           
-      <div>
-        <label>&nbsp;</label>
-        <div class="notice"> <%= notice %></div>
-        <div class="error"> <%= flash[:alert] %></div>
+      <div class="actions">
+        <label> </label>
+        <% flash.each do |name, msg| -%>
+          <%= content_tag :p, msg, class: name %>
+        <% end %>
       </div>
 		</fieldset>
 	<% end %>
