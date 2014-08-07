@@ -11,6 +11,6 @@ function order_search() {
 // Needed by the order search field to make IE Enter fire onchange
 function check_enter(event) {
 	if (event.which == 13) {
-		event.srcElement.blur;
+		event.srcElement.blur();
 	}
 };
