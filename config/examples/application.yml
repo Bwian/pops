@@ -1,0 +1,17 @@
+defaults: &defaults
+  sql_server_host: 152.100.100.68
+  sql_server_port: 1433
+  sql_server_db:   EXO_UCB_TEST 
+    
+development:
+  <<: *defaults
+  sql_server_db:   EXO_UCB_TEST
+  
+test:
+  <<: *defaults
+  sql_server_db:   EXO_UCB_TEST
+  
+production:
+  <<: *defaults
+  sql_server_db:   EXO_UCB
+  

@@ -1,8 +1,21 @@
 # Load the Rails application.
 require File.expand_path('../application', __FILE__)
 
+CONFIG_FILE = 'config/application.yml'
+
 # Initialize the Rails application.
 Pops::Application.initialize!
+
+begin
+  envs = YAML.load_file(CONFIG_FILE)[Rails.env]
+rescue
+  Rails.logger.error "Error loading configuration file #{CONFIG_FILE}"
+  envs = {}
+end
+
+envs.each do |key,value|
+  ENV[key] = value.to_s
+end
 
 # Common constants
 NEW     = 'new'
