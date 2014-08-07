@@ -47,7 +47,7 @@ module ApplicationHelper
   
   def search
     return '' if request.fullpath == '/login'
-    text_field_tag(:order_search, nil, class: "form-control search", placeholder: "PO #", onchange: "javascript:order_search()")
+    text_field_tag(:order_search, nil, class: "form-control search", placeholder: "PO #", onchange: "javascript:order_search()", onkeypress: "javascript:check_enter(event)")
   end
   
   def legend(name,disabled)
