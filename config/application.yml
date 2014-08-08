@@ -8,7 +8,7 @@ defaults: &defaults
   sql_server_port:     1433           # default = 1433
   sql_server_db:       EXO_UCB_TEST 
   sql_server_login:    username
-  sql_server_password: password
+  sql_server_password: cGFzc3dvcmQ=   # use db/utilities/encode.rb password
   sql_server_timeout:  1              # default = 1 (sec)
     
 development:
@@ -20,7 +20,7 @@ test:  # Don't change these because the test suite needs them
   sql_server_port:     1432
   sql_server_db:       EXO_UCB_TEST 
   sql_server_login:    username
-  sql_server_password: password
+  sql_server_password: cGFzc3dvcmQ=
   sql_server_timeout:  2
   
 production:

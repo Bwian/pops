@@ -13,7 +13,7 @@ class ExoAgentTest < ActionView::TestCase
     assert_equal('EXO_UCB_TEST',@agent.instance_eval('@database'))
     assert_equal(2,@agent.instance_eval('@login_timeout'))
     assert_equal('username',@agent.instance_eval('@user'))
-    assert_equal('password',@agent.instance_eval('@password'))
+    assert_equal('password',Base64.decode64(@agent.instance_eval('@password')))
   end
   
   test "default configuration attributes" do

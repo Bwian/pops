@@ -32,8 +32,7 @@ class ExoAgent
     @database      = ENV['sql_server_db']
     @login_timeout = (ENV['sql_server_timeout'] || 1).to_i
     @user          = ENV['sql_server_login']
-    @password      = ENV['sql_server_password']
-    
+    @password      = ENV['sql_server_password'] 
   end
   
   def extract(table)
@@ -127,7 +126,7 @@ class ExoAgent
         host: @host,
         port: @port,
         username: @user,
-        password: @password,
+        password: Base64.decode64(@password),
         login_timeout: @login_timeout
       )  
       @connection.execute("use [#{@database}]").do
