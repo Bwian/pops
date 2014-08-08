@@ -26,13 +26,14 @@ class ExoAgent
     
     @notice = ''
     
-    @connection = nil
-    @host = '152.100.100.68'
-    @port = 1433
-    @login_timeout = 1
-    @user = 'exouser'
-    @password = 'acacia'
-    @database = 'EXO_UCB_TEST'
+    @connection    = nil
+    @host          = ENV['sql_server_host']
+    @port          = (ENV['sql_server_port'] || 1433).to_i
+    @database      = ENV['sql_server_db']
+    @login_timeout = (ENV['sql_server_timeout'] || 1).to_i
+    @user          = ENV['sql_server_login']
+    @password      = ENV['sql_server_password']
+    
   end
   
   def extract(table)

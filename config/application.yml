@@ -1,0 +1,29 @@
+# This configuration file is intended to be modified for production
+# purposes and is protected from subsequent updating by:
+# git update-index --assume-unchanged /path/to/application.yml
+# Use --no-assume-unchanged should subsequent changes need tracking.
+
+defaults: &defaults
+  sql_server_host:     192.168.1.23
+  sql_server_port:     1433           # default = 1433
+  sql_server_db:       EXO_UCB_TEST 
+  sql_server_login:    username
+  sql_server_password: password
+  sql_server_timeout:  1              # default = 1 (sec)
+    
+development:
+  <<: *defaults
+  
+test:  # Don't change these because the test suite needs them
+  <<: *defaults
+  sql_server_host:     invalid
+  sql_server_port:     1432
+  sql_server_db:       EXO_UCB_TEST 
+  sql_server_login:    username
+  sql_server_password: password
+  sql_server_timeout:  2
+  
+production:
+  <<: *defaults
+  sql_server_db:       EXO_UCB
+  
