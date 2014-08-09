@@ -41,7 +41,11 @@ class OrderPdf
   end
 
   def header(order)
-    watermark unless order.authorised?
+    if Rails.env.production?
+      watermark('Unauthorised') unless order.authorised?
+    else
+      watermark('- Test Only -')
+    end
     
     @pdf.table([
 			[{:image => "#{Rails.root}/app/assets/images/UCB-grayscale.jpg", :scale => 0.07},
@@ -156,11 +160,11 @@ class OrderPdf
     end    
   end
   
-  def watermark
+  def watermark(text)
     @pdf.rotate(45, origin: [100,150]) do
       @pdf.fill_color "CFCFCF"
       @pdf.font("Times-Roman", :size => 72, :font_style => :bold) do
-        @pdf.draw_text "Unauthorised", :at => [150,150]
+        @pdf.draw_text text, :at => [150,150]
       end
       @pdf.fill_color "000000"
     end
