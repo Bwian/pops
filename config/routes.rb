@@ -20,6 +20,11 @@ Pops::Application.routes.draw do
   resources :users
   resources :deliveries
   
+  controller :notes do
+    get  'notes' => :index
+    post 'notes' => :search
+  end
+  
   get  'orders/refresh'      => 'orders#refresh'
   get  'orders/:id/print'    => 'orders#print', :defaults => { :format => 'pdf' }
   get  'orders/:id/search'   => 'orders#search'

@@ -35,16 +35,18 @@ class ApplicationController < ActionController::Base
     true
   end
   
-  INDEX = 'index'
-  SHOW  = 'show'
-  ALL   = 'all'
-  NONE  = 'none'
+  INDEX  = 'index'
+  SHOW   = 'show'
+  SEARCH = 'search'
+  ALL    = 'all'
+  NONE   = 'none'
 
   ADMIN = {
     'orders'        => [ALL],
     'items'         => [ALL],
     'users'         => [INDEX, SHOW],
     'deliveries'    => [INDEX, SHOW],
+    'notes'         => [INDEX, SEARCH],
     'suppliers'     => [INDEX],
     'payment_terms' => [INDEX],
     'programs'      => [INDEX],

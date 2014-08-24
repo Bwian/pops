@@ -4,13 +4,22 @@ one:
   order: submitted
   user: brian
   info: Stuff brian changed
+  created_at: 2014-08-10 00:00:00
 
 two:
   order: submitted
   user: brian
   info: More stuff brian changed
+  created_at: 2014-08-11 00:00:00
   
 three:
   order: approved
   user: sean
   info: Stuff sean changed
+  created_at: 2014-08-12 00:00:00
+  
+four:
+  order_id: 1
+  user: sean
+  info: More stuff sean changed then deleted
+  created_at: 2014-08-13 00:00:00

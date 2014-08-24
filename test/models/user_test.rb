@@ -10,7 +10,6 @@ class UserTest < ActiveSupport::TestCase
     assert_equal "brian", @user1.code
     assert_equal "Brian Collins", @user1.name
     assert_equal "brian", @user1.code
-    
   end
   
   test "attributes must not be empty" do
