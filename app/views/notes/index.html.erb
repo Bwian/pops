@@ -1,68 +1,54 @@
 <div class=admin_form>
 
   <%= form_for(@note) do |f| %>
-    <fieldset>
-      <legend>Notes Search</legend>
       
-      <% if @note.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@note.errors.count, "error") %> prohibited this search:</h2>
-          <ul>
-            <% @note.errors.full_messages.each do |msg| %>
-              <li><%= msg %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-      
-      <div class="field">
-        <%= f.label :order_id, 'Order:' %>
-        <%= f.text_field :order_id %>
+    <% if @note.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@note.errors.count, "error") %> prohibited this search:</h2>
+        <ul>
+          <% @note.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
       </div>
-      <div class="field">
-        <%= f.label :date_from, 'From:' %>
-        <%= f.text_field :date_from %>
-      </div>
-      <div class="field">
-        <%= f.label :date_to, 'To:' %>
-        <%= f.text_field :date_to %>
-      </div>
-      <div class="field">
-  	    <%= f.label :user_id, 'User:' %>
-  	    <%= f.select :user_id, User.selection, { include_blank: true },
-              { class: "btn btn-primary btn-sm" } %>
-  	  </div>
-      <div class="field">
-        <%= f.label :info, 'Info:' %>
-        <%= f.text_field :info %>
-      </div>
-      
-      <div class="actions">
-        <label></label>
-        <%= f.submit 'Search', class: "btn btn-primary btn-sm" %>
-        <%= link_to 'Clear', notes_path, class: "btn btn-primary btn-sm" %>
-      </div>
-      
-      <% if notice %>
-        <p class="notice" ><%= notice %></p>
-      <% end %>
-    </fieldset>
-  <% end %>
-</div>
-    
-<div class="itemlist">
-  <table width="100%">
-    <th>Notes</th>
-    <th> </th>
-    <th> </th>
-    <th> </th>
-    <% @notes.each do |note| %>
-      <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-        <td><%= link_to(note.order_id, order_path(note.order_id), class: "link_hilight") %></td>
-        <td><%= note.formatted_date %></td>
-				<td><%= note.user_name %></td>
-				<td><%= html_newlines(note.info) %></td>
-      </tr>
     <% end %>
-  </table>
+    
+    <div class=header>
+      <div class="header-title header-cells">Notes</div>
+    </div>
+      
+    <div class="itemlist">
+      <table width="100%">
+        <th>Order</th>
+        <th>Date</th>
+        <th></th>
+        <th></th>
+        <th>User</th>
+        <th>Info</th>
+        <th></th>
+        <th></th>
+        <tr class="search_row">
+          <td><%= f.text_field :order_id, size: 5, class: "search_fields" %></td>
+          <td><%= f.text_field :date_from, size: 8, class: "search_fields" %></td>
+          <td align="center">to</td>
+          <td><%= f.text_field :date_to, size: 8, class: "search_fields" %></td>
+          <td ><%= f.select :user_id, User.selection, { include_blank: true },
+              { class: "btn btn-primary btn-sm search_fields" } %></td>
+          <td><%= f.text_field :info, class: "search_fields" %></td>
+          <td colspan="2" align="right">
+            <%= f.submit 'Search', class: "btn btn-primary btn-sm search_fields" %>
+            <%= link_to 'Clear', notes_path, class: "btn btn-primary btn-sm search_fields" %>
+          </td>
+        </tr>
+        <% @notes.each do |note| %>
+          <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+            <td><%= link_to(note.order_id, order_path(note.order_id), class: "link_hilight") %></td>
+            <td colspan="3"><%= note.formatted_date %></td>
+    				<td><%= note.user_name %></td>
+    				<td colspan="3"><%= html_newlines(note.info) %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  <% end %>
 </div>

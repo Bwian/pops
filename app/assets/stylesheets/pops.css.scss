@@ -73,6 +73,7 @@ table {
 
 td {
   padding:          0.5em;
+  width:            auto;
 }
 
 th {
@@ -258,6 +259,17 @@ th {
   padding:    0.2em;
   margin:     1em;
   background: $main-color-bg;
+}
+
+.search_fields {
+  margin-left:      0;
+  margin-right:     0;
+  background:       $main-color-bg;
+}
+
+.search_row {
+  margin-top:       0;
+  background:       $main-color-medium;
 }
 
 .dropdown-menu {
