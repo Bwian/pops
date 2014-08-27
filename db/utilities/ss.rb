@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require 'tiny_tds'
 require 'pry'
+require 'base64'
 
 class StoredProcedure
   
@@ -137,7 +138,7 @@ end
 puts "Using #{db}"
 
 begin
-  connection = TinyTds::Client.new(username: 'exouser', password: 'acacia', dataserver: 'ucfinance')
+  connection = TinyTds::Client.new(username: 'exouser', password: Base64.decode64('YWNhY2lh'), dataserver: 'ucfinance')
   connection.execute("use [#{db}]").do
 rescue TinyTds::Error => excp
   puts "Can't connect to database [#{db}] - #{excp.message}"
