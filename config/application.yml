@@ -12,6 +12,7 @@ defaults: &defaults
   sql_server_timeout:  1             # default = 1 (sec)
   ldap_host:           ballarat_thm
   ldap_port:           389           # default = 389
+  ldap_base:           dc=ballarat_thm
   ldap_login:          query
   ldap_password:       cGFzc3dvcmQ=  # use db/utilities/encode.rb password
     

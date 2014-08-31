@@ -11,6 +11,7 @@ class LdapAgent
     @connection    = nil
     @host          = ENV['ldap_host']
     @port          = (ENV['ldap_port'] || 389).to_i
+    @base          = ENV['ldap_base']
     @user          = ENV['ldap_login']
     password       = ENV['ldap_password']
     @password      = password ? Base64.decode64(password) : ''
@@ -42,7 +43,7 @@ class LdapAgent
       @connection = Net::LDAP.new(
         host: @host,
         port: @port,
-        base: "dc=ballarat_thm",
+        base: @base,
         auth: {
           method: :simple,
           username: @user,
