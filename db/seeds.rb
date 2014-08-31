@@ -15,3 +15,12 @@ User.create(
   salt: SALT,
   admin: true
 )
+
+User.create(
+  code: 'guest',
+  name: 'Guest',
+  hashed_password: User.encrypt_password('password', SALT),
+  salt: SALT,
+  admin: false,
+  creator: false
+)

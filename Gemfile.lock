@@ -61,6 +61,7 @@ GEM
     mime-types (1.25.1)
     minitest (5.3.4)
     multi_json (1.10.1)
+    net-ldap (0.7.0)
     pdf-core (0.2.5)
     polyglot (0.3.5)
     prawn (1.0.0)
@@ -139,6 +140,7 @@ DEPENDENCIES
   coffee-rails
   jbuilder (~> 1.2)
   jquery-rails
+  net-ldap
   prawn
   prawn-print
   pry

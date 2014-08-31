@@ -54,3 +54,5 @@ gem 'prawn-print'
 # SQL Server access
 gem 'tiny_tds'
 
+# LDAP Server access
+gem 'net-ldap'
