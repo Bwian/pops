@@ -10,7 +10,6 @@ class User < ActiveRecord::Base
   
   default_scope { order(:name) }
 
-# TODO: should also be validating presence of :admin but fails unit test
   validates :name, :code, presence: true
   validates :name, :code, uniqueness: true
   validates :password, confirmation: true

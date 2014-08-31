@@ -9,15 +9,17 @@ class SessionsController < ApplicationController
     return_to = session[:return_to] ? session[:return_to] : orders_url
     reset_session
     session[:return_to] = return_to
-
-    if user = User.authenticate(params[:code], params[:password])
+    @notice = ''
+    @alert = 'Invalid user/password combination'
+    
+    if user = authenticate(params[:code], params[:password])
       session[:user_id] = user.id
       session[:admin] = user.admin
       session[:order_filter] = OrderFilter.new(user.id)
       update_timeout
-      redirect_to return_to
+      redirect_to return_to, notice: @notice
     else
-      redirect_to login_url, alert: "Invalid user/password combination"
+      redirect_to login_url, alert: @alert
     end
   end
 
@@ -25,4 +27,23 @@ class SessionsController < ApplicationController
     reset_session
     redirect_to login_url
   end
+  
+  private
+  
+  def authenticate(login,password)
+    ldap = LdapAgent.new
+    user = nil
+    
+    if ldap.authenticate(login,password)
+      user = User.find_by_code(login) || User.find_by_code('guest')       
+      @notice = "No POPS user set up for #{login}.  You have been logged in as a guest with restricted access" if user && user.code == 'guest' 
+    elsif Rails.env.production?       
+      @alert = ldap.notice
+    else
+      user = User.find_by_code(login)
+    end
+    
+    user
+  end
+  
 end

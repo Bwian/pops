@@ -17,8 +17,6 @@ class UserTest < ActiveSupport::TestCase
     assert user.invalid?
     assert user.errors[:name].any?
     assert user.errors[:code].any?
-#		assert user.errors[:admin].any?
-# TODO: Putting :admin in validates causes @user2.valid to fail
   end
 
   test "unique name and code" do
