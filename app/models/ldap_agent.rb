@@ -26,7 +26,7 @@ class LdapAgent
   private
  
   def valid?
-    [:host,:port,:user,:password].each do |vbl|
+    [:host,:port,:base,:user,:password].each do |vbl|
       unless self.instance_variable_get("@#{vbl.to_s}")
         @notice = "LDAP configuration invalid - missing #{vbl.to_s} setting"
         return false
