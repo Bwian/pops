@@ -59,7 +59,7 @@ class UsersController < ApplicationController
     @user = params[:id].nil? ? User.new(user_params) : @user.update_attributes(user_params)
     ldap = LdapAgent.new
     ldap_params = ldap.search(@user.code)
-    flash.notice = "Warning! Login details for '#{@user.code}' not found." if ldap_params.empty?
+    flash.notice = "Warning! Login details for '#{@user.code}' not found." if ldap_params == {}
     
     @user.name  = set_ldap(ldap_params[:name])
     @user.email = set_ldap(ldap_params[:mail])
