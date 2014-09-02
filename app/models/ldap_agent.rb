@@ -23,6 +23,22 @@ class LdapAgent
     connect
   end
   
+  def search(user_code)
+    result = {}
+    if connect
+      @connection.search(
+        filter: Net::LDAP::Filter.eq(:samaccountname, user_code), 
+        attributes: [:name, :mail, :telephonenumber], 
+        return_result: false
+      ) { |item|
+        result = item
+        break
+      }
+    end
+    
+    result
+  end
+  
   private
  
   def valid?

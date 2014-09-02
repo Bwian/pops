@@ -1,11 +1,8 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-<% SALT = "NaCl" unless defined?(SALT) %>
 
 brian:
   code: brian
   name: Brian Collins
-  hashed_password: <%= User.encrypt_password('secret', SALT) %>
-  salt: <%= SALT %>
   email: brian.pyrrho@bigpond.com
   admin: true
   approver: true
@@ -17,8 +14,6 @@ brian:
 sean:
   code: sean
   name: Sean Anderson
-  hashed_password: MyString
-  salt: MyString
   email: sean@somewhere.com
   admin: false
   approver: false
@@ -28,8 +23,6 @@ sean:
 invalid:
   code: frank
   name: Frank Stallone
-  hashed_password:
-  salt: rambo
   email: frank@stallone.com
   admin: false
   approver: false
@@ -39,8 +32,6 @@ invalid:
 processor:
   code: heather
   name: Heather Collins
-  hashed_password: MyString
-  salt: MyString
   email: sean@somewhere.com
   admin: false
   approver: false
@@ -50,8 +41,6 @@ processor:
 no_email:
   code: homer
   name: Homer Simpson
-  hashed_password:
-  salt: rambo
   email: 
   admin: false
   approver: false

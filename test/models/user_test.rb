@@ -30,33 +30,6 @@ class UserTest < ActiveSupport::TestCase
     assert @user2.invalid?
     assert_equal "has already been taken", @user2.errors[:code].join('; ')
   end
-
-  test "password=" do
-    user = users(:invalid)
-    salt = user.salt
-    assert user.invalid?
-    assert user.hashed_password.blank? 
-
-    user.password = 'secret'
-    assert user.valid?
-    assert !user.hashed_password.blank?
-    assert_not_equal(salt,user.salt)
-  end
-
-  test "authenticate valid user" do
-    user = User.authenticate('brian','secret')
-    assert_equal('Brian Collins', user.name)
-  end
-
-  test "authenticate invalid password" do
-    user = User.authenticate('brian','SECRET')
-    assert_nil(user)
-  end
-
-  test "authenticate invalid user" do
-    user = User.authenticate('drew','SECRET')
-    assert_nil(user)
-  end
   
   test "selection and reset" do
     count = User.selection.count
@@ -64,7 +37,6 @@ class UserTest < ActiveSupport::TestCase
     user = User.new
     user.code = 'test'
     user.name = 'Test Name'
-    user.password = 'secret'
     user.admin = false
     user.approver = true
     user.save

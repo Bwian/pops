@@ -12,21 +12,7 @@ class User < ActiveRecord::Base
 
   validates :name, :code, presence: true
   validates :name, :code, uniqueness: true
-  validates :password, confirmation: true
-  validate :password_must_be_present
   validate :filters_valid
-
-  def self.encrypt_password(password, salt)
-    Digest::SHA2.hexdigest(password + "pops" + salt)
-  end
-
-  def self.authenticate(code, password)
-    if user = find_by_code(code)
-      if user.hashed_password == encrypt_password(password, user.salt)
-        user
-      end
-    end
-  end
   
   @@selection = nil
   
@@ -42,14 +28,6 @@ class User < ActiveRecord::Base
   def destroy
     @@selection = nil  # force reload
     super
-  end
-  
-  def password=(password)
-    @password = password
-    if password.present?
-      generate_salt
-      self.hashed_password = self.class.encrypt_password(password, salt)
-    end
   end
 
   def roles
@@ -73,18 +51,10 @@ class User < ActiveRecord::Base
   end
 
   private
-
-  def password_must_be_present
-    errors.add(:password, "Missing password") unless self.hashed_password.present?
-  end
   
   def filters_valid
     check_filter(:accounts_filter,self.accounts_filter)
     check_filter(:programs_filter,self.programs_filter)
-  end
-
-  def generate_salt
-    self.salt = self.object_id.to_s + rand.to_s
   end
   
   def check_filter(field,filter)

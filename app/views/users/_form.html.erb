@@ -1,4 +1,4 @@
-<div class="admin_form">
+<div id="user_form">
 <%= form_for(@user) do |f| %>
   <fieldset>
     <legend><%= legend("User Details", @readonly) %></legend>
@@ -15,19 +15,11 @@
 	
     <div class="field">
       <%= f.label :code, 'Code:' %>
-      <%= f.text_field :code, readonly: @readonly, autofocus: true %>
+      <%= f.text_field :code, readonly: @readonly, autofocus: true, onchange: "javascript: set_ldap_params()" %>
     </div>
     <div class="field">
       <%= f.label :name, 'Name:' %>
       <%= f.text_field :name, readonly: @readonly %>
-    </div>
-    <div class="field">
-      <%= f.label :password, 'Password:' %>
-      <%= f.password_field :password, readonly: @readonly %>
-    </div>
-    <div class="field">
-      <%= f.label :password_confirmation, 'Confirm:' %>
-      <%= f.password_field :password_confirmation, readonly: @readonly %>
     </div>
     <div class="field">
       <%= f.label :email, 'Email:' %>
@@ -47,8 +39,9 @@
     </div>
 	  <div class="field">
 	    <%= f.label :approver_id, 'Default Approver:' %>
-	    <%= f.select :approver_id, User.selection, { prompt: 'Select a default approver' },
-                   { disabled: @readonly, class: "btn btn-primary btn-sm" } %>
+	    <%= f.select :approver_id, User.selection, 
+            { prompt: 'Select a default approver' },
+            { disabled: @readonly, class: "btn btn-primary btn-sm" } %>
 	  </div>
     <div class="field">
       <%= f.hidden_field :admin, value: "0" %>
@@ -75,7 +68,7 @@
         </label>
       </div>
     </div>
-    </br>
+
     <div class="actions">
       <label></label>
   		<% if @readonly %>
@@ -86,7 +79,7 @@
       <%= link_list(@user) %>
     </div>
 	
-  	<div class="notice">
+  	<div id="notice" class="notice">
       <label for="notice" > </label>
       <%= notice %>
     </div>
