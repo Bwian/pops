@@ -21,7 +21,7 @@ class ExoAgent
       'PaymentTerm' => { STATUSNO: :id, STATUSDESC: :name, CREDIT_FACTOR: :factor },
       'Program'     => { BRANCHNO: :id, BRANCHNAME: :name },
       'Supplier'    => { ACCNO: :id, NAME: :name, ADDRESS1: :address1, ADDRESS2: :address2, ADDRESS3: :address3, PHONE: :phone, FAX: :fax, EMAIL: :email, TAXSTATUS: :tax_rate_id, CREDITSTATUS: :payment_term_id },
-      'TaxRate'     => { SEQNO: :id, NAME: :name, SHORTNAME: :shortname, RATE: :rate }
+      'TaxRate'     => { SEQNO: :id, NAME: :name, SHORTNAME: :short_name, RATE: :rate }
     }
     
     @notice = ''
