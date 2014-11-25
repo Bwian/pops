@@ -55,6 +55,7 @@ class SessionsController < ApplicationController
 				user.name  = set_ldap(ldap_params[:name])
     		user.email = set_ldap(ldap_params[:mail])
     		user.phone = set_ldap(ldap_params[:telephonenumber])
+				user.admin = true if User.count == 0
 				user.save
 			end
 		end	
