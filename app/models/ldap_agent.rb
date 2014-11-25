@@ -8,24 +8,22 @@ class LdapAgent
   def initialize
     @notice = ''
     
-    @connection    = nil
     @host          = ENV['ldap_host']
     @port          = (ENV['ldap_port'] || 389).to_i
     @base          = ENV['ldap_base']
     @user          = ENV['ldap_login']
     password       = ENV['ldap_password']
     @password      = password ? Base64.decode64(password) : ''
+    @connection    = Net::LDAP.new(host: @host, port: @port, base: @base)  
   end
   
   def authenticate(login,password)
-    @user = login
-    @password = password
-    connect
+    connect(login,password)
   end
   
   def search(user_code)
     result = {}
-    if connect
+    if connect(@user,@password)
       @connection.search(
         filter: Net::LDAP::Filter.eq(:samaccountname, user_code), 
         attributes: [:name, :mail, :telephonenumber], 
@@ -52,21 +50,17 @@ class LdapAgent
     return true
   end 
    
-  def connect
+  def connect(user,password)
     return false unless valid?
     
+		if user.nil? || user.empty? || password.nil? || password.empty?
+			@notice = 'Login or password not supplied'
+			return false
+		end
+
     begin
-      @connection = Net::LDAP.new(
-        host: @host,
-        port: @port,
-        base: @base,
-        auth: {
-          method: :simple,
-          username: @user,
-          password: @password 
-        }
-      )  
-    
+			@connection.auth user,password
+
       unless @connection.bind
         build_notice "#{@connection.get_operation_result.message}(#{@connection.get_operation_result.code})"
         return false

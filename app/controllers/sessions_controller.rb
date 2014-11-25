@@ -35,15 +35,35 @@ class SessionsController < ApplicationController
     user = nil
     
     if ldap.authenticate(login,password)
-      user = User.find_by_code(login) || User.find_by_code('guest')       
-      @notice = "No POPS user set up for #{login}.  You have been logged in as a guest with restricted access" if user && user.code == 'guest' 
-    elsif Rails.env.production?       
+			user = find_or_create_user(login)	
+		else
       @alert = ldap.notice
-    else
-      user = User.find_by_code(login)
     end
     
     user
   end
-  
+ 
+	def find_or_create_user(code)
+		user = User.find_by_code(code)
+		
+		unless user
+			ldap = LdapAgent.new
+			ldap_params = ldap.search(code)
+			unless ldap_params == {}
+				user = User.new
+				user.code = code
+				user.name  = set_ldap(ldap_params[:name])
+    		user.email = set_ldap(ldap_params[:mail])
+    		user.phone = set_ldap(ldap_params[:telephonenumber])
+				user.save
+			end
+		end	
+		user
+	end 
+
+	def set_ldap(param)
+    return '' if param.nil? || param.size == 0
+    param.first
+  end
+
 end
