@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require "#{File.dirname(__FILE__)}/../../config/environment"
+require 'pry'
 
 DEFAULT_TAX_RATE = 32
 
@@ -41,6 +42,7 @@ acme_suppliers = [
 
 while order_count > 0
   order = Order.new
+  order.status = 'D'
   order.supplier_id = suppliers[rand(suppliers.size)]
   order.supplier_name = "ACME #{acme_suppliers[rand(acme_suppliers.size)]}"
   order.invoice_no = rand(200000).to_s
@@ -50,19 +52,6 @@ while order_count > 0
   order.reference = rand(200000).to_s
   order.creator_id = creators[rand(creators.size)]
   order.approver_id = approvers[rand(approvers.size)]
-  
-  case status
-    when 'D','S'
-      order.status = status
-    when 'A'
-      order.status = status
-      order.approved_at = order.created_at + 2.days
-    when 'P'      
-      order.status = status
-      order.approved_at = order.created_at + 2.days
-      order.processed_at = order.approved_at + 2.days
-      order.processor_id = processors[rand(processors.size)]
-  end
   
   if order.save 
     item_count = rand(2) + 1
@@ -79,6 +68,27 @@ while order_count > 0
       
       item_count -= 1
     end
-    order_count -= 1
+
+    case status
+      when 'D','S'
+        order.status = status
+      when 'A'
+        order.to_approved(order.approver_id)
+        order.approved_at = order.created_at + 2.days
+      when 'P'      
+        order.to_approved(order.approver_id)
+        order.to_processed(processors[rand(processors.size)])
+        order.approved_at = order.created_at + 2.days
+        order.processed_at = order.approved_at + 2.days
+    end
+    
+    if order.save
+      order_count -= 1
+  		print '.' if order_count % 10 == 0
+    else
+      order.destroy
+    end
   end
 end
+
+puts
