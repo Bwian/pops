@@ -31,40 +31,26 @@ class SessionsController < ApplicationController
   private
   
   def authenticate(login,password)
-    ldap = LdapAgent.new
     user = nil
-    
-    if ldap.authenticate(login,password)
-			user = find_or_create_user(login)	
-		else
-      @alert = ldap.notice
-    end
-    
+    ldap = LdapAgent.new
+
+		if ldap.search(login)
+    	if ldap.authenticate(ldap.dn,password)
+				user = User.find_by_code(login)
+				unless user
+					user = User.new
+					user.code = login
+					user.name  = ldap.name
+    			user.email = ldap.email
+    			user.phone = ldap.phone
+					user.admin = true if User.count == 0
+					user.save
+				end
+			else
+      	@alert = ldap.notice
+    	end
+		end
+
     user
   end
- 
-	def find_or_create_user(code)
-		user = User.find_by_code(code)
-		
-		unless user
-			ldap = LdapAgent.new
-			ldap_params = ldap.search(code)
-			unless ldap_params == {}
-				user = User.new
-				user.code = code
-				user.name  = set_ldap(ldap_params[:name])
-    		user.email = set_ldap(ldap_params[:mail])
-    		user.phone = set_ldap(ldap_params[:telephonenumber])
-				user.admin = true if User.count == 0
-				user.save
-			end
-		end	
-		user
-	end 
-
-	def set_ldap(param)
-    return '' if param.nil? || param.size == 0
-    param.first
-  end
-
 end

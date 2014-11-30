@@ -2,7 +2,7 @@ require 'net-ldap'
 
 class LdapAgent
   
-  attr_reader :notice
+  attr_reader :notice, :dn, :name, :email, :phone
   attr_writer :host, :port, :user, :password
   
   def initialize
@@ -14,7 +14,8 @@ class LdapAgent
     @user          = ENV['ldap_login']
     password       = ENV['ldap_password']
     @password      = password ? Base64.decode64(password) : ''
-    @connection    = Net::LDAP.new(host: @host, port: @port, base: @base)  
+		
+		@connection    = Net::LDAP.new(host: @host, port: @port, base: @base) 
   end
   
   def authenticate(login,password)
@@ -34,9 +35,19 @@ class LdapAgent
       }
     end
     
-    result
+    if result == {}
+			@notice = "No LDAP entry found for #{user_code}"
+			return false
+		end
+
+		@dn    = set_ldap(result[:dn])
+		@name  = set_ldap(result[:name])
+		@email = set_ldap(result[:mail])
+		@phone = set_ldap(result[:telephonenumber])	
+
+		return true
   end
-  
+ 
   private
  
   def valid?
@@ -77,5 +88,9 @@ class LdapAgent
   def build_notice(message)
     @notice = "Could not create connection to LDAP Server at #{@host}:#{@port} due to: #{message}"
   end
-  
+ 	
+	def set_ldap(param)
+    return '' if param.nil? || param.size == 0
+    param.first
+  end 
 end
