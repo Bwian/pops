@@ -31,6 +31,12 @@ class SessionsController < ApplicationController
   private
   
   def authenticate(login,password)
+    ldap_enabled = ENV['ldap_enabled'] && ENV['ldap_enabled'] == 'true'
+    unless ldap_enabled
+      user = User.find_by_code(login)
+      return user
+    end
+    
     user = nil
     ldap = LdapAgent.new
 
