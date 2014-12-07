@@ -41,10 +41,10 @@ class OrderPdf
   end
 
   def header(order)
-    if Rails.env.production?
-      watermark('Unauthorised') unless order.authorised?
+    unless order.authorised?
+      watermark('Unauthorised') 
     else
-      watermark('- Test Only -')
+      watermark(ENV['order_watermark'])
     end
     
     @pdf.table([

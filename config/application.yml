@@ -15,9 +15,13 @@ defaults: &defaults
   ldap_base:           dc=ballarat_thm
   ldap_login:          query
   ldap_password:       cGFzc3dvcmQ=  # use db/utilities/encode.rb password
+  ldap_enabled:        true
+  order_watermark:     
     
 development:
   <<: *defaults
+  ldap_enabled:        false
+  order_watermark:     '* Test Only *'
   
 test:  # Don't change these because the test suite needs them
   <<: *defaults
