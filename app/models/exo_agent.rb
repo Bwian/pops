@@ -83,7 +83,7 @@ class ExoAgent
       NIL, # GLSUBACC
       quote(item.description),
       1.0, # QUANTITY
-      item.formatted_price,
+      item.formatted_subtotal,
       item.tax_rate_id,
       quote(Date.today.to_s), # or something else ???
       NIL # LINKED_STOCKCODE
