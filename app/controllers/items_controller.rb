@@ -2,7 +2,7 @@ class ItemsController < ApplicationController
   
   include NotesHelper
   
-  before_filter :find_item, except: %w[index new create]
+  before_filter :find_item, except: %w[index new create gst]
   before_filter :find_order, only: %w[new]
   before_filter :authorised_action, only: %w[new edit]
   
