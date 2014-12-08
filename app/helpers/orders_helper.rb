@@ -67,7 +67,7 @@ module OrdersHelper
   
   def link_print(order)
     return '' unless order
-    authorised_action(PRINT,ORDERS,order) ? link_to('Print', {controller: 'orders', action: 'print'}, target: '_blank', class: ApplicationHelper::LINK_STYLE) : ""
+    authorised_action(PRINT,ORDERS,order) ? link_to('Print', "/orders/#{order.id}/print", target: '_blank', class: ApplicationHelper::LINK_STYLE) : ""
   end
   
   def link_notes(action)
