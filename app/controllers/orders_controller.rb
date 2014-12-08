@@ -204,14 +204,10 @@ class OrdersController < ApplicationController
     pdf = OrderPdf.new(@order)
     pdf.print
     
-    respond_to do |format|
-      format.pdf do
-        send_data(pdf.render, 
-          filename: "order_#{@order.id}.pdf", 
-          type: "application/pdf",
-          disposition: "inline")
-      end
-    end
+    send_data(pdf.render, 
+      filename: "order_#{@order.id}.pdf", 
+      type: "application/pdf", 
+      disposition: "inline")
   end
   
   def payment_date
