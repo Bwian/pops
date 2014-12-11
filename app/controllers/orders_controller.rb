@@ -47,6 +47,12 @@ class OrdersController < ApplicationController
     @order.status = OrderStatus::DRAFT
     @order.creator_id = session[:user_id]
 
+    user = User.find(session[:user_id])
+    if user && !user.approver_id && @order.approver_id
+      user.approver_id = @order.approver_id
+      user.save
+    end
+    
     respond_to do |format|
       if @order.save
         params[:id] = @order.id
