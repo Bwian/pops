@@ -17,13 +17,13 @@ class ApplicationController < ActionController::Base
   def timeout
     if session[:timeout] < Time.now.to_i 
       redirect_to login_url, notice: "Session timed out - please log in"
-    else
-      update_timeout
     end
+    
+    update_timeout
   end
    
   def update_timeout
-    session[:timeout] = Time.now.to_i + 3000
+    session[:timeout] = Time.now.to_i + 600
   end
   
   private

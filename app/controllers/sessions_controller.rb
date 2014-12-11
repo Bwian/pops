@@ -53,7 +53,7 @@ class SessionsController < ApplicationController
 					user.save
 				end
 			else
-      	@alert = ldap.notice
+        @alert = ldap.notice unless ldap.notice =~ /49/ # Invalid Credentials
     	end
 		end
 
