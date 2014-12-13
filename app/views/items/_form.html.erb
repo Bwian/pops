@@ -79,10 +79,11 @@
     <div class="actions">
       <label></label>
   		<% if @readonly %>
-        <%= link_edit(@item) %>&nbsp;
-        <%= link_delete(@item) %>&nbsp;
+        <%= link_edit(@item) %>
+        <%= link_delete(@item) %>
       <% else %>
         <%= f.submit nil, class: "btn btn-primary btn-sm" %>
+        <%= link_delete(@item) %>
       <% end %>
       <%= link_model(@order) %>
     </div>

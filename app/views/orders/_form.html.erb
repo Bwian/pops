@@ -113,7 +113,7 @@
           <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
             <td><%= item.program_name %></td>
             <td><%= item.account_name %></td>
-            <td><%= link_to(item.description,item,class: "link_hilight") %></td> 
+            <td><%= link_item(item) %></td> 
             <td align="center"><%= item.tax_rate_short_name %></td>
             <td align="right"><%= item.formatted_subtotal %></td>
           </tr>

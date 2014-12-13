@@ -17,6 +17,11 @@ module OrdersHelper
     'desc'     => '&darr;'
   }
   
+  def link_item(item)
+    authorised_action(EDIT,ITEMS,item) ? action = 'edit' : 'show'
+    link_to(item.description,"/items/#{item.id}/#{action}",class: "link_hilight")
+  end
+  
   def link_item_new(order)
     authorised_action(NEW,ITEMS,order) ? link_to("Add Item", new_order_item_path(order), class: ApplicationHelper::LINK_STYLE) : ""
   end
