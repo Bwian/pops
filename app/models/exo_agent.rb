@@ -156,7 +156,8 @@ class ExoAgent
   end
   
   def quote(vbl)
-    "'#{vbl}'"
+    vbl.tr!(?",?')
+    "\"#{vbl}\""
   end
   
 end
