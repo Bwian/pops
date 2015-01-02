@@ -71,7 +71,7 @@ class NoteTest < ActiveSupport::TestCase
     @note.date_from = '1/2/14'
     assert_equal('01/02/2014',@note.date_from,'1/2/14')
     @note.date_from = '1/2'
-    assert_equal('01/02/2014',@note.date_from,'1/2')
+    assert_equal('01/02/2015',@note.date_from,'1/2')
     @note.date_from = '2014'
     assert_equal('01/01/2014',@note.date_from,'2014')
     @note.date_from = '14'

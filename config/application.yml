@@ -34,6 +34,7 @@ test:  # Don't change these because the test suite needs them
   ldap_port:           388
   ldap_login:          query
   ldap_password:       cGFzc3dvcmQ=
+  ldap_enabled:        false
   
 production:
   <<: *defaults
