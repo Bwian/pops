@@ -17,24 +17,24 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">POPS - Purchase Order Processing System</a>
+            <%= link_to('POPS - Purchase Order Processing System',url_for(controller: 'orders'), class: 'navbar-brand') %>
           </div>
           <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
               <!--li class="active"><a href="#">Home</a></li-->
-              <li><a href="/orders">Orders</a></li>
+              <li><%= link_to('Orders',url_for(controller: 'orders')) %></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="/users">Users</a></li>
-                  <li><a href="/notes">Notes</a></li>
-                  <li><a href="/deliveries">Deliveries</a></li>
+                  <li><%= link_to('Users',url_for(controller: 'users')) %></li>
+                  <li><%= link_to('Notes',url_for(controller: 'notes')) %></li>
+                  <li><%= link_to('Deliveries',url_for(controller: 'deliveries')) %></li>
                   <li class="divider"></li>
-                  <li><a href="/suppliers">Suppliers</a></li>
-                  <li><a href="/programs">Programs</a></li>
-                  <li><a href="/accounts">Accounts</a></li>
-                  <li><a href="/payment_terms">Payment Terms</a></li>
-                  <li><a href="/tax_rates">Tax Rates</a></li>
+                  <li><%= link_to('Suppliers',url_for(controller: 'suppliers')) %></li>
+                  <li><%= link_to('Programs',url_for(controller: 'programs')) %></li>
+                  <li><%= link_to('Accounts',url_for(controller: 'accounts')) %></li>
+                  <li><%= link_to('Payment Terms',url_for(controller: 'payment_terms')) %></li>
+                  <li><%= link_to('Tax Rates',url_for(controller: 'tax_rates')) %></li>
                 </ul>
               <li class="dropdown" id="action_dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Action<b class="caret"></b></a>
@@ -61,7 +61,7 @@
     </div>
 
     <div id="footer">
-      <div class="container-fluid credit">&copy; Pyrrho Pty Ltd - 2014</div>
+      <div class="container-fluid credit">&copy; Pyrrho Pty Ltd - 2015</div>
     </div>
 
   </body>

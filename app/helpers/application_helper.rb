@@ -5,8 +5,8 @@ module ApplicationHelper
   
   def link_list(model)
     return '' unless model
-    name = model.class.name.underscore
-    link_to("List #{name.titleize.pluralize}", "/#{name.pluralize}", class: LINK_STYLE)
+    name = model.class.name.underscore.pluralize
+    link_to("List #{name.titleize}", url_for(controller: name), class: LINK_STYLE)
   end
   
   def link_model(model)
@@ -16,37 +16,37 @@ module ApplicationHelper
   end
   
   def link_new(name)
-    authorised_action(NEW,params[:controller], nil) ? link_to("New #{name.titleize}", "/#{name.pluralize}/new", class: LINK_STYLE) : ""
+    authorised_action(NEW,params[:controller], nil) ? link_to("New #{name.titleize}", url_for(controller: name.pluralize, action: :new), class: LINK_STYLE) : ""
   end
   
   def link_edit(model)
-    return '' unless model
+    return '' unless model && model.id
     name = model.class.name.downcase
-    authorised_action(EDIT,params[:controller], model) ? link_to('Edit', "/#{name.pluralize}/#{model.id}/edit", class: LINK_STYLE) : ""
+    authorised_action(EDIT,params[:controller], model) ? link_to('Edit', url_for(controller: name.pluralize, id: model.id, action: :edit), class: LINK_STYLE) : ""
   end
 
   def link_delete(model)
-    return '' unless model
+    return '' unless model && model.id
     authorised_action(DELETE,params[:controller], model) ? link_to('Delete', model, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" ) : ""
   end
   
   def link_refresh
     name = params[:controller]
-    authorised_action(REFRESH,params[:controller],nil) ? link_to("Refresh #{name.titleize.pluralize}", "/#{name.pluralize}/new", class: LINK_STYLE) : ""
+    authorised_action(REFRESH,params[:controller],nil) ? link_to("Refresh #{name.titleize.pluralize}", url_for(controller: name.pluralize, action: :new), class: LINK_STYLE) : ""
   end
   
   def link_logoutin
-    return '' if request.fullpath == '/login'
+    return '' if request.fullpath.ends_with?('/login')
     if session[:user_id]  
       user = User.find(session[:user_id])
-      link_to("#{user.name} - Logout",'/logout') 
+      link_to("#{user.name} - Logout", url_for(controller: 'sessions', action: :destroy)) 
     else 
-      link_to('Login', '/login')
+      link_to('Login', url_for(controller: 'sessions', action: :new))
     end
   end
   
   def search
-    return '' if request.fullpath == '/login'
+    return '' if request.fullpath.ends_with?('/login')
     text_field_tag(:order_search, nil, class: "form-control search", placeholder: "PO #", onchange: "javascript:order_search()", onkeypress: "javascript:check_enter(event)")
   end
   

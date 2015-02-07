@@ -2,8 +2,8 @@ module ExoHelper
   
   def link_exo(model)
     return '' unless model
-    name = model.class.name.underscore
-    authorised_action(EDIT,params[:controller], model) ? link_to(model.id, "/#{name.pluralize}/#{model.id}/edit", class: 'link_exo') : model.id
+    name = model.class.name.underscore.pluralize
+    authorised_action(EDIT,params[:controller], model) ? link_to(model.id, url_for(controller: name, id: model.id, action: :edit), class: 'link_exo') : model.id
   end
   
   def attribute_label(field)

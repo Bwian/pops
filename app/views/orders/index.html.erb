@@ -14,7 +14,7 @@
     </div>
   <% end %>
   
-  <%= form_tag("/orders/refresh", method: :post) do %>        
+  <%= form_tag(controller: 'orders', action: 'refresh', method: :post) do %>        
     <div class=header>
       <div class="header-title header-cells">Orders</div>
       <div class="header-cells">

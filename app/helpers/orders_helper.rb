@@ -19,7 +19,7 @@ module OrdersHelper
   
   def link_item(item)
     authorised_action(EDIT,ITEMS,item) ? action = 'edit' : 'show'
-    link_to(item.description,"/items/#{item.id}/#{action}",class: "link_hilight")
+    link_to(item.description, url_for(controller: 'items', id: item.id, action: action),class: "link_hilight")
   end
   
   def link_item_new(order)
@@ -45,7 +45,7 @@ module OrdersHelper
         if action.start_with?('re')
           link = link_notes(action)
         else
-          link = link_to(action_label(action), "/orders/#{order.id}/#{action}", method: :post, class: btn_class) 
+          link = link_to(action_label(action), url_for(controller: 'orders', id: order.id, action: action), method: :post, class: btn_class) 
         end
       end
       links << link
@@ -71,8 +71,8 @@ module OrdersHelper
   end
   
   def link_print(order)
-    return '' unless order
-    authorised_action(PRINT,ORDERS,order) ? link_to('Print', "/orders/#{order.id}/print", target: '_blank', class: ApplicationHelper::LINK_STYLE) : ""
+    return '' unless order && order.id
+    authorised_action(PRINT,ORDERS,order) ? link_to('Print', url_for(controller: 'orders', id: order.id, action: 'print'), target: '_blank', class: ApplicationHelper::LINK_STYLE) : ""
   end
   
   def link_notes(action)
