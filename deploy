@@ -1,0 +1,19 @@
+#!/bin/bash
+DESTINATION="/var/www/pops"
+
+if [ "$(id -u)" != "0" ]; then
+    echo "deploy: This script must be run with sudo - sudo ./deploy"
+    exit 1
+fi
+
+if [ ! -d $DESTINATION ]; then
+	echo "deploy: $DESTINATION must exist"
+  exit 1
+fi
+
+export GIT_WORK_TREE=$DESTINATION
+git checkout -f master
+cd $DESTINATION/config
+rm *.yml
+ln -s /etc/opt/pops/*.yml .
+chown -R www-data $DESTINATION
