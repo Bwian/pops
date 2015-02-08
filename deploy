@@ -1,19 +1,31 @@
 #!/bin/bash
-DESTINATION="/var/www/pops"
 
 if [ "$(id -u)" != "0" ]; then
-    echo "deploy: This script must be run with sudo - sudo ./deploy"
-    exit 1
-fi
-
-if [ ! -d $DESTINATION ]; then
-	echo "deploy: $DESTINATION must exist"
+  echo "deploy: This script must be run with sudo"
+  echo "usage: sudo -E deploy"
   exit 1
 fi
 
-export GIT_WORK_TREE=$DESTINATION
+if [ -z "$POPS_DEST" ]; then
+  echo "deploy: POPS_DEST environment variable must be set"
+  echo "usage: sudo -E deploy"
+  exit 1
+fi
+
+if [ -z "$POPS_OWNER" ]; then
+  echo "deploy: POPS_OWNER environment variable must be set"
+  echo "usage: sudo -E deploy"
+  exit 1
+fi
+
+if [ ! -d $POPS_DEST ]; then
+	echo "deploy: Destination directory $POPS_DEST must exist"
+  exit 1
+fi
+
+export GIT_WORK_TREE=$POPS_DEST
 git checkout -f master
-cd $DESTINATION/config
+cd $POPS_DEST/config
 rm *.yml
 ln -s /etc/opt/pops/*.yml .
-chown -R www-data $DESTINATION
+chown -R $POPS_OWNER $POPS_DEST

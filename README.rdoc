@@ -35,3 +35,14 @@ SQL Server access is achieved through FreeTDS libraries (freetds.org).  To insta
 * <em>tsql -S server -U user -P password</em> to connect to SQL Server.  More information on testing is available {here}[http://freetds.schemamania.org/userguide/confirminstall.htm].
 
 The {tiny_tds}[https://github.com/rails-sqlserver/tiny_tds] gem provides low-level connection to SQL Server.  Run <em>gem install tiny_tds</em> to install it.  If it works, terrific!  If not, you'll have to build your own by using <em>git</em> to clone the {repository}[https://github.com/rails-sqlserver/tiny_tds.git], and the MiniPortile instructions in the {gem}[https://github.com/rails-sqlserver/tiny_tds]'s README to roll your own.
+
+==== Deployment
+The _deploy_ script relies on a staging repository being present on the server machine which would normally be used as a test region.  The POPS_DESTINATION environment variable must be set and the destination directory must exist. The POPS_OWNER environment variable should be set to the owner of the web server.  Initial deployment steps:
+* cd pops_repository_root_directory in staging repository
+* sudo mkdir /etc/opt/pops
+* sudo cp config/*.yml /etc/opt/pops
+* from pops directory in staging repository, sudo -E deploy
+* cd $POPS_DEST
+* bundle -u $POPS_OWNER install --deployment 
+
+
