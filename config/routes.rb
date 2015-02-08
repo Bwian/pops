@@ -1,6 +1,6 @@
 Pops::Application.routes.draw do
 
-  #root 'orders#index'
+  root 'orders#index'
   
   controller :welcome do
     get 'welcome' => :index

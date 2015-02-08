@@ -29,3 +29,5 @@ cd $POPS_DEST/config
 rm *.yml
 ln -s /etc/opt/pops/*.yml .
 chown -R $POPS_OWNER $POPS_DEST
+sudo -u $POPS_OWNER bundle install --deployment
+sudo -u $POPS_OWNER rake db:migrate RAILS_ENV=production

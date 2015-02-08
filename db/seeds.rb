@@ -13,10 +13,3 @@ User.create(
   name: 'Administrator',
   admin: true
 )
-
-User.create(
-  code: 'guest',
-  name: 'Guest',
-  admin: false,
-  creator: false
-)

@@ -43,6 +43,6 @@ The _deploy_ script relies on a staging repository being present on the server m
 * sudo cp config/*.yml /etc/opt/pops
 * from pops directory in staging repository, sudo -E deploy
 * cd $POPS_DEST
-* bundle -u $POPS_OWNER install --deployment 
-
+* sudo -u $POPS_OWNER rake db:setup RAILS_ENV=production
+* sudo -u $POPS_OWNER RAILS_ENV=production bundle exec rake assets:precompile
 
