@@ -51,6 +51,7 @@ gem 'pry-nav', group: [:development, :test]
 
 # pdf management
 gem 'prawn'
+gem 'prawn-table'
 gem 'prawn-print'
 
 # SQL Server access
