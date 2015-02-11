@@ -59,7 +59,7 @@ class OrdersController < ApplicationController
         save_user_notes(params)
         format.html { redirect_to new_order_item_path(@order) }
       else
-        format.html { render action: "new" }
+        format.html { render :new }
       end
     end
   end
@@ -77,7 +77,7 @@ class OrdersController < ApplicationController
         format.html { redirect_to(@order, notice: "Order #{@order.id} was successfully updated. #{get_notice(message)}") }
       else
         reload_if_stale(@order)
-        format.html { render action: "edit" }
+        format.html { render :edit }
       end
     end
   end
@@ -91,7 +91,7 @@ class OrdersController < ApplicationController
       if @order.destroyed?
         format.html { redirect_to(orders_url,notice: "Order #{@order.id} was successfully deleted.") }
       else
-        format.html { render action: "show" }
+        format.html { render :show }
       end
     end
   end
@@ -111,7 +111,7 @@ class OrdersController < ApplicationController
         message.deliver if message && message.valid?
       else
         find_order
-        format.js { render action: "edit" }
+        format.js { render :edit }
       end
     end
   end
@@ -128,7 +128,7 @@ class OrdersController < ApplicationController
       else
         @order.to_draft
         @readonly = true
-        format.html { render action: "show" }
+        format.html { render :show }
       end
     end
   end
@@ -147,7 +147,7 @@ class OrdersController < ApplicationController
         message.deliver if message && message.valid?
       else
         find_order
-        format.js { render action: "edit" }
+        format.js { render :edit }
       end
     end
   end
@@ -165,7 +165,7 @@ class OrdersController < ApplicationController
       else
         @order.to_submitted
         @readonly = true
-        format.html { render action: "show" }
+        format.html { render :show }
       end
     end
   end
@@ -189,7 +189,7 @@ class OrdersController < ApplicationController
       else
         @order.reset_approved
         @readonly = true
-        format.html { render action: "show" }
+        format.html { render :show }
       end
     end
   end

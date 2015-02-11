@@ -18,7 +18,7 @@ class ApplicationHelperTest < ActionView::TestCase
   end
   
   test "link_list" do
-    assert_match(/orders/,link_list(@order))
+    assert_match(/Orders/,link_list(@order))
   end
   
   test "link_model" do

@@ -18,7 +18,7 @@ module OrdersHelper
   }
   
   def link_item(item)
-    authorised_action(EDIT,ITEMS,item) ? action = 'edit' : 'show'
+    action = authorised_action(EDIT,ITEMS,item) ? 'edit' : 'show'
     link_to(item.description, url_for(controller: 'items', id: item.id, action: action),class: "link_hilight")
   end
   

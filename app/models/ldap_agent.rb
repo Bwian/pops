@@ -70,14 +70,14 @@ class LdapAgent
 		end
 
     begin
-			@connection.auth user,password
+    	@connection.auth user,password
 
-      unless @connection.bind
+      unless @connection.bind 
         build_notice "#{@connection.get_operation_result.message}(#{@connection.get_operation_result.code})"
         return false
       end
     
-    rescue Net::LDAP::LdapError => excp
+    rescue Net::LDAP::Error => excp
       build_notice excp.message 
       return false
     end

@@ -8,6 +8,12 @@ class OrdersHelperTest < ActionView::TestCase
     @supplier = suppliers(:zero)
   end
   
+  test "link_item" do
+    link = link_item(items(:one))
+    assert_match(/items/,link)
+    assert_match(/edit/,link)
+  end
+  
   test "link_action draft" do
     links = link_action(@order)
     assert_equal(1,links.size)
