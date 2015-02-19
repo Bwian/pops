@@ -15,6 +15,7 @@ class NotesController < ApplicationController
     @notes = @notes.by_info(@note.info) unless @note.info.empty?
     @notes = @notes.by_date(@note.date_from,@note.date_to) unless @note.date_from.empty? && @note.date_to.empty?
      
+    flash.alert = "No records found" if @notes.size == 0
     render action: 'index'
   end
   
