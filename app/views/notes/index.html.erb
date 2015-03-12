@@ -21,21 +21,16 @@
       <table width="100%">
         <th>Order</th>
         <th>Date</th>
-        <th></th>
-        <th></th>
         <th>User</th>
         <th>Info</th>
         <th></th>
-        <th></th>
         <tr class="search_row">
           <td><%= f.text_field :order_id, size: 5, class: "search_fields" %></td>
-          <td><%= f.text_field :date_from, size: 8, class: "search_fields" %></td>
-          <td align="center">to</td>
-          <td><%= f.text_field :date_to, size: 8, class: "search_fields" %></td>
-          <td ><%= f.select :user_id, User.selection, { include_blank: true },
-              { class: "btn btn-primary btn-sm search_fields" } %></td>
+          <td><%= f.text_field :date_from, size: 9, class: "search_fields" %> to <%= f.text_field :date_to, size: 9, class: "search_fields" %></td>
+          <td><%= f.select :user_id, User.selection, { include_blank: true },
+              { class: "btn btn-primary btn-md search_fields" } %></td>
           <td><%= f.text_field :info, class: "search_fields" %></td>
-          <td colspan="2" align="right">
+          <td align="right">
             <%= f.submit 'Search', class: "btn btn-primary btn-sm search_fields" %>
             <%= link_to 'Clear', notes_path, class: "btn btn-primary btn-sm search_fields" %>
           </td>
@@ -43,9 +38,9 @@
         <% @notes.each do |note| %>
           <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
             <td><%= link_to(note.order_id, order_path(note.order_id), class: "link_hilight") %></td>
-            <td colspan="3"><%= note.formatted_date %></td>
+            <td><%= note.formatted_date %></td>
     				<td><%= note.user_name %></td>
-    				<td colspan="3"><%= html_newlines(note.info) %></td>
+    				<td colspan="2"><%= html_newlines(note.info) %></td>
           </tr>
         <% end %>
       </table>

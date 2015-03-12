@@ -219,6 +219,11 @@ th {
   display:        block;
 }
 
+.itemlist th {
+  margin-bottom:  0;
+  padding-bottom: 0;
+}
+
 .subtotals {
   margin-top:     0.5em;
   padding-top:    0;
@@ -268,7 +273,6 @@ th {
 }
 
 .search_row {
-  margin-top:       0;
   background:       $main-color-medium;
 }
 
