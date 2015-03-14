@@ -44,11 +44,18 @@
           </tr>
         <% end %>
       </table>
+     
       <% flash.each do |name, msg| -%>
         <%= content_tag :p, msg, class: name %>
       <% end %>
+      
       <% unless @notes.empty? %>
-        <%= will_paginate @notes, renderer: BootstrapPagination::Rails %>
+        <div class="digg_pagination">
+          <div class="page_info">
+            <%= page_entries_info @notes %>
+          </div>
+          <%= will_paginate @notes, :container => false %>
+        </div>
       <% end %>
     </div>
   <% end %>

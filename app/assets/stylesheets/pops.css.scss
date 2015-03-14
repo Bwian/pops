@@ -357,3 +357,74 @@ th {
   background-color: $main-color;
   color:            $main-color-bg;
 }
+
+.digg_pagination {
+  background: white;
+  cursor: default;
+  margin-bottom: 0.5em;
+  /* self-clearing method: */
+}
+
+.digg_pagination a, .digg_pagination span, .digg_pagination em {
+  padding: 0.2em 0.5em;
+  display: block;
+  float: left;
+  margin-right: 1px; 
+}
+
+.digg_pagination .disabled {
+  color: $main-color-medium;
+  border: 1px solid $main-color-medium; 
+}
+
+.digg_pagination .current {
+  font-style: normal;
+  font-weight: bold;
+  background: $main-color-dark;
+  color: $main-color-bg;
+  border: 1px solid $main-color-mdark; 
+}
+
+.digg_pagination a {
+  text-decoration: none;
+  color: $main-color-mdark;
+  border: 1px solid $main-color-mdark; 
+}
+
+.digg_pagination a:hover, .digg_pagination a:focus {
+  color: $main-color-dark;
+  border-color: $main-color-dark;
+  background: $main-color-medium; 
+}
+
+.digg_pagination .page_info {
+  background: $main-color-medium;
+  color: $main-color-mdark;
+  padding: 0.4em 0.6em;
+  width: 22em;
+  margin-bottom: 0.3em;
+  margin-top: 0.5em;
+  text-align: center; 
+}
+
+.digg_pagination .page_info b {
+  color: $main-color-dark;
+  background: $main-color-light;
+  padding: 0.1em 0.25em; 
+}
+
+.digg_pagination:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden; 
+}
+
+* html .digg_pagination {
+  height: 1%; 
+}
+
+*:first-child + html .digg_pagination {
+  overflow: hidden; 
+}
