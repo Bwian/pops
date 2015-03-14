@@ -54,6 +54,10 @@ gem 'prawn'
 gem 'prawn-table'
 gem 'prawn-print'
 
+# pagination
+gem 'will_paginate'
+gem 'will_paginate-bootstrap'
+
 # SQL Server access
 gem 'tiny_tds'
 

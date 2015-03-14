@@ -1,6 +1,6 @@
 <div class=admin_form>
 
-  <%= form_for(@note) do |f| %>
+  <%= form_for(@note, method: :get ) do |f| %>
       
     <% if @note.errors.any? %>
       <div id="error_explanation">
@@ -46,7 +46,10 @@
       </table>
       <% flash.each do |name, msg| -%>
         <%= content_tag :p, msg, class: name %>
-      <% end -%>
+      <% end %>
+      <% unless @notes.empty? %>
+        <%= will_paginate @notes, renderer: BootstrapPagination::Rails %>
+      <% end %>
     </div>
   <% end %>
 </div>
