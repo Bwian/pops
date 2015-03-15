@@ -8,7 +8,15 @@ class OrdersController < ApplicationController
   # GET /orders
   def index
     @order_filter = session[:order_filter] || OrderFilter.new(session[:user_id])
-    @orders = @order_filter.faults.any? ? Order.none : Order.where(where_parameters).limit(100).joins(join_user(params[:sort])).order(sort_order(params[:sort]))
+    if @order_filter.faults.any?
+      @orders = Order.none
+    else
+      @orders = Order.where(where_parameters)
+      @orders = @orders.joins(join_user(params[:sort]))
+      @orders = @orders.order(sort_order(params[:sort]))
+      params.delete('sort')  # otherwise paginate will save the sort parameter
+      @orders = @orders.paginate(page: params[:page], per_page: 20)
+    end
   end
 
   # GET /orders/1
