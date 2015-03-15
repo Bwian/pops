@@ -30,5 +30,6 @@ rm *.yml
 ln -s /etc/opt/pops/*.yml .
 chown -R $POPS_OWNER $POPS_DEST
 sudo -u $POPS_OWNER bundle install --deployment
-sudo -u $POPS_OWNER rake db:migrate RAILS_ENV=production
+sudo -u $POPS_OWNER RAILS_ENV=production rake db:migrate
+sudo -u $POPS_OWNER RAILS_ENV=production bundle exec rake assets:precompile
 sudo -u $POPS_OWNER touch $POPS_DEST/tmp/restart.txt
