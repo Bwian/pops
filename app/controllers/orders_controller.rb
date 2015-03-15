@@ -128,11 +128,13 @@ class OrdersController < ApplicationController
   def submit
     @order.to_submitted
     add_notes('order',@order) if @order.notes.any?
+    message = @order.sendmail(session[:user_id])
 
     respond_to do |format|
       if @order.save
         save_user_notes(params)
         format.html { redirect_to(@order, notice: "Order #{@order.id} set to Submitted.") }
+        message.deliver if message && message.valid?
       else
         @order.to_draft
         @readonly = true

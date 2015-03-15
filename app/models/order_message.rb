@@ -40,6 +40,11 @@ class OrderMessage
   
   private
   
+  def submitted
+    @to = @order.approver
+    @from = @order.creator
+  end
+  
   def approved
     @to = @order.creator
     @from = @order.approver

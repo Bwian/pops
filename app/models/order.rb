@@ -172,6 +172,8 @@ class Order < ActiveRecord::Base
     message = nil
     
     case fromto
+      when 'DS'
+        message = OrderMessage.new(self,'submitted',user)
       when 'SA'
         message = OrderMessage.new(self,'approved',user)
       when 'AS'
