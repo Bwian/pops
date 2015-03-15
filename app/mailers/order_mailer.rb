@@ -2,6 +2,14 @@ class OrderMailer < ActionMailer::Base
 
   # @order, @from and @to need to be set up for use by the view
   
+  def submitted_email(order,args)
+    @order = order
+    @to = order.approver
+    @from = order.creator
+    
+    build_mail('submitted')
+  end
+  
   def approved_email(order,args)
     @order = order
     @to = order.creator

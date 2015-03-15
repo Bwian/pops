@@ -29,3 +29,9 @@ en:
       - :day
       - :month
       - :year
+  will_paginate:
+    page_entries_info:
+      single_page_html:
+        other: "Displaying <b>all&nbsp;%{count}</b> %{model}s"
+      multi_page: "Displaying %{model}s %{from} - %{to} of %{count}"        
+      multi_page_html: "Displaying %{model}s <b>%{from}&nbsp;-&nbsp;%{to}</b> of <b>%{count}</b>"

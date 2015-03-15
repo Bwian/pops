@@ -172,6 +172,8 @@ class Order < ActiveRecord::Base
     message = nil
     
     case fromto
+      when 'DS'
+        message = OrderMessage.new(self,'submitted',user)
       when 'SA'
         message = OrderMessage.new(self,'approved',user)
       when 'AS'
@@ -184,7 +186,8 @@ class Order < ActiveRecord::Base
     
     if message
       message.body = self.formatted_notes
-      message = nil if message.from_eq_to?
+      # don't send if from and to are the same person unless the order is being approved
+      message = nil if message.from_eq_to? && fromto != 'SA'
     end
     
     message
