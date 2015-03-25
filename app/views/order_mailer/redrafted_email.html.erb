@@ -5,7 +5,7 @@
   </head>
   <body>
     <p>Hi <%= @to.first_name%>,</p>
-		<p><%= link_to("Purchase Order #{@order.id}",url_for(:host => 'localhost:3000', :controller => 'orders', :action => 'show', :id => @order.id)) %> has been returned to you for changes.  
+		<p><%= link_to("Purchase Order #{@order.id}", url_for(only_path: false, controller: 'orders', action: 'show', id: @order.id)) %> has been returned to you for changes.  
 			Please resubmit after correcting the issues in the notes below:
 		 </p>
 		 <p><%= @body %></p>
