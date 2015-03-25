@@ -16,7 +16,8 @@ defaults: &defaults
   ldap_login:          query
   ldap_password:       cGFzc3dvcmQ=  # use db/utilities/encode.rb password
   ldap_enabled:        true
-  order_watermark:     
+  order_watermark: 
+  pops_host:           'localhost:3000'   
     
 development:
   <<: *defaults
@@ -39,4 +40,5 @@ test:  # Don't change these because the test suite needs them
 production:
   <<: *defaults
   sql_server_db:       EXO_UCB
+  pops_host:           intranet.ucare.org.au/pops
   
