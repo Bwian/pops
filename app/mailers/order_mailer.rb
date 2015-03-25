@@ -2,6 +2,8 @@ class OrderMailer < ActionMailer::Base
 
   # @order, @from and @to need to be set up for use by the view
   
+  before_action :set_defaults
+  
   def submitted_email(order,args)
     @order = order
     @to = order.approver
@@ -30,6 +32,15 @@ class OrderMailer < ActionMailer::Base
     build_mail('reset to Submitted')
   end
   
+  def redrafted_email(order,args)
+    @order = order
+    @to = order.creator
+    @from = args[:user]
+    @body = args[:body]
+    
+    build_mail('reset to Draft')
+  end
+  
   def changed_email(order,args)
     @order = order
     @to = args[:to]
@@ -43,5 +54,9 @@ class OrderMailer < ActionMailer::Base
   
   def build_mail(action)
     mail(to: @to.email, from: @from.email, subject: "Purchase Order #{@order.id} #{action}.")
+  end
+  
+  def set_defaults
+    @host = ENV['pops_host']
   end
 end
