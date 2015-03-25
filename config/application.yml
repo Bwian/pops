@@ -17,7 +17,7 @@ defaults: &defaults
   ldap_password:       cGFzc3dvcmQ=  # use db/utilities/encode.rb password
   ldap_enabled:        true
   order_watermark: 
-  pops_host:           'localhost:3000'   
+  pops_host:           localhost:3000   
     
 development:
   <<: *defaults
