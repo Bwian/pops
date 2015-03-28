@@ -28,6 +28,9 @@ git checkout -f master
 cd $POPS_DEST/config
 rm *.yml
 ln -s /etc/opt/pops/*.yml .
+cd $POPS_DEST/log
+rm production.log
+ln -s /var/log/pops/production.log .
 chown -R $POPS_OWNER $POPS_DEST
 sudo -u $POPS_OWNER bundle install --deployment
 sudo -u $POPS_OWNER RAILS_ENV=production rake db:migrate
