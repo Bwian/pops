@@ -125,6 +125,18 @@ th {
   padding:      0;
 }
 
+.info {
+  color:        $notice_color;
+}
+
+.warn {
+  color:        $warn_color;
+}
+
+.fatal {
+  color:        $error_color;
+}
+
 .link_hilight {
   color:        $error-color;
   font-weight:  bold;

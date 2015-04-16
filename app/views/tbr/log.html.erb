@@ -1,0 +1,11 @@
+<h1>Telstra Billing Reporter Log</h1>
+<table width="100%">
+<% @log.log.each do |fields| %>
+  <tr class='<%= "#{cycle('list_line_odd', 'list_line_even')} #{fields[0]}" %>'>  
+    <td width="15%"><%= "#{fields[1]}" %></td>
+    <td width="15%"><%= "#{fields[2]}" %></td>
+    <td width="70%"><%= "#{fields[3]}" %></td>
+  </tr>
+<% end %>
+</table>  
+

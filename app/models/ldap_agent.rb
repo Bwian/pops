@@ -70,7 +70,7 @@ class LdapAgent
 		end
 
     begin
-    	@connection.auth user,password
+      @connection.auth user,password
 
       unless @connection.bind 
         build_notice "#{@connection.get_operation_result.message}(#{@connection.get_operation_result.code})"
