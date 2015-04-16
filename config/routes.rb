@@ -11,7 +11,10 @@ Pops::Application.routes.draw do
     post 'login'  => :create
     get  'logout' => :destroy
   end
-
+  
+  get 'tbr/select'          => 'tbr#select'
+  post 'tbr/doit'           => 'tbr#doit'
+  
   resources :accounts,      :except => [:create, :delete, :show]
   resources :payment_terms, :except => [:create, :delete, :show]
   resources :programs,      :except => [:create, :delete, :show]    

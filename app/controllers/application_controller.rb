@@ -56,7 +56,7 @@ class ApplicationController < ActionController::Base
 
   def admin_action
     valid_actions = ADMIN[params[:controller]]
-    if valid_actions.include?(ALL) || valid_actions.include?(params[:action])
+    if valid_actions && (valid_actions.include?(ALL) || valid_actions.include?(params[:action]))
       return true
     else
       return session[:admin]

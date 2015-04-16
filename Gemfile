@@ -50,8 +50,8 @@ gem 'pry', group: [:development, :test]
 gem 'pry-nav', group: [:development, :test]
 
 # pdf management
-gem 'prawn'
-gem 'prawn-table'
+gem 'prawn', '~> 2.0'
+gem 'prawn-table', '~> 0.2'
 gem 'prawn-print'
 
 # pagination
@@ -62,3 +62,6 @@ gem 'tiny_tds'
 
 # LDAP Server access
 gem 'net-ldap'
+
+# Telstra Billing File parser
+gem 'tbr'

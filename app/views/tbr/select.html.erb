@@ -1,0 +1,27 @@
+<%= form_tag({action: :doit}, multipart: true) do %>
+	<fieldset>
+		<legend>Telstra Bill Reporting</legend>
+    
+    <table width="100%">
+      <tr>
+        <td>  
+          <span class="btn btn-primary btn-sm btn-file right">
+              Browse... <%= file_field_tag :filename %>
+          </span>
+        </td>
+
+      	<td><text>No file selected</text></td>
+        <td><%= submit_tag "Process", class: "btn btn-success btn-sm" %></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <% flash.each do |name, msg| -%>
+            <%= content_tag :text, msg, class: name %>
+          <% end -%>
+        </td>
+        <td></td>
+      </tr>
+    </table>
+  </fieldset>
+<% end %>
