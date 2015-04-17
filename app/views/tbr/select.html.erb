@@ -6,11 +6,10 @@
       <tr>
         <td>  
           <span class="btn btn-primary btn-sm btn-file right">
-              Browse... <%= file_field_tag :filename %>
+              Browse... <%= file_field_tag :filename, onchange: "javascript:set_file_name($(this).val())" %>
           </span>
         </td>
-
-      	<td><text>No file selected</text></td>
+      	<td><%= text_field_tag :file_name, "No file selected", { size: 50, readonly: true } %></td>
         <td><%= submit_tag "Process", class: "btn btn-success btn-sm" %></td>
       </tr>
       <tr>
