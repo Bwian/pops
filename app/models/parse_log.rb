@@ -1,14 +1,24 @@
+require 'elif'
+
 class ParseLog
   
   attr_reader :log
   
   def initialize(filename)
     @log = []
-    File.open(filename, "r") do |f|
+        
+    Elif.open(filename, "r") do |f|
       f.each_line do |line|
         @log << parse(line)
+        break if line =~ /Processing Telstra Bill File/
       end
     end
+    
+    @log.reverse!
+  end
+  
+  def each(&blk)
+    @log.each(&blk)
   end
   
   private

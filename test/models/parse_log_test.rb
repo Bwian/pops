@@ -15,4 +15,11 @@ class ParseLogTest < ActiveSupport::TestCase
     assert_equal('19:14:16',a[2])
     assert(a[3].start_with?('Building'))
   end
+  
+  test "each" do
+    @pl.each do |fields|
+      assert(fields[3].start_with? 'Processing')
+      break
+    end
+  end
 end

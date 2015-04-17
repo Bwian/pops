@@ -65,3 +65,6 @@ gem 'net-ldap'
 
 # Telstra Billing File parser
 gem 'tbr'
+
+# Reverse file reading
+gem 'elif'

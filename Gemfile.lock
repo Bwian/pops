@@ -43,6 +43,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.1.1)
+    elif (0.1.0)
     erubis (2.7.0)
     execjs (2.5.2)
     hike (1.2.3)
@@ -139,6 +140,7 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass
   coffee-rails
+  elif
   jbuilder (~> 1.2)
   jquery-rails
   mysql2
