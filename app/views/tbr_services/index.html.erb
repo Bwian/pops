@@ -15,7 +15,7 @@
     <th>Name</th>
     <th>Comment</th>    
     <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-      <td><b><%= link_to(service.code, service) %></b></td>
+      <td><b><%= link_to(format_phone_number(service.code), service) %></b></td>
       <td><%= service.manager_code %></td>
       <td><%= service.user_code %></td>
       <td><%= service.name %></td>
