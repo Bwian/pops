@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140803005552) do
+ActiveRecord::Schema.define(version: 20150418145550) do
 
   create_table "accounts", force: true do |t|
     t.string  "name"
@@ -107,6 +107,22 @@ ActiveRecord::Schema.define(version: 20140803005552) do
     t.decimal "rate"
     t.string  "status"
   end
+
+  create_table "tbr_services", force: true do |t|
+    t.integer  "manager_id"
+    t.integer  "user_id"
+    t.string   "code"
+    t.string   "name"
+    t.string   "cost_centre"
+    t.string   "rental"
+    t.string   "service_type"
+    t.string   "comment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tbr_services", ["manager_id"], name: "index_tbr_services_on_manager_id"
+  add_index "tbr_services", ["user_id"], name: "index_tbr_services_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "code"
