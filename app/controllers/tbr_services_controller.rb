@@ -61,6 +61,6 @@ class TbrServicesController < ApplicationController
 
     def tbr_service_params
       params[:tbr_service]
-      params.require(:tbr_service).permit(:manager,:user,:code,:name,:cost_centre,:rental,:service_type,:comment)
+      params.require(:tbr_service).permit(:manager_id,:user_id,:code,:name,:cost_centre,:rental,:service_type,:comment)
     end
 end

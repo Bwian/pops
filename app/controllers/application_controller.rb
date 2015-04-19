@@ -51,7 +51,9 @@ class ApplicationController < ActionController::Base
     'payment_terms' => [INDEX],
     'programs'      => [INDEX],
     'accounts'      => [INDEX],
-    'tax_rates'     => [INDEX]
+    'tax_rates'     => [INDEX],
+    'tbr'           => [],
+    'tbr_services'  => []
   }
 
   def admin_action
