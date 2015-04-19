@@ -15,18 +15,24 @@ class ApplicationHelperTest < ActionView::TestCase
   setup do
     setup_admin_session
     @order = orders(:draft)
+    @service = tbr_services(:both)
   end
   
   test "link_list" do
+    assert_match('',link_list(nil))
     assert_match(/Orders/,link_list(@order))
+    assert_match(/TBR Services/,link_list(@service))
   end
   
   test "link_model" do
+    assert_match('',link_model(nil))
     assert_match(/Order/,link_model(@order))
+    assert_match(/TBR Service/,link_model(@service))
   end
   
   test "link_new" do
-    assert_match(/New Order/,link_new('order'))
+    assert_match(/New Order/,link_new(Order))
+    assert_match(/TBR Service/,link_new(TbrService))   
   end
   
   test "link_refresh" do
@@ -35,12 +41,23 @@ class ApplicationHelperTest < ActionView::TestCase
   end
   
   test "link_edit" do
+    assert_match('',link_edit(nil))
     assert_match(/orders(.*)edit/,link_edit(@order))
   end
   
   test "link_delete" do
-    assert_match(/orders/,link_delete(@order))
-    assert_match(/delete/,link_delete(@order))
+    assert_match('',link_delete(nil))
+    assert_match(/delete(.*)orders/,link_delete(@order))
+  end
+  
+  test "submit_label" do
+    assert_match('',submit_label(nil))
+    assert_match('Update Order',submit_label(@order))
+    assert_match('Update TBR Service',submit_label(@service))
+    @order = Order.new
+    @service = TbrService.new
+    assert_match('Create Order',submit_label(@order))
+    assert_match('Create TBR Service',submit_label(@service))
   end
   
   test "legend edit" do

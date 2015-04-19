@@ -57,7 +57,7 @@
   		<% if @readonly %>
         <%= link_edit(@tbr_service) %>&nbsp;<%= link_delete(@tbr_service) %>
       <% else %>
-        <%= f.submit nil, class: "btn btn-primary btn-sm" %>
+        <%= f.submit submit_label(@tbr_service), class: "btn btn-primary btn-sm" %>
       <% end %>
       <%= link_list(@tbr_service) %>
     </div>

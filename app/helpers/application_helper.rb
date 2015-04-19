@@ -11,22 +11,24 @@ module ApplicationHelper
   def link_list(model)
     return '' unless model
     name = model.class.name.underscore.pluralize
-    link_to("List #{name.titleize}", url_for(controller: name), class: LINK_STYLE)
+    label = model.class.pops_name.pluralize
+    link_to("List #{label}", url_for(controller: name), class: LINK_STYLE)
   end
   
   def link_model(model)
     return '' unless model
-    name = model.class.name.camelcase
+    name = model.class.pops_name
     link_to(name, model, class: LINK_STYLE)
   end
   
-  def link_new(name)
-    authorised_action(NEW,params[:controller], nil) ? link_to("New #{name.titleize}", url_for(controller: name.pluralize, action: :new), class: LINK_STYLE) : ""
+  def link_new(klass)
+    name = klass.name.underscore.pluralize
+    authorised_action(NEW,params[:controller], nil) ? link_to("New #{klass.pops_name}", url_for(controller: name, action: :new), class: LINK_STYLE) : ""
   end
   
   def link_edit(model)
     return '' unless model && model.id
-    name = model.class.name.downcase
+    name = model.class.name.underscore
     authorised_action(EDIT,params[:controller], model) ? link_to('Edit', url_for(controller: name.pluralize, id: model.id, action: :edit), class: LINK_STYLE) : ""
   end
 
@@ -48,6 +50,13 @@ module ApplicationHelper
     else 
       link_to('Login', url_for(controller: 'sessions', action: :new))
     end
+  end
+  
+  def submit_label(model)
+    return '' unless model
+    name = model.class.pops_name
+    action = model.id ? 'Update' : 'Create'
+    "#{action} #{name}"
   end
   
   def search
