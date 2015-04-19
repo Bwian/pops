@@ -1,0 +1,71 @@
+<div id="tbr_service_form">
+<%= form_for(@tbr_service) do |f| %>
+  <fieldset>
+    <legend><%= legend("TBR Service Details", @readonly) %></legend>
+    <% if @tbr_service.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@tbr_service.errors.count, "error") %> prohibited this tbr_service from being saved:</h2>
+        <ul>
+          <% @tbr_service.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    	
+    <div class="field">
+	    <%= f.label :manager_id, 'Manager:' %>
+	    <%= f.select :manager_id, User.selection, 
+            { prompt: 'Select a manager' },
+            { disabled: @readonly, class: "btn btn-primary btn-sm" } %>
+	  </div>
+    <div class="field">
+	    <%= f.label :user_id, 'User:' %>
+	    <%= f.select :user_id, User.selection, 
+            { prompt: 'Select a user' },
+            { disabled: @readonly, class: "btn btn-primary btn-sm" } %>
+	  </div>
+    <div class="field">
+      <%= f.label :code, 'Code:' %>
+      <%= f.text_field :code, readonly: @readonly %>
+    </div>
+    <div class="field">
+      <%= f.label :name, 'Name:' %>
+      <%= f.text_field :name, readonly: @readonly %>
+    </div>
+    <div class="field">
+      <%= f.label :cost_centre, 'Cost Centre:' %>
+      <%= f.text_field :cost_centre, readonly: @readonly %>
+    </div>
+    <div class="field">
+      <%= f.label :rental, 'Rental:' %>
+      <%= f.text_field :rental, readonly: @readonly %>
+    </div>
+    <div class="field">
+	    <%= f.label :service_type, 'Service Type:' %>
+	    <%= f.select :service_type, User.selection, 
+            { prompt: 'Select a service type' },
+            { disabled: @readonly, class: "btn btn-primary btn-sm" } %>
+	  </div>
+    <div class="field">
+      <%= f.label :comment, 'Comment:' %>
+      <%= f.text_area :comment, rows: 5, cols: 50, readonly: @readonly %>
+    </div>
+
+    <div class="actions">
+      <label></label>
+  		<% if @readonly %>
+        <%= link_edit(@tbr_service) %>&nbsp;<%= link_delete(@tbr_service) %>
+      <% else %>
+        <%= f.submit nil, class: "btn btn-primary btn-sm" %>
+      <% end %>
+      <%= link_list(@tbr_service) %>
+    </div>
+	
+  	<div id="notice" class="notice">
+      <label for="notice" > </label>
+      <%= notice %>
+    </div>
+  </fieldset>
+<% end %>
+</div>

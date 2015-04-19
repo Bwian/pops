@@ -24,6 +24,7 @@ Pops::Application.routes.draw do
   resources :tax_rates,     :except => [:create, :delete, :show]  
   resources :users
   resources :deliveries
+  resources :tbr_services
   
   get  'notes'               => 'notes#index'
   

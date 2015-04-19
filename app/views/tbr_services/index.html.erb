@@ -1,0 +1,25 @@
+<% if notice %>
+  <p class="notice" ><%= notice %></p>
+<% end %>
+
+<div class=header>
+  <div class="header-title header-cells">TBR Services</div>
+  <div class="header-cells right"><%= link_new('tbr_service')%></div>
+</div>
+
+<table width="100%">
+  <% @tbr_services.each do |service| %>
+    <th>Service</th>
+    <th>Manager</th>
+    <th>User</th>
+    <th>Name</th>
+    <th>Comment</th>    
+    <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+      <td><b><%= link_to(service.code, service) %></b></td>
+      <td><%= service.manager_code %></td>
+      <td><%= service.user_code %></td>
+      <td><%= service.name %></td>
+      <td><%= service.comment %></td>
+    </tr>
+  <% end %>
+</table>
