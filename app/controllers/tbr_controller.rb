@@ -10,7 +10,7 @@ class TbrController < ApplicationController
     @log = ParseLog.new('/tmp/tbr.log')
   end
   
-  def doit
+  def go
     respond_to do |format|
       in_file = params[:filename]
       if in_file

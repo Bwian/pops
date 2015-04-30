@@ -8,12 +8,12 @@
 </div>
 
 <table width="100%">
-  <% @tbr_services.each do |service| %>
-    <th>Service</th>
-    <th>Manager</th>
-    <th>User</th>
-    <th>Name</th>
-    <th>Comment</th>    
+  <th>Service</th>
+  <th>Manager</th>
+  <th>User</th>
+  <th>Name</th>
+  <th>Comment</th>
+  <% @tbr_services.each do |service| %>    
     <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
       <td><b><%= link_to(format_phone_number(service.code), service) %></b></td>
       <td><%= service.manager_code %></td>
