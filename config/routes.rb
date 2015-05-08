@@ -14,8 +14,9 @@ Pops::Application.routes.draw do
   
   get  'tbr'                 => 'tbr#select'
   get  'tbr/select'          => 'tbr#select'
-  post 'tbr/go  '            => 'tbr#go'
-  get  'tbr/log'             => 'tbr#log'
+  post 'tbr/go'              => 'tbr#go'
+  get  'tbr/log/:id'         => 'tbr#log'
+  post 'tbr/log/:id'         => 'tbr#log'
   
   resources :accounts,      :except => [:create, :delete, :show]
   resources :payment_terms, :except => [:create, :delete, :show]

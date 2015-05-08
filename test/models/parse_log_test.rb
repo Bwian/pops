@@ -10,16 +10,25 @@ class ParseLogTest < ActiveSupport::TestCase
   
   test "parse" do
     a = @pl.send('parse',LINE)
-    assert_equal('info',a[0])
-    assert_equal('Thursday Apr 16',a[1])
-    assert_equal('19:14:16',a[2])
-    assert(a[3].start_with?('Building'))
+    assert_equal('info',a[:type])
+    assert_equal('Thursday Apr 16 - 19:14:16',a[:time].strftime("%A %b %-d - %H:%M:%S"))
+    assert(a[:desc].start_with?('Building'))
+  end
+
+  test "session" do
+    assert_equal(15,@pl.session(1).count)
+    assert_equal(10,@pl.session(3).count)
+    assert_equal(0,@pl.session(6).count)
   end
   
-  test "each" do
-    @pl.each do |fields|
-      assert(fields[3].start_with? 'Processing')
-      break
-    end
+  test "sessions" do
+    assert_equal(5,@pl.sessions.count)
+    assert_equal("Friday May 8 - 10:42:58",@pl.sessions[3])
   end
+  
+  test "selection" do
+    binding.pry
+    assert_equal(5,@pl.selection.count)
+  end
+    
 end

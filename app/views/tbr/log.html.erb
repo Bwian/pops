@@ -1,15 +1,24 @@
-<h1>Telstra Billing Reporter Log</h1>
-<table width="100%">
-<% @log.each do |fields| %>
-  <tr class='<%= "#{cycle('list_line_odd', 'list_line_even')} #{fields[0]}" %>'>  
-    <td width="20%"><%= "#{fields[1]}" %></td>
-    <td width="15%"><%= "#{fields[2]}" %></td>
-    <td width="65%"><%= "#{fields[3]}" %></td>
-  </tr>
-<% end %>
-</table>  
+<%= form_tag(controller: 'tbr', action: 'log', method: :post) do %> 
+  <div class=header>
+    <div class="header-title header-cells">Telstra Billing Reporter Log</div>
+    <div class="header-cells right">
+      <%= select_tag(:session, options_for_select(@log.selection), { prompt: '-- Select previous log --', onchange: "this.form.submit();", class: "btn btn-primary roles" } )%>
+    </div>
+  </div>
+  <table width="100%">
+  <% @log.session(@session).each do |fields| %>
+    <tr class='<%= "#{cycle('list_line_odd', 'list_line_even')} #{fields[:type]}" %>'>  
+      <td width="20%"><%= "#{fields[:time].strftime('%A %b %-d')}" %></td>
+      <td width="15%"><%= "#{fields[:time].strftime('%H:%M:%S')}" %></td>
+      <td width="65%"><%= "#{fields[:desc]}" %></td>
+    </tr>
+  <% end %>
+  </table>
+<% end%>  
 
 <script>
-	window.onload=setTimeout("location.reload(true);",5000);
+	if (<%= @session %> == 1) {
+    window.onload=setTimeout("location.reload(true);",10000);
+  }
 </script>
 

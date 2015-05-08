@@ -1,0 +1,60 @@
+I, [2015-05-08T10:26:57.997800 #13075]  INFO -- : Telstra bill processing started
+I, [2015-05-08T10:26:57.997832 #13075]  INFO -- : Initialising Telstra Billing Reporter
+W, [2015-05-08T10:26:57.997911 #13075]  WARN -- : No output directory provided.  Files will be written to /tmp
+I, [2015-05-08T10:26:57.997957 #13075]  INFO -- : Processing Telstra Bill File: bills.csv
+W, [2015-05-08T10:26:57.998049 #13075]  WARN -- : All services will be classified as unassigned
+I, [2015-05-08T10:26:57.998099 #13075]  INFO -- : Files being written to /tmp
+I, [2015-05-08T10:26:57.998139 #13075]  INFO -- : Extracting Call Types from bills.csv
+I, [2015-05-08T10:26:58.004937 #13075]  INFO -- : Extracting billing data from bills.csv
+W, [2015-05-08T10:26:58.005057 #13075]  WARN -- : Empty services list. All services will be classified as unassigned
+I, [2015-05-08T10:26:58.038670 #13075]  INFO -- : Building Unassigned group
+I, [2015-05-08T10:26:58.041137 #13075]  INFO -- : Creating group summaries
+I, [2015-05-08T10:26:58.473539 #13075]  INFO -- : Creating service details
+I, [2015-05-08T10:27:01.058136 #13075]  INFO -- : Creating service totals summary
+I, [2015-05-08T10:27:01.132652 #13075]  INFO -- : PDF report files can be found in /private/tmp/201306.
+I, [2015-05-08T10:27:01.132710 #13075]  INFO -- : Telstra billing data extract completed.
+I, [2015-05-08T10:42:58.552006 #13260]  INFO -- : Telstra bill processing started
+I, [2015-05-08T10:42:58.552116 #13260]  INFO -- : Initialising Telstra Billing Reporter
+W, [2015-05-08T10:42:58.552180 #13260]  WARN -- : No output directory provided.  Files will be written to /tmp
+I, [2015-05-08T10:42:58.552222 #13260]  INFO -- : Processing Telstra Bill File: services.csv
+W, [2015-05-08T10:42:58.552263 #13260]  WARN -- : All services will be classified as unassigned
+I, [2015-05-08T10:42:58.552293 #13260]  INFO -- : Files being written to /tmp
+I, [2015-05-08T10:42:58.552320 #13260]  INFO -- : Extracting Call Types from services.csv
+I, [2015-05-08T10:42:58.552456 #13260]  INFO -- : Extracting billing data from services.csv
+W, [2015-05-08T10:42:58.552491 #13260]  WARN -- : Empty services list. All services will be classified as unassigned
+F, [2015-05-08T10:42:58.552621 #13260] FATAL -- : Invalid billing file: /var/folders/6d/sr29y_k113s3hdt2qff4z8qc0000gn/T/tbr20150508-13260-mpyh8n
+I, [2015-05-08T10:51:55.093500 #13260]  INFO -- : Telstra bill processing started
+I, [2015-05-08T10:51:55.093529 #13260]  INFO -- : Initialising Telstra Billing Reporter
+W, [2015-05-08T10:51:55.093585 #13260]  WARN -- : No output directory provided.  Files will be written to /tmp
+I, [2015-05-08T10:51:55.093622 #13260]  INFO -- : Processing Telstra Bill File: empty.csv
+W, [2015-05-08T10:51:55.093660 #13260]  WARN -- : All services will be classified as unassigned
+I, [2015-05-08T10:51:55.093689 #13260]  INFO -- : Files being written to /tmp
+I, [2015-05-08T10:51:55.093716 #13260]  INFO -- : Extracting Call Types from empty.csv
+I, [2015-05-08T10:51:55.093774 #13260]  INFO -- : Extracting billing data from empty.csv
+W, [2015-05-08T10:51:55.093835 #13260]  WARN -- : Empty services list. All services will be classified as unassigned
+F, [2015-05-08T10:51:55.093884 #13260] FATAL -- : Invalid billing file: /var/folders/6d/sr29y_k113s3hdt2qff4z8qc0000gn/T/tbr20150508-13260-17m47pn
+I, [2015-05-08T10:52:30.623100 #13260]  INFO -- : Telstra bill processing started
+I, [2015-05-08T10:52:30.623116 #13260]  INFO -- : Initialising Telstra Billing Reporter
+W, [2015-05-08T10:52:30.623166 #13260]  WARN -- : No output directory provided.  Files will be written to /tmp
+I, [2015-05-08T10:52:30.623200 #13260]  INFO -- : Processing Telstra Bill File: invalid.csv
+W, [2015-05-08T10:52:30.623237 #13260]  WARN -- : All services will be classified as unassigned
+I, [2015-05-08T10:52:30.623265 #13260]  INFO -- : Files being written to /tmp
+I, [2015-05-08T10:52:30.623292 #13260]  INFO -- : Extracting Call Types from invalid.csv
+I, [2015-05-08T10:52:30.623356 #13260]  INFO -- : Extracting billing data from invalid.csv
+W, [2015-05-08T10:52:30.623386 #13260]  WARN -- : Empty services list. All services will be classified as unassigned
+F, [2015-05-08T10:52:30.623447 #13260] FATAL -- : Invalid billing file: /var/folders/6d/sr29y_k113s3hdt2qff4z8qc0000gn/T/tbr20150508-13260-j5a7no
+I, [2015-05-08T10:52:52.845900 #13260]  INFO -- : Telstra bill processing started
+I, [2015-05-08T10:52:52.845985 #13260]  INFO -- : Initialising Telstra Billing Reporter
+W, [2015-05-08T10:52:52.846040 #13260]  WARN -- : No output directory provided.  Files will be written to /tmp
+I, [2015-05-08T10:52:52.846100 #13260]  INFO -- : Processing Telstra Bill File: bills.csv
+W, [2015-05-08T10:52:52.846220 #13260]  WARN -- : All services will be classified as unassigned
+I, [2015-05-08T10:52:52.846270 #13260]  INFO -- : Files being written to /tmp
+I, [2015-05-08T10:52:52.846306 #13260]  INFO -- : Extracting Call Types from bills.csv
+I, [2015-05-08T10:52:52.849796 #13260]  INFO -- : Extracting billing data from bills.csv
+W, [2015-05-08T10:52:52.849858 #13260]  WARN -- : Empty services list. All services will be classified as unassigned
+I, [2015-05-08T10:52:52.885220 #13260]  INFO -- : Building Unassigned group
+I, [2015-05-08T10:52:52.887126 #13260]  INFO -- : Creating group summaries
+I, [2015-05-08T10:52:53.258642 #13260]  INFO -- : Creating service details
+I, [2015-05-08T10:52:55.484311 #13260]  INFO -- : Creating service totals summary
+I, [2015-05-08T10:52:55.546662 #13260]  INFO -- : PDF report files can be found in /private/tmp/201306.
+I, [2015-05-08T10:52:55.546718 #13260]  INFO -- : Telstra billing data extract completed.
