@@ -58,6 +58,7 @@ label {
 
 select, textarea, input {
   margin-left:      0.5em;
+  padding-left:     0.5em;
   color:            $main-color;
 }
 
@@ -442,21 +443,43 @@ th {
 }
 
 .btn-file {
-    position: relative;
-    overflow: hidden;
+  position: relative;
+  overflow: hidden;
 }
+
 .btn-file input[type=file] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    font-size: 100px;
-    text-align: right;
-    filter: alpha(opacity=0);
-    opacity: 0;
-    outline: none;
-    background: white;
-    cursor: inherit;
-    display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+.selectize-control { 
+  width:            20em;
+  margin:           0;
+  padding:          0;
+}
+
+.btn .selectize-dropdown, .selectize-input {
+  padding:          0;
+  margin-left:      0.5em;
+  text-align:       left;
+  color:            $main-color;
+}
+
+.selectize-input {
+  padding-left:      0.5em;
+}
+
+.selectize-dropdown .active {
+  background:       $main-color-bg;
 }

@@ -27,7 +27,6 @@ class ParseLogTest < ActiveSupport::TestCase
   end
   
   test "selection" do
-    binding.pry
     assert_equal(5,@pl.selection.count)
   end
     

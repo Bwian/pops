@@ -28,4 +28,8 @@ class TbrServiceTest < ActiveSupport::TestCase
     @service = tbr_services(:no_user)
     assert_equal('Unassigned',@service.user_code)
   end
+  
+  test "service_types" do
+    assert_equal(2,TbrService.service_types.count)
+  end
 end

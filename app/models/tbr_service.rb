@@ -6,6 +6,11 @@ class TbrService < ActiveRecord::Base
     'TBR Service'
   end
   
+  def self.service_types
+    types = TbrService.select('distinct service_type').map(&:service_type) 
+    types 
+  end
+  
   def manager_code
     self.manager.nil? ? 'Unassigned' : self.manager.code
   end

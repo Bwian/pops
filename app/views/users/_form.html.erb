@@ -68,7 +68,25 @@
         </label>
       </div>
     </div>
-
+    
+    <div class="field">
+      <%= f.hidden_field :tbr_admin, value: "0" %>
+      <%= f.hidden_field :tbr_manager, value: "0" %>
+      <%= f.hidden_field :approver, value: "0" %>
+      <%= f.hidden_field :creator, value: "0" %>
+      <label>TBR:</label>
+      <div class="ck-button">
+        <label>
+          <%= f.check_box :tbr_admin, disabled: @readonly, include_hidden: false %>
+          <span>Administrator</span>
+        </label>
+        <label>
+          <%= f.check_box :tbr_manager, disabled: @readonly, include_hidden: false %>
+          <span>Manager</span>
+        </label>
+      </div>
+    </div>
+    
     <div class="actions">
       <label></label>
   		<% if @readonly %>

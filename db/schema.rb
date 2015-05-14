@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150418145550) do
+ActiveRecord::Schema.define(version: 20150509034147) do
 
   create_table "accounts", force: true do |t|
     t.string  "name"
@@ -140,6 +140,8 @@ ActiveRecord::Schema.define(version: 20150418145550) do
     t.string   "phone"
     t.string   "accounts_filter"
     t.string   "programs_filter"
+    t.boolean  "tbr_admin",       default: false
+    t.boolean  "tbr_manager",     default: false
   end
 
 end

@@ -27,5 +27,5 @@ no_user:
   name: Dana Street Main Number
   cost_centre: '555'
   rental: $5.00
-  service_type: Telephone
+  service_type: Other
   comment: Comment

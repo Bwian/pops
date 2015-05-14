@@ -17,13 +17,13 @@
 	    <%= f.label :manager_id, 'Manager:' %>
 	    <%= f.select :manager_id, User.selection, 
             { prompt: 'Select a manager' },
-            { disabled: @readonly, class: "btn btn-primary btn-sm" } %>
+            { disabled: @readonly, class: "btn" } %>
 	  </div>
     <div class="field">
 	    <%= f.label :user_id, 'User:' %>
 	    <%= f.select :user_id, User.selection, 
             { prompt: 'Select a user' },
-            { disabled: @readonly, class: "btn btn-primary btn-sm" } %>
+            { disabled: @readonly, class: "btn" } %>
 	  </div>
     <div class="field">
       <%= f.label :code, 'Code:' %>
@@ -43,15 +43,16 @@
     </div>
     <div class="field">
 	    <%= f.label :service_type, 'Service Type:' %>
-	    <%= f.select :service_type, User.selection, 
-            { prompt: 'Select a service type' },
-            { disabled: @readonly, class: "btn btn-primary btn-sm" } %>
+	    <%= f.select :service_type, TbrService.service_types, 
+            { prompt: 'Select or add a service type' },
+            { disabled: @readonly, class: "btn" } %>
 	  </div>
+    
     <div class="field">
       <%= f.label :comment, 'Comment:' %>
       <%= f.text_area :comment, rows: 5, cols: 50, readonly: @readonly %>
     </div>
-
+    
     <div class="actions">
       <label></label>
   		<% if @readonly %>
@@ -69,3 +70,20 @@
   </fieldset>
 <% end %>
 </div>
+
+<script type="text/javascript">
+  $('#tbr_service_service_type').selectize({
+  	create: true,
+  	sortField: 'text'
+  });
+  
+  $('#tbr_service_manager_id').selectize({
+  	create: false,
+    sortField: 'text'
+  });
+  
+  $('#tbr_service_user_id').selectize({
+  	create: false,
+  	sortField: 'text'
+  });
+</script>
