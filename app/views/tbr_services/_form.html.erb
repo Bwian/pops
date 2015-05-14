@@ -31,7 +31,7 @@
     </div>
     <div class="field">
       <%= f.label :name, 'Name:' %>
-      <%= f.text_field :name, readonly: @readonly %>
+      <%= f.text_field :name, class: 'wider', readonly: @readonly %>
     </div>
     <div class="field">
       <%= f.label :cost_centre, 'Cost Centre:' %>
@@ -50,7 +50,7 @@
     
     <div class="field">
       <%= f.label :comment, 'Comment:' %>
-      <%= f.text_area :comment, rows: 5, cols: 50, readonly: @readonly %>
+      <%= f.text_area :comment, rows: 5, readonly: @readonly %>
     </div>
     
     <div class="actions">
@@ -64,7 +64,7 @@
     </div>
 	
   	<div id="notice" class="notice">
-      <label for="notice" > </label>
+      <label> </label>
       <%= notice %>
     </div>
   </fieldset>

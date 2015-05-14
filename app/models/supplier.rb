@@ -11,7 +11,7 @@ class Supplier < ActiveRecord::Base
   @@selection = nil
   
   def self.selection
-    @@selection ||= Supplier.where(status: ['A','N']).map { |s| [s.name, s.id] }
+    @@selection ||= Supplier.where(status: ['A','N']).map { |s| [s.name_id, s.id] }
   end
   
   def save

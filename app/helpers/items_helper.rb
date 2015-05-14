@@ -55,8 +55,7 @@ module ItemsHelper
   end
   
   def program_list(item,flag)
-    filter = User.find(session[:user_id]).programs_filter
-    
+    filter = User.find(session[:user_id]).programs_filter  
     select_list(filter,Program.selection,item.program_id,flag)
   end
   
