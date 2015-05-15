@@ -1,18 +1,23 @@
 class PaymentTerm < ActiveRecord::Base
+  
+  CACHE_KEY = "payment_terms.all"
+  
   include Exo
   
-  has_many :suppliers
+  after_save :expire_cache
   
+  has_many :suppliers
+
   default_scope { order(:name) }
   
-  @@selection = nil
-  
   def self.selection
-    @@selection ||= PaymentTerm.where(status: ['A','N']).map { |p| [p.name, p.id] }
+    Rails.cache.fetch(CACHE_KEY) do
+      PaymentTerm.where(status: ['A','N']).map { |s| [s.name_id, s.id] }
+    end
+  end
+ 
+  def expire_cache
+    Rails.cache.delete(CACHE_KEY)
   end
   
-  def save
-    @@selection = nil
-    super
-  end
 end

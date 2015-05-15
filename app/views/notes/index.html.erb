@@ -27,7 +27,7 @@
         <tr class="search_row">
           <td><%= f.text_field :order_id, size: 5, class: "search_fields" %></td>
           <td><%= f.text_field :date_from, size: 9, class: "search_fields" %> to <%= f.text_field :date_to, size: 9, class: "search_fields" %></td>
-          <td><%= f.select :user_id, User.selection, { include_blank: true },
+          <td><%= f.select :user_id, User.users, { include_blank: true },
               { class: "btn btn-primary btn-md search_fields" } %></td>
           <td><%= f.text_field :info, class: "search_fields" %></td>
           <td align="right">

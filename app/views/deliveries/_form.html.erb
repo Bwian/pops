@@ -15,11 +15,11 @@
 	
     <div class="field">
       <%= f.label :name, 'Name:' %>
-      <%= f.text_field :name, readonly: @readonly %>
+      <%= f.text_field :name, class: 'wider', readonly: @readonly %>
     </div>
     <div class="field">
       <%= f.label :address, 'Address:' %>
-      <%= f.text_area :address, cols: 40, rows: 5, readonly: @readonly %>
+      <%= f.text_area :address, rows: 5, readonly: @readonly %>
     </div>
     </br>
     <div class="actions">

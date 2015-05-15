@@ -39,7 +39,7 @@
     </div>
 	  <div class="field">
 	    <%= f.label :approver_id, 'Default Approver:' %>
-	    <%= f.select :approver_id, User.selection, 
+	    <%= f.select :approver_id, User.approvers, 
             { prompt: 'Select a default approver' },
             { disabled: @readonly, class: "btn btn-primary btn-sm" } %>
 	  </div>

@@ -18,17 +18,18 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should create user" do
+    Rails.cache.delete('approvers.all')
     @user.code = "Drew"
     @user.name = "Drew Collins"
     @user.admin = false
     @user.approver = true
     
-    count = User.selection.count
+    count = User.approvers.count
     assert_difference('User.count') do
       post :create, user: @user.attributes
     end
     assert_redirected_to users_path
-    # TODO: assert_equal(count + 1, User.selection.count)  
+    assert_equal(count + 1, User.approvers.count)  
   end
 
   test "should not create user" do

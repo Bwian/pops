@@ -1,6 +1,7 @@
 require 'digest/sha2'
 
 class User < ActiveRecord::Base
+  after_save :expire_cache
   attr_accessor :password_confirmation
   attr_reader :password
   
@@ -14,22 +15,31 @@ class User < ActiveRecord::Base
   validates :name, :code, uniqueness: true
   validate :filters_valid
   
-  @@selection = nil
-  
-  def self.selection
-    @@selection ||= User.where(approver: true).map { |s| [s.name, s.id] }
-  end
-  
-  def save
-    @@selection = nil  # force reload
-    super
-  end
-  
-  def destroy
-    @@selection = nil  # force reload
-    super
+  def self.approvers
+    Rails.cache.fetch("approvers.all") do
+      User.where(approver: true).map { |s| [s.name, s.id] }
+    end
   end
 
+  def self.tbr_managers
+    Rails.cache.fetch("tbr_managers.all") do
+      User.where(tbr_manager: true).map { |s| [s.name, s.id] }
+    end
+  end
+  
+  def self.users
+    Rails.cache.fetch("users.all") do
+      User.all.map { |s| [s.name, s.id] }
+    end
+  end
+  
+  def expire_cache
+    Rails.cache.delete('approvers.all')
+    Rails.cache.delete('tbr_managers.all')
+    Rails.cache.delete('users.all')
+    return true  # needed so that the callback chain continues
+  end
+  
   def roles
     role_array = [] 
         

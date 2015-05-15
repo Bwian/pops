@@ -1,6 +1,10 @@
 class Supplier < ActiveRecord::Base
   
+  CACHE_KEY = "suppliers.all"
+  
   include Exo
+  
+  after_save :expire_cache
   
   belongs_to :tax_rate
   belongs_to :payment_term
@@ -8,15 +12,14 @@ class Supplier < ActiveRecord::Base
 
   default_scope { order(:name) }
   
-  @@selection = nil
-  
   def self.selection
-    @@selection ||= Supplier.where(status: ['A','N']).map { |s| [s.name_id, s.id] }
+    Rails.cache.fetch(CACHE_KEY) do
+      Supplier.where(status: ['A','N']).map { |s| [s.name_id, s.id] }
+    end
   end
-  
-  def save
-    @@selection = nil
-    super
+ 
+  def expire_cache
+    Rails.cache.delete(CACHE_KEY)
   end
   
   # Return address as one string with spaces in each line set to &nbsp

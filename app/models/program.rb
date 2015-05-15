@@ -1,19 +1,23 @@
 class Program < ActiveRecord::Base
   
+  CACHE_KEY = "programs.all"
+  
   include Exo
+  
+  after_save :expire_cache
   
   has_many :order_items
 
   default_scope { order(:name) }
   
-  @@selection = nil
-  
   def self.selection
-    @@selection ||= Program.where(status: ['A','N']).map { |p| [p.name_id, p.id] }
+    Rails.cache.fetch(CACHE_KEY) do
+      Program.where(status: ['A','N']).map { |s| [s.name_id, s.id] }
+    end
   end
-  
-  def save
-    @@selection = nil
-    super
+ 
+  def expire_cache
+    Rails.cache.delete(CACHE_KEY)
   end
+
 end

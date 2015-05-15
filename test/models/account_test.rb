@@ -2,6 +2,7 @@ require 'test_helper'
 
 class AccountTest < ActiveSupport::TestCase
   test "selection and reset" do
+    Rails.cache.delete(Account::CACHE_KEY)
     assert_equal(5, Account.selection.count)
     
     account = Account.new

@@ -31,17 +31,28 @@ class UserTest < ActiveSupport::TestCase
     assert_equal "has already been taken", @user2.errors[:code].join('; ')
   end
   
-  test "selection and reset" do
-    count = User.selection.count
-    
-    user = User.new
-    user.code = 'test'
-    user.name = 'Test Name'
-    user.admin = false
-    user.approver = true
-    user.save
-    
-    assert_equal(count + 1, User.selection.count)
+  test "caching and adding users" do
+    Rails.cache.clear
+    count = User.users.count
+    assert_equal(5,count)
+    add_user
+    assert_equal(count + 1, User.users.count)
+  end
+  
+  test "caching and adding approvers" do
+    Rails.cache.clear
+    count = User.approvers.count
+    assert_equal(1,count)
+    add_user
+    assert_equal(count + 1, User.approvers.count)
+  end
+  
+  test "caching and adding tbr_managers" do
+    Rails.cache.clear
+    count = User.tbr_managers.count
+    assert_equal(0,count)
+    add_user
+    assert_equal(count + 1, User.tbr_managers.count)
   end
   
   test "roles" do
@@ -63,5 +74,17 @@ class UserTest < ActiveSupport::TestCase
   test "invalid programs filter" do
     @user1.programs_filter = '1234x' 
     assert_not(@user1.valid?)
+  end
+  
+  private
+  
+  def add_user
+    user = User.new
+    user.code = 'test'
+    user.name = 'Test Name'
+    user.admin = false
+    user.approver = true
+    user.tbr_manager = true
+    user.save
   end
 end

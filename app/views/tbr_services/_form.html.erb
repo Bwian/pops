@@ -15,13 +15,13 @@
     	
     <div class="field">
 	    <%= f.label :manager_id, 'Manager:' %>
-	    <%= f.select :manager_id, User.selection, 
+	    <%= f.select :manager_id, User.tbr_managers, 
             { prompt: 'Select a manager' },
             { disabled: @readonly, class: "btn" } %>
 	  </div>
     <div class="field">
 	    <%= f.label :user_id, 'User:' %>
-	    <%= f.select :user_id, User.selection, 
+	    <%= f.select :user_id, User.users, 
             { prompt: 'Select a user' },
             { disabled: @readonly, class: "btn" } %>
 	  </div>

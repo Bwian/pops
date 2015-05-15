@@ -56,7 +56,7 @@
     </div>
 	  <div class="field">
 	    <%= f.label :approver_id, 'Approver:' %>
-	    <%= f.select :approver_id, User.selection, { prompt: 'Select an approver' },
+	    <%= f.select :approver_id, User.approvers, { prompt: 'Select an approver' },
             { disabled: @readonly || @order.approved?, class: "btn btn-primary btn-sm" } %>
 	  </div>
 	  <div class="field">
