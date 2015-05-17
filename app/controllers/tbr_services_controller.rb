@@ -27,7 +27,7 @@ class TbrServicesController < ApplicationController
 
     respond_to do |format|
       if @tbr_service.save
-        format.html { redirect_to @tbr_service, notice: 'Tbr service was successfully created.' }
+        format.html { redirect_to tbr_services_url, notice: "TBR Service #{@tbr_service.code} was successfully created." }
       else
         format.html { render action: 'new' }
       end
@@ -38,7 +38,7 @@ class TbrServicesController < ApplicationController
   def update
     respond_to do |format|
       if @tbr_service.update(tbr_service_params)
-        format.html { redirect_to @tbr_service, notice: 'Tbr service was successfully updated.' }
+        format.html { redirect_to tbr_services_url, notice: "TBR Service #{@tbr_service.code} was successfully updated." }    
       else
         format.html { render action: 'edit' }
       end

@@ -116,22 +116,24 @@ th {
   width:            30em;
 }
 
+.narrower {
+  width:            10em;
+}
+
 .notice {
   color:            $notice-color;
-  margin:           0.5em;
-  padding:          0;
+}
+
+.action-flash {
+  margin-left:      0.5em;
 }
 
 .error {
   color:            $error-color;
-  margin:           0.1em;
-  padding:          0;
 }
 
 .alert {
   color:            $error-color;
-  margin:           0.1em;
-  padding:          0;
 }
 
 .info {
@@ -178,7 +180,6 @@ th {
 
 .actions {
   margin-top:       1em;
-  margin-left:      0.5em;
 }
 
 .header {
@@ -471,6 +472,16 @@ th {
   display:          block;
 }
 
+.select-narrow {
+  width:            15em;  
+  display:          inline-block;
+}
+
+.select-wide {
+  width:            30em;
+  display:          inline-block; 
+}
+
 .selectize-control { 
   margin:           0;
   padding:          0;
@@ -479,7 +490,6 @@ th {
 .btn .selectize-dropdown, .selectize-input {
   padding:          0;
   margin-left:      0.5em;
-  width:            30em;
   text-align:       left;
   color:            $main-color;
 }

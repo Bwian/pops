@@ -1,5 +1,5 @@
-<% if notice %>
-  <p class="notice" ><%= notice %></p>
+<% flash.each do |name, msg| %>
+	<%= content_tag :p, msg, class: name %>
 <% end %>
 
 <div class="header">

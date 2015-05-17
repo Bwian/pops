@@ -32,8 +32,14 @@
 
     <div class="field">
 	    <%= f.label :supplier_id, 'Supplier:' %>
-	    <%= f.select :supplier_id, Supplier.selection, { prompt: 'Select a supplier' },{ disabled: @readonly, class: "btn", onchange: "javascript:show_supplier();set_payment_date()", autofocus: true } %>
-	  </div>
+	    <div class="select-wide">
+        <%= f.select :supplier_id, Supplier.selection, 
+            { prompt: 'Select a supplier' },
+            { disabled: @readonly, 
+              onchange: "javascript:show_supplier();set_payment_date()", 
+              autofocus: true } %>
+	    </div>
+    </div>
     <div id="supplier" class="field">
       <%= f.label :supplier_name, 'Supplier Name:' %>
       <%= f.text_field :supplier_name, :maxlength => 60, readonly: @readonly %>
@@ -56,9 +62,12 @@
     </div>
 	  <div class="field">
 	    <%= f.label :approver_id, 'Approver:' %>
-	    <%= f.select :approver_id, User.approvers, { prompt: 'Select an approver' },
-            { disabled: @readonly || @order.approved?, class: "btn btn-primary btn-sm" } %>
-	  </div>
+	    <div class="select-narrow">
+        <%= f.select :approver_id, User.approvers, 
+            { prompt: 'Select an approver' },
+            { disabled: @readonly || @order.approved? } %>
+	    </div>
+    </div>
 	  <div class="field">
 	    <%= label_tag :delivery_id, 'Deliver to:' %>
 	    <%= select_tag :delivery_id, options_for_select(Delivery.selection), 
@@ -69,7 +78,7 @@
       <%= f.text_area :delivery_address, rows: 5, readonly: @readonly, class: "delivery" %>
     </div>
     <div class="actions">
-      <label></label>
+      <label>&nbsp;</label>
       <% order_actions(@order,@readonly).each do |link| %>
         <%= link %>
       <% end %>
@@ -94,10 +103,13 @@
 			</div>
     </div>
 	
-  	<div class="notice">
-      <label for="notice"> </label>
-      <%= notice %>
-    </div>  
+		<div>
+			<label>&nbsp;</label>
+			<% flash.each do |name, msg| %>
+				<%= content_tag :span, msg, class: "#{name} action-flash" %>
+			<% end %>
+		</div>
+
   </fieldset>
 	
   <% if @order.items.any? %>
@@ -163,6 +175,11 @@
 	window.onload=init;
   
   $('#order_supplier_id').selectize({
+  	create: false,
+    sortField: 'text'
+  });
+  
+  $('#order_approver_id').selectize({
   	create: false,
     sortField: 'text'
   });

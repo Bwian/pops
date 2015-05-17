@@ -41,7 +41,7 @@
 	    <%= f.label :approver_id, 'Default Approver:' %>
 	    <%= f.select :approver_id, User.approvers, 
             { prompt: 'Select a default approver' },
-            { disabled: @readonly, class: "btn btn-primary btn-sm" } %>
+            { disabled: @readonly, class: "btn narrower" } %>
 	  </div>
     <div class="field">
       <%= f.hidden_field :admin, value: "0" %>
@@ -72,8 +72,6 @@
     <div class="field">
       <%= f.hidden_field :tbr_admin, value: "0" %>
       <%= f.hidden_field :tbr_manager, value: "0" %>
-      <%= f.hidden_field :approver, value: "0" %>
-      <%= f.hidden_field :creator, value: "0" %>
       <label>TBR:</label>
       <div class="ck-button">
         <label>
@@ -88,7 +86,7 @@
     </div>
     
     <div class="actions">
-      <label></label>
+      <label>&nbsp;</label>
   		<% if @readonly %>
         <%= link_edit(@user) %>&nbsp;<%= link_delete(@user) %>
       <% else %>
@@ -97,10 +95,20 @@
       <%= link_list(@user) %>
     </div>
 	
-  	<div id="notice" class="notice">
-      <label for="notice" > </label>
-      <%= notice %>
-    </div>
+		<div>
+			<label>&nbsp;</label>
+			<% flash.each do |name, msg| %>
+				<%= content_tag :span, msg, class: "#{name} action-flash" %>
+			<% end %>
+		</div>
+
   </fieldset>
 <% end %>
 </div>
+
+<script type="text/javascript">
+  $('#user_approver_id').selectize({
+  	create: false,
+  	sortField: 'text'
+  });
+</script>

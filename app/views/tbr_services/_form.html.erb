@@ -54,7 +54,7 @@
     </div>
     
     <div class="actions">
-      <label></label>
+      <label>&nbsp;</label>
   		<% if @readonly %>
         <%= link_edit(@tbr_service) %>&nbsp;<%= link_delete(@tbr_service) %>
       <% else %>
@@ -63,10 +63,13 @@
       <%= link_list(@tbr_service) %>
     </div>
 	
-  	<div id="notice" class="notice">
-      <label> </label>
-      <%= notice %>
-    </div>
+		<div>
+			<label>&nbsp;</label>
+			<% flash.each do |name, msg| %>
+				<%= content_tag :span, msg, class: "#{name} action-flash" %>
+			<% end %>
+		</div>
+
   </fieldset>
 <% end %>
 </div>

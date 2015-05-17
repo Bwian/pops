@@ -77,7 +77,7 @@
     </div>
     
     <div class="actions">
-      <label></label>
+      <label>&nbsp;</label>
   		<% if @readonly %>
         <%= link_edit(@item) %>
         <%= link_delete(@item) %>
@@ -88,10 +88,12 @@
       <%= link_model(@order) %>
     </div>
 	
-  	<div class="notice">
-      <label for="notice" > </label>
-      <%= notice %>
-    </div>
+		<div>
+			<label>&nbsp;</label>
+			<% flash.each do |name, msg| %>
+				<%= content_tag :span, msg, class: "#{name} action-flash" %>
+			<% end %>
+		</div>
     
     <% if @order.items.any? %>
       

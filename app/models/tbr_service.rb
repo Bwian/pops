@@ -2,6 +2,9 @@ class TbrService < ActiveRecord::Base
   belongs_to :manager, class_name: 'User'
   belongs_to :user
   
+  default_scope { order(:code) }
+  validates :code, presence: true
+  
   def self.pops_name
     'TBR Service'
   end

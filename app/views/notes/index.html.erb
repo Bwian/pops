@@ -1,6 +1,10 @@
 <div class=admin_form>
 
-  <%= form_for(@note, method: :get ) do |f| %>
+	<% flash.each do |name, msg| %>
+		<%= content_tag :p, msg, class: name %>
+	<% end %>
+  
+<%= form_for(@note, method: :get ) do |f| %>
       
     <% if @note.errors.any? %>
       <div id="error_explanation">

@@ -36,15 +36,18 @@
     <% end %>
     
     <div class="actions">
-      <label></label>
+      <label>&nbsp;</label>
       <%= f.submit nil, class: "btn btn-primary btn-sm" %>
       <%= link_list(@model) %>
     </div>
 	
-  	<div class="notice">
-      <label for="notice" > </label>
-      <%= notice %>
-    </div>
+		<div>
+			<label>&nbsp;</label>
+			<% flash.each do |name, msg| %>
+				<%= content_tag :span, msg, class: "#{name} action-flash" %>
+			<% end %>
+		</div>
+    
   </fieldset>
 <% end %>
 </div>

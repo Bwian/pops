@@ -19,11 +19,12 @@
 			</div>
           
       <div class="actions">
-        <label> </label>
-        <% flash.each do |name, msg| -%>
-          <%= content_tag :p, msg, class: name %>
+        <label>&nbsp;</label>
+        <% flash.each do |name, msg| %>
+          <%= content_tag :span, msg, class: name %>
         <% end %>
       </div>
+      
 		</fieldset>
 	<% end %>
 </div>
