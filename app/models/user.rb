@@ -1,7 +1,11 @@
 require 'digest/sha2'
 
 class User < ActiveRecord::Base
+  
+  CACHE_KEY = "users.all.#{Rails.env}"
+  
   after_save :expire_cache
+  
   attr_accessor :password_confirmation
   attr_reader :password
   

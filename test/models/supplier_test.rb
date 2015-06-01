@@ -1,7 +1,10 @@
 require 'test_helper'
 
 class SupplierTest < ActiveSupport::TestCase
-
+  setup do
+    Rails.cache.delete(Supplier::CACHE_KEY)
+  end
+  
   test "selection and reset" do
     Rails.cache.delete(Supplier::CACHE_KEY)
     assert_equal(3, Supplier.selection.count)

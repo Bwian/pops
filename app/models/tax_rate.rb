@@ -1,6 +1,6 @@
 class TaxRate < ActiveRecord::Base
   
-  CACHE_KEY = "tax_rates.all"
+  CACHE_KEY = "tax_rates.all.#{Rails.env}"
   
   include Exo
   

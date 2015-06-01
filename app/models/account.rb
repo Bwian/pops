@@ -1,6 +1,6 @@
 class Account < ActiveRecord::Base
   
-  CACHE_KEY = "accounts.all"
+  CACHE_KEY = "accounts.all.#{Rails.env}"
   
   include Exo
   

@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class PaymentTermTest < ActiveSupport::TestCase
+  setup do
+    Rails.cache.delete(PaymentTerm::CACHE_KEY)
+  end
+  
   test "selection and reset" do
     assert_equal(3, PaymentTerm.selection.count)
     

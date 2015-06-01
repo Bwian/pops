@@ -1,6 +1,6 @@
 class Supplier < ActiveRecord::Base
   
-  CACHE_KEY = "suppliers.all"
+  CACHE_KEY = "suppliers.all.#{Rails.env}"
   
   include Exo
   

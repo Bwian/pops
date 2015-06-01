@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class TaxRateTest < ActiveSupport::TestCase
+  setup do
+    Rails.cache.delete(TaxRate::CACHE_KEY)
+  end
+  
   test "selection and reset" do
     assert_equal(3, TaxRate.selection.count)
     

@@ -4,8 +4,9 @@ class UserTest < ActiveSupport::TestCase
   setup do
     @user1 = users(:brian)
     @user2 = users(:sean)
+    Rails.cache.delete(User::CACHE_KEY)
   end
-
+  
   test "getters" do
     assert_equal "brian", @user1.code
     assert_equal "Brian Collins", @user1.name

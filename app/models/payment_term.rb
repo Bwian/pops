@@ -1,6 +1,6 @@
 class PaymentTerm < ActiveRecord::Base
   
-  CACHE_KEY = "payment_terms.all"
+  CACHE_KEY = "payment_terms.all.#{Rails.env}"
   
   include Exo
   

@@ -1,6 +1,6 @@
 class Program < ActiveRecord::Base
   
-  CACHE_KEY = "programs.all"
+  CACHE_KEY = "programs.all.#{Rails.env}"
   
   include Exo
   
