@@ -25,9 +25,11 @@
     
     <div class="field">
 	    <%= f.label :status, 'Status:' %>
-	    <%= f.select :status, @class::STATUS.invert, {}, { class: "btn btn-primary btn-sm" } %>
+		  <div class='select-narrow'>
+	    	<%= f.select :status, @class::STATUS.invert, {}, { disabled: @readonly } %>
+		  </div>
     </div>
-    
+      
     <% @model.attribute_list.each_key do |field| %>
       <div class="field">
         <%= attribute_label(field) %>
@@ -51,3 +53,20 @@
   </fieldset>
 <% end %>
 </div>
+
+<script>
+  $(<%= exo_status(@model) %>).selectize({
+  	create: false,
+    sortField: 'text'
+  });
+  
+  $(<%= exo_tax_rate(@model) %>).selectize({
+  	create: false,
+    sortField: 'text'
+  });
+  
+  $(<%= exo_payment_term(@model) %>).selectize({
+  	create: false,
+    sortField: 'text'
+  });
+</script>

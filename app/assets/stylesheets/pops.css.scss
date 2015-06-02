@@ -473,6 +473,11 @@ th {
 }
 
 .select-narrow {
+  width:            10em;  
+  display:          inline-block;
+}
+
+.select-medium   {
   width:            15em;  
   display:          inline-block;
 }
@@ -487,7 +492,7 @@ th {
   padding:          0;
 }
 
-.btn .selectize-dropdown, .selectize-input {
+.selectize-dropdown, .selectize-input {
   padding:          0;
   margin-left:      0.5em;
   text-align:       left;
