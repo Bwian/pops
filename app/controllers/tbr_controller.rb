@@ -33,7 +33,6 @@ class TbrController < ApplicationController
           rescue ArgumentError
             abort            
           rescue Encoding::UndefinedConversionError
-            binding.pry
             Tbr.log.error("#{in_file.original_filename} is an invalid file type")
             abort
           rescue => e

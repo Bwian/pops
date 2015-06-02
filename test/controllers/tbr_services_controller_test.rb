@@ -23,7 +23,7 @@ class TbrServicesControllerTest < ActionController::TestCase
       post :create, tbr_service: @tbr_service.attributes
     end
 
-    assert_redirected_to tbr_service_path(assigns(:tbr_service))
+    assert_redirected_to tbr_services_path
   end
 
   test "should show tbr_service" do
@@ -39,7 +39,7 @@ class TbrServicesControllerTest < ActionController::TestCase
   test "should update tbr_service" do
     @tbr_service.user = @tbr_service.manager
     patch :update, id: @tbr_service, tbr_service: @tbr_service.attributes
-    assert_redirected_to tbr_service_path(assigns(:tbr_service))
+    assert_redirected_to tbr_services_path
   end
 
   test "should destroy tbr_service" do
