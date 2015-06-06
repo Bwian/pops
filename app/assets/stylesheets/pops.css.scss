@@ -317,7 +317,7 @@ th {
   border:           1px solid $main-color-medium;
   overflow:         auto;
   display:          inline-block;
-  vertical-align:   bottom;
+  vertical-align:   top;
 }
 
 .filter-button label {
@@ -478,7 +478,7 @@ th {
 }
 
 .select-medium   {
-  width:            15em;  
+  width:            20em;  
   display:          inline-block;
 }
 

@@ -9,19 +9,19 @@ module ItemsHelper
   def program_select(item,readonly,flag)
     select :item, :program_id, program_list(item,flag), 
       { include_blank: 'Select a program', selected: item.program_id },
-      { disabled: readonly, class: "btn btn-primary btn-select" }
+      { disabled: readonly }
   end
   
   def account_select(item,readonly,flag)
     select :item, :account_id, account_list(item,flag), 
       { include_blank: 'Select an account', selected: item.account_id },
-      { disabled: readonly, onchange: "javascript:tax_rate()", class: "btn btn-primary btn-select" }
+      { disabled: readonly, onchange: "javascript:tax_rate()" }
   end
   
   def tax_rate_select(item,readonly)
     select :item, :tax_rate_id, tax_list(item), 
       { include_blank: 'Select a tax rate', selected: default_tax_rate(item) },
-      { disabled: readonly, class: "btn btn-primary" }
+      { disabled: readonly }
   end
   
   private
@@ -61,6 +61,7 @@ module ItemsHelper
   
   def select_list(filter,list,current_id,flag)
     ranges = build_ranges(filter)
+    binding.pry
     return list if ranges.empty? 
     return list if !flag
     

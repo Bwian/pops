@@ -35,7 +35,9 @@
     </div>
 	  <div class="field">
 	    <%= f.label :program_id, 'Program:' %>
-	    <%= program_select(@item,@readonly,true) %>
+	    <div class='select-wide'>
+        <%= program_select(@item,@readonly,true) %>
+      </div>
       <% if !@readonly %>
 				<div class="filter-button">
 	        <label>
@@ -47,7 +49,9 @@
 	  </div>
 	  <div class="field">
 	    <%= f.label :account_id, 'Account:' %>
-	    <%= account_select(@item,@readonly,true) %>
+      <div class='select-wide'>
+  	    <%= account_select(@item,@readonly,true) %>
+      </div>
       <% if !@readonly %>
 				<div class="filter-button">
 	        <label>
@@ -59,7 +63,7 @@
 	  </div>
 	  <div class="field">
 	    <%= f.label :tax_rate_id, 'Tax Rate:' %>
-	    <div id="tax_rate">
+	    <div id="tax_rate" class='select-wide'>
         <%= tax_rate_select(@item,@readonly) %>
       </div>
     </div>
@@ -101,3 +105,20 @@
   </fieldset>
 <% end %>
 </div>
+
+<script>
+  $('#item_program_id').selectize({
+  	create: false,
+    sortField: 'text'
+  });
+  
+  $('#item_account_id').selectize({
+  	create: false,
+    sortField: 'text'
+  });
+  
+  $('#item_tax_rate_id').selectize({
+  	create: false,
+    sortField: 'text'
+  });
+</script>
