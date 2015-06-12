@@ -1,4 +1,5 @@
 module NotesHelper
+  
   def save_json(name,model)
     name = name.downcase
     key = "#{name}_changes".to_sym
@@ -69,4 +70,5 @@ module NotesHelper
     rval = "#{value}"
     rval.empty? ? '{empty}' : "\"#{rval}\""
   end
+  
 end

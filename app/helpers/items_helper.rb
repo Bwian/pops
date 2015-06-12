@@ -61,7 +61,6 @@ module ItemsHelper
   
   def select_list(filter,list,current_id,flag)
     ranges = build_ranges(filter)
-    binding.pry
     return list if ranges.empty? 
     return list if !flag
     

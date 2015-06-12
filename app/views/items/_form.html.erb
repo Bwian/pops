@@ -25,15 +25,18 @@
         <% end %>
       </p>
     </div>
+    
     <div class="field">
       <%= f.label :id, 'Order:' %>
       <div class="po-header">&nbsp;<%= @order.id %> - <%= @order.status_name %></div>
     </div>
+    
     <div class="field">
       <%= f.label :id, 'Supplier:' %>
       <div class="text">&nbsp;<%= @order.supplier_desc %></div>
     </div>
-	  <div class="field">
+	  
+    <div class="field">
 	    <%= f.label :program_id, 'Program:' %>
 	    <div class='select-wide'>
         <%= program_select(@item,@readonly,true) %>
@@ -41,13 +44,14 @@
       <% if !@readonly %>
 				<div class="filter-button">
 	        <label>
-	          <%= check_box_tag :program_flag, 1, true, disabled: @readonly, onchange: "javascript:program_select()" %>
+            <%= check_box_tag :program_flag, 1, true, disabled: @readonly, onchange: "javascript:program_select()" %>
 	          <span>Filter</span>
 	        </label>
 				</div>
 			<% end %>
 	  </div>
-	  <div class="field">
+	  
+    <div class="field">
 	    <%= f.label :account_id, 'Account:' %>
       <div class='select-wide'>
   	    <%= account_select(@item,@readonly,true) %>
@@ -61,20 +65,24 @@
 				</div>
 			<% end %>
 	  </div>
-	  <div class="field">
+	  
+    <div class="field">
 	    <%= f.label :tax_rate_id, 'Tax Rate:' %>
 	    <div id="tax_rate" class='select-wide'>
         <%= tax_rate_select(@item,@readonly) %>
       </div>
     </div>
+    
     <div class="field">
       <%= f.label :description, 'Description:' %>
       <%= f.text_field :description, :maxlength => 40, readonly: @readonly %>
     </div>
+    
     <div class="field">
       <%= f.label :price, 'Price (incl tax):' %>
       <%= f.text_field :price, value: @item.formatted_price, readonly: @readonly, onchange: "javascript:set_gst()" %>
     </div>
+    
     <div class="field">
       <%= f.label :gst, 'GST:' %>
 			<%= text_field_tag :gst, @item.formatted_gst, readonly: true %>

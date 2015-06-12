@@ -23,9 +23,17 @@ function account_select() {
 };
 
 function program_select() {
+  var selectize = $('#item_program_id')[0].selectize;
+  selectize.clearOptions();
+  
   $.ajax({
-    url:  "program_select",
+    url:  'program_select',
     type: "POST",
-    data: $('form').serialize()
+    dataType: 'json',
+    data: $('form').serialize(),
+    success: function(data) {
+      selectize.addOption(data);
+      selectize.open();
+    }
   });
 };

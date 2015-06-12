@@ -91,8 +91,14 @@ class ItemsController < ApplicationController
   def program_select
     @program_item = Item.new(item_params)
     @program_flag = params[:program_flag]
+    list = [] 
+    program_list(@program_item,@program_flag).each do |a|
+      list << { text: a[0], value: a[1] }
+    end
     respond_to do |format|
-      format.js
+      format.json { 
+        render json: list.to_json
+      } 
     end
   end
   
@@ -118,5 +124,49 @@ class ItemsController < ApplicationController
   
   def find_order
     @order = Order.find(params[:order_id])
+  end
+  
+  def program_list(item,flag)
+    filter = User.find(session[:user_id]).programs_filter  
+    select_list(filter,Program.selection,item.program_id,flag)
+  end
+  
+  def select_list(filter,list,current_id,flag)
+    ranges = build_ranges(filter)
+    return list if ranges.empty? 
+    return list if !flag
+    
+    current_id = '\\' if current_id.nil?
+    filtered_list = []
+    list.each do |line|
+      ranges.each do |range|
+        filtered_list << line if range.cover?(line[1])
+      end
+      filtered_list << line if !filtered_list.detect {|s| s[1] == current_id } && current_id == line[1]
+    end
+    filtered_list
+  end
+  
+  def build_ranges(filter)
+    ranges = []
+    filter = '' if filter.nil?
+    
+    filter.split(/,| /).each do |f|
+      fromto = f.split('-')
+      case fromto.size
+        when 0
+          next
+        when 1
+          from = fromto[0].to_i
+          to = f.last == '-' ? 1.0/0.0 : from
+        else
+          from = fromto[0].to_i
+          to = fromto[1].to_i
+      end
+      range = from..to
+      ranges << range
+    end
+     
+    ranges 
   end
 end
