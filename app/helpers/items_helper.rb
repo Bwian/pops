@@ -1,4 +1,7 @@
 module ItemsHelper
+
+  include SelectizeHelper
+  
   DEFAULT_TAX_RATE = 32
   AUTO_TAX_RATE = -1
   
@@ -7,7 +10,7 @@ module ItemsHelper
   end
 
   def program_select(item,readonly,flag)
-    select :item, :program_id, program_list(item,flag), 
+    select :item, :program_id, program_list(item,flag,false), 
       { include_blank: 'Select a program', selected: item.program_id },
       { disabled: readonly }
   end
@@ -38,63 +41,4 @@ module ItemsHelper
     DEFAULT_TAX_RATE    
   end
   
-  def tax_list(item)
-    limited_selection = TaxRate.limited_selection
-    return TaxRate.selection if User.find(session[:user_id]).processor
-    return limited_selection unless item.tax_rate_id
-    unless limited_selection.detect {|rate| rate[1] == item.tax_rate_id}
-      limited_selection << [item.tax_rate.name,item.tax_rate_id]
-    end
-    limited_selection 
-  end
-  
-  def account_list(item,flag)
-    filter = User.find(session[:user_id]).accounts_filter
-    filter = '6000-' if filter.nil? || filter.empty?
-    select_list(filter,Account.selection,item.account_id,flag)
-  end
-  
-  def program_list(item,flag)
-    filter = User.find(session[:user_id]).programs_filter  
-    select_list(filter,Program.selection,item.program_id,flag)
-  end
-  
-  def select_list(filter,list,current_id,flag)
-    ranges = build_ranges(filter)
-    return list if ranges.empty? 
-    return list if !flag
-    
-    current_id = '\\' if current_id.nil?
-    filtered_list = []
-    list.each do |line|
-      ranges.each do |range|
-        filtered_list << line if range.cover?(line[1])
-      end
-      filtered_list << line if !filtered_list.detect {|s| s[1] == current_id } && current_id == line[1]
-    end
-    filtered_list
-  end
-  
-  def build_ranges(filter)
-    ranges = []
-    filter = '' if filter.nil?
-    
-    filter.split(/,| /).each do |f|
-      fromto = f.split('-')
-      case fromto.size
-        when 0
-          next
-        when 1
-          from = fromto[0].to_i
-          to = f.last == '-' ? 1.0/0.0 : from
-        else
-          from = fromto[0].to_i
-          to = fromto[1].to_i
-      end
-      range = from..to
-      ranges << range
-    end
-     
-    ranges 
-  end
 end
