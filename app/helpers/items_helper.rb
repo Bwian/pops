@@ -16,7 +16,7 @@ module ItemsHelper
   end
   
   def account_select(item,readonly,flag)
-    select :item, :account_id, account_list(item,flag), 
+    select :item, :account_id, account_list(item,flag,false), 
       { include_blank: 'Select an account', selected: item.account_id },
       { disabled: readonly, onchange: "javascript:tax_rate()" }
   end

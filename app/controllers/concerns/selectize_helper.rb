@@ -10,10 +10,11 @@ module SelectizeHelper
     limited_selection 
   end
   
-  def account_list(item,flag)
+  def account_list(item,flag,json)
     filter = User.find(session[:user_id]).accounts_filter
     filter = '6000-' if filter.nil? || filter.empty?
-    select_list(filter,Account.selection,item.account_id,flag)
+    list = select_list(filter,Account.selection,item.account_id,flag)
+    json ? json_list(list) : list
   end
   
   def program_list(item,flag,json)

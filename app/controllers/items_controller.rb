@@ -74,26 +74,26 @@ class ItemsController < ApplicationController
   end
   
   def tax_rate
-    @tax_item = Item.new(item_params)
-    @tax_item.tax_rate_id = nil
+    item = Item.new(item_params)
+    item.tax_rate_id = nil
     respond_to do |format|
-      format.js
+      format.any { render text: view_context.default_tax_rate(item) } 
     end
   end
   
   def account_select   
-    @account_item = Item.new(item_params)
-    @account_flag = params[:account_flag]
+    item = Item.new(item_params)
+    flag = params[:account_flag]
     respond_to do |format|
-      format.js
+      format.json { render json: account_list(item,flag,true) }
     end
   end
   
   def program_select
-    program_item = Item.new(item_params)
-    program_flag = params[:program_flag]
+    item = Item.new(item_params)
+    flag = params[:program_flag]
     respond_to do |format|
-      format.json { render json: program_list(program_item,program_flag,true) } 
+      format.json { render json: program_list(item,flag,true) } 
     end
   end
   

@@ -7,18 +7,31 @@ function set_gst() {
 };
 
 function tax_rate() {
+  var selectize = $('#item_tax_rate_id')[0].selectize;
   $.ajax({
-    url:  "tax_rate",
+    url:  'tax_rate',
     type: "POST",
-    data: $('form').serialize()
+    dataType: 'text',
+    data: $('form').serialize(),
+    success: function(data) {
+      selectize.setValue(data,false);
+    }
   });
 };
 
 function account_select() {
+  var selectize = $('#item_account_id')[0].selectize;
+  selectize.clearOptions();
+  
   $.ajax({
-    url:  "account_select",
+    url:  'account_select',
     type: "POST",
-    data: $('form').serialize()
+    dataType: 'json',
+    data: $('form').serialize(),
+    success: function(data) {
+      selectize.addOption(data);
+      selectize.open();
+    }
   });
 };
 
