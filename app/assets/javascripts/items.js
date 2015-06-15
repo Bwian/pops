@@ -30,7 +30,6 @@ function account_select() {
     data: $('form').serialize(),
     success: function(data) {
       selectize.addOption(data);
-      selectize.open();
     }
   });
 };
@@ -46,7 +45,6 @@ function program_select() {
     data: $('form').serialize(),
     success: function(data) {
       selectize.addOption(data);
-      selectize.open();
     }
   });
 };
