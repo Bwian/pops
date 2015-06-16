@@ -492,6 +492,14 @@ th {
   padding:          0;
 }
 
+.selectize-dropdown {
+  line-height:      1em;
+}
+
+.selectize-dropdown-content {
+  max-height:       40em;
+}
+
 .selectize-dropdown, .selectize-input {
   padding:          0;
   margin-left:      0.5em;
