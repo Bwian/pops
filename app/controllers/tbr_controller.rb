@@ -7,26 +7,40 @@ class TbrController < ApplicationController
   end
 
   def log
-    @log = ParseLog.new('/tmp/tbr.log')
+    logpath = ENV['tbr_log'] || '/tmp'
+    @log = ParseLog.new("#{logpath}/tbr.log")
     @session = params[:session] || params[:id] || 1
+  end
+  
+  def reports
+    
   end
   
   def go
     respond_to do |format|
       in_file = params[:filename]
       if in_file
+        begin
+          logpath = ENV['tbr_log'] || '/tmp'
+          logger = Logger.new("#{logpath}/tbr.log")
+        rescue Errno::ENOENT
+          flash.now.alert = "Warning! Logpath #{logpath} not found - log cannot be displayed."
+          format.html { render :select }
+        end
+        
         Thread.new do
-          begin
-            Tbr.log = Logger.new('/tmp/tbr.log')
+          begin           
+            Tbr.log = logger
             Tbr.log.info('Telstra bill processing started')
             
             out_file = Tempfile.new(in_file.original_filename)
             out_file.write(in_file.read)
             out_file.close
-
+            
             tbr = Tbr::Processor.new( 
+              output:   ENV['tbr_root'],
               original: in_file.original_filename, 
-              replace: true
+              replace:  true
             )
             tbr.process(out_file.path)
               

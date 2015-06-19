@@ -18,6 +18,8 @@ defaults: &defaults
   ldap_enabled:        true
   order_watermark: 
   pops_host:           localhost:3000   
+  tbr_root:            /tmp/tbr
+  tbr_log:             /tmp/tbr
     
 development:
   <<: *defaults

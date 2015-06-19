@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
   }
 
   def admin_action
-    if params[:controller] =~ /^tbr/
+    if params[:controller] =~ /^tbr/   # TBR authentication handled seperately
       user = User.find(session[:user_id])
       return user.tbr_admin || user.tbr_manager if params[:action] == 'reports'
       return user.tbr_admin
