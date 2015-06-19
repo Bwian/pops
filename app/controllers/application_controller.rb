@@ -51,12 +51,16 @@ class ApplicationController < ActionController::Base
     'payment_terms' => [INDEX],
     'programs'      => [INDEX],
     'accounts'      => [INDEX],
-    'tax_rates'     => [INDEX],
-    'tbr'           => [],
-    'tbr_services'  => []
+    'tax_rates'     => [INDEX]
   }
 
   def admin_action
+    if params[:controller] =~ /^tbr/
+      user = User.find(session[:user_id])
+      return user.tbr_admin || user.tbr_manager if params[:action] == 'reports'
+      return user.tbr_admin
+    end
+    
     valid_actions = ADMIN[params[:controller]]
     if valid_actions && (valid_actions.include?(ALL) || valid_actions.include?(params[:action]))
       return true

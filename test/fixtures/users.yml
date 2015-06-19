@@ -10,6 +10,7 @@ brian:
   creator: true
   accounts_filter: 3-4
   programs_filter: 3-4
+  tbr_admin: true
 
 sean:
   code: sean

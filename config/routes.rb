@@ -14,6 +14,7 @@ Pops::Application.routes.draw do
   
   get  'tbr'                 => 'tbr#select'
   get  'tbr/select'          => 'tbr#select'
+  get  'tbr/reports'         => 'tbr#reports'
   post 'tbr/go'              => 'tbr#go'
   get  'tbr/log/:id'         => 'tbr#log'
   post 'tbr/log/:id'         => 'tbr#log'

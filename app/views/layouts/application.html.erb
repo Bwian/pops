@@ -35,9 +35,8 @@
                   <li><%= link_to('Accounts',url_for(controller: 'accounts')) %></li>
                   <li><%= link_to('Payment Terms',url_for(controller: 'payment_terms')) %></li>
                   <li><%= link_to('Tax Rates',url_for(controller: 'tax_rates')) %></li>
-                  <li><%= link_to('TBR',url_for(controller: 'tbr', action: 'select')) %></li>
-                  <li><%= link_to('TBR Services',url_for(controller: 'tbr_services')) %></li>
                 </ul>
+              </li>
               <li class="dropdown" id="action_dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Action<b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -46,6 +45,21 @@
                   <li><%= link_delete(@order) %></li>
 								</ul>
 							</li>
+              <% if show_tbr %>
+                <li class="dropdown" id="tbr_dropdown">
+  								<a href="#" class="dropdown-toggle" data-toggle="dropdown">TBR<b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <% if tbr_admin %>
+                      <li><%= link_to('Process',url_for(controller: 'tbr', action: 'select')) %></li>
+                      <li><%= link_to('Log',url_for(controller: 'tbr', action: 'log', id: 1)) %></li>
+                      <li><%= link_to('Services',url_for(controller: 'tbr_services')) %></li>
+  								<% end %>
+                  <% if tbr_admin || tbr_manager %>
+                    <li><%= link_to('Reports',url_for(controller: 'tbr', action: 'reports')) %></li>
+                  <% end %>  
+                  </ul>
+  							</li>
+              <% end %>
 						</li>
             </ul>
             <ul class="nav navbar-nav pull-right">
