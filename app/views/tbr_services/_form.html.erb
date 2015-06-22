@@ -15,18 +15,22 @@
     	
     <div class="field">
 	    <%= f.label :manager_id, 'Manager:' %>
-	    <%= f.select :manager_id, User.tbr_managers, 
-            { prompt: 'Select a manager' },
-            { disabled: @readonly, class: "btn" } %>
-	  </div>
+	    <div class="select-medium">
+        <%= f.select :manager_id, User.tbr_managers, 
+              { prompt: 'Select a manager' },
+              { disabled: @readonly } %>
+  	  </div>
+    </div>
     <div class="field">
 	    <%= f.label :user_id, 'User:' %>
-	    <%= f.select :user_id, User.users, 
-            { prompt: 'Select a user' },
-            { disabled: @readonly, class: "btn" } %>
-	  </div>
+	    <div class="select-medium">
+        <%= f.select :user_id, User.users, 
+              { prompt: 'Select a user' },
+              { disabled: @readonly } %>
+  	  </div>
+    </div>
     <div class="field">
-      <%= f.label :code, 'Code:' %>
+      <%= f.label :code, 'Service:' %>
       <%= f.text_field :code, readonly: @readonly %>
     </div>
     <div class="field">
@@ -43,10 +47,12 @@
     </div>
     <div class="field">
 	    <%= f.label :service_type, 'Service Type:' %>
-	    <%= f.select :service_type, TbrService.service_types, 
-            { prompt: 'Select or add a service type' },
-            { disabled: @readonly, class: "btn" } %>
-	  </div>
+	    <div class="select-medium">
+        <%= f.select :service_type, TbrService.service_types, 
+              { prompt: 'Select or add a service type' },
+              { disabled: @readonly } %>
+  	  </div>
+    </div>
     
     <div class="field">
       <%= f.label :comment, 'Comment:' %>

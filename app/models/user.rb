@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   end
   
   def self.users
-    Rails.cache.fetch("users.all") do
+    Rails.cache.fetch(CACHE_KEY) do
       User.all.map { |s| [s.name, s.id] }
     end
   end
@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
   def expire_cache
     Rails.cache.delete('approvers.all')
     Rails.cache.delete('tbr_managers.all')
-    Rails.cache.delete('users.all')
+    Rails.cache.delete(CACHE_KEY)
     return true  # needed so that the callback chain continues
   end
   

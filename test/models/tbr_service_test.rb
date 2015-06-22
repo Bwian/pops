@@ -32,4 +32,12 @@ class TbrServiceTest < ActiveSupport::TestCase
   test "service_types" do
     assert_equal(2,TbrService.service_types.count)
   end
+  
+  test "services" do
+    assert_equal(3,TbrService.services.count)
+  end
+  
+  test "group" do
+    assert_equal(2,TbrService.group(users(:brian).id).count)
+  end
 end

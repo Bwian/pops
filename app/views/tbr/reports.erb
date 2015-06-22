@@ -1,0 +1,22 @@
+<%= form_tag({ controller: 'tbr', action: 'report' }, target: "_blank") do %>
+	<fieldset>
+		<legend>Telstra Bill Reporting - Reports</legend>
+      <div class="field">
+  	    <%= label_tag :months, 'Month:' %>
+        <%= select_tag :months, options_for_select(@months), class: 'btn btn-primary btn-sm', onchange: "javascript:set_report_select()" %>
+      </div>
+      
+      <div class="field">
+  	    <%= label_tag :user_type, 'Type:' %>
+        <%= select_tag :user_type, options_for_select(@types), class: 'btn btn-primary btn-sm', onchange: "javascript:set_report_select()" %>
+      </div>
+      
+      <%= render 'report_select' %>
+      
+      <div class="actions">
+        <label>&nbsp;</label>
+        <%= submit_tag 'Go', class: "btn btn-primary btn-sm" %>
+      </div>
+
+  </fieldset>
+<% end %>

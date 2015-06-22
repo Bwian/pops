@@ -15,6 +15,7 @@ Pops::Application.routes.draw do
   get  'tbr'                 => 'tbr#select'
   get  'tbr/select'          => 'tbr#select'
   get  'tbr/reports'         => 'tbr#reports'
+  post 'tbr/report'          => 'tbr#report'
   post 'tbr/go'              => 'tbr#go'
   get  'tbr/log/:id'         => 'tbr#log'
   post 'tbr/log/:id'         => 'tbr#log'
@@ -77,6 +78,8 @@ Pops::Application.routes.draw do
   
   post  'users/ldap'              => 'users#ldap'
   patch 'users/:id/ldap'          => 'users#ldap'
+  
+  post  'tbr/report_select'       => 'tbr#report_select'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

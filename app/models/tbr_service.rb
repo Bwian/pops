@@ -10,8 +10,15 @@ class TbrService < ActiveRecord::Base
   end
   
   def self.service_types
-    types = TbrService.select('distinct service_type').map(&:service_type) 
-    types 
+    TbrService.select('distinct service_type').map(&:service_type) 
+  end
+  
+  def self.services
+    TbrService.all.map { |s| [s.code, s.manager_code, s.name, s.cost_centre] } 
+  end
+  
+  def self.group(id)
+    TbrService.where(manager_id: id).map(&:code)
   end
   
   def manager_code
