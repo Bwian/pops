@@ -4,6 +4,7 @@ class TbrService < ActiveRecord::Base
   
   default_scope { order(:code) }
   validates :code, presence: true
+  validates_uniqueness_of :code, :scope => :manager_id
   
   def self.pops_name
     'TBR Service'
