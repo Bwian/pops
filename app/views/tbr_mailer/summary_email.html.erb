@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>Hi <%= @to.first_name%>,</p>
+		<p>Telstra Billing summary attached for <%= @filename %>.  Please review this summary and detailed reports for each service which may be found <%= link_to('here',url_for(host: @host, controller: 'tbr', action: 'reports')) %>.</p>
+		<p>Thanks, <%= @from.first_name %></p>
+  </body>
+</html>

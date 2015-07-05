@@ -32,11 +32,18 @@ class TbrController < ApplicationController
   end
   
   def report
-    send_file(params[:report], 
-      filename: File.basename(params[:report]),
-      type: "application/pdf", 
-      disposition: "inline"
-    )
+    if params[:report] == 'email'
+      notice = sendmail(params[:months])
+      respond_to do |format|
+        format.html { redirect_to(tbr_reports_path, notice: notice) }
+      end
+    else
+      send_file(params[:report], 
+        filename: File.basename(params[:report]),
+        type: "application/pdf", 
+        disposition: "inline"
+      ) 
+    end
   end
   
   def go
@@ -83,6 +90,7 @@ class TbrController < ApplicationController
             Rails.logger.flush
           end
         end
+        
         format.html { redirect_to(controller: 'tbr', action: 'log', id: 1) }
       else
         flash.now.alert = "File must be supplied"
@@ -104,25 +112,49 @@ class TbrController < ApplicationController
     case type
       when 'Administrator'
         summary = Dir.glob("Service*.pdf").map(&File.method(:realpath))[0]
-        reports << ['Summary',summary] if summary
+        if summary
+          reports << ['Summary',summary]
+          reports << ['Email summaries','email']
+        end
         
-        Dir.glob('Details/*.pdf').map(&File.method(:realpath)).each do |f|
+        Dir.glob('details/*.pdf').map(&File.method(:realpath)).each do |f|
           reports << [File.basename(f).split[0],f]
         end
       
       when 'Manager'
         user = User.find(session[:user_id])
         group = TbrService.group(user.id)
-        
         summary = Dir.glob("summaries/#{user.code}*").map(&File.method(:realpath))[0]
         reports << ['Summary',summary] if summary
         
-        Dir.glob("Details/*.pdf").map(&File.method(:realpath)).each do |f|
+        Dir.glob("details/*.pdf").map(&File.method(:realpath)).each do |f|
           service = File.basename(f).split[0]
           reports << [service,f] if group.include?(service)
         end
     end
     
     reports
+  end
+  
+  def sendmail(month)
+    Dir.chdir("#{ENV['tbr_root']}/#{month}")
+    from = User.find(session[:user_id])
+    mgr_count = 0
+    adm_count = 0
+    
+    Dir.glob("summaries/*.pdf").map(&File.method(:realpath)).each do |f|
+      manager_code = File.basename(f).split[0]
+      to = User.find_by_code(manager_code)
+      if to
+        mail = TbrMailer.summary_email(from,to,f)
+        mgr_count += 1
+      else
+        mail = TbrMailer.summary_email(from,from,f)
+        adm_count += 1
+      end
+      mail.deliver
+    end
+
+    "Summaries mailed: #{mgr_count} to managers; #{adm_count} to TBR administrator"
   end
 end

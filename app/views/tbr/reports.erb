@@ -17,6 +17,12 @@
         <label>&nbsp;</label>
         <%= submit_tag 'Go', class: "btn btn-primary btn-sm" %>
       </div>
-
+      
+  		<div>
+  			<label>&nbsp;</label>
+  			<% flash.each do |name, msg| %>
+  				<%= content_tag :span, msg, class: "#{name} action-flash" %>
+  			<% end %>
+  		</div>
   </fieldset>
 <% end %>

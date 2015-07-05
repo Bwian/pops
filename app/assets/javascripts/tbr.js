@@ -12,3 +12,9 @@ function set_report_select() {
     data: $('form').serialize()
   });
 }
+
+function set_form_target() {
+  if ( $('#report').val() == 'email' ) {
+    $('form').attr('target', '_self');
+  }
+}

@@ -19,6 +19,7 @@ class TbrServicesControllerTest < ActionController::TestCase
 
   test "should create tbr_service" do
     @tbr_service.user = @tbr_service.manager
+    @tbr_service.code = '0332121234'
     assert_difference('TbrService.count') do
       post :create, tbr_service: @tbr_service.attributes
     end
