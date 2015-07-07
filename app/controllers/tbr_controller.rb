@@ -117,7 +117,7 @@ class TbrController < ApplicationController
           reports << ['Email summaries','email']
         end
         
-        Dir.glob('details/*.pdf').map(&File.method(:realpath)).each do |f|
+        Dir.glob('details/*.pdf').sort.map(&File.method(:realpath)).each do |f|
           reports << [File.basename(f).split[0],f]
         end
       
@@ -127,7 +127,7 @@ class TbrController < ApplicationController
         summary = Dir.glob("summaries/#{user.code}*").map(&File.method(:realpath))[0]
         reports << ['Summary',summary] if summary
         
-        Dir.glob("details/*.pdf").map(&File.method(:realpath)).each do |f|
+        Dir.glob("details/*.pdf").sort.map(&File.method(:realpath)).each do |f|
           service = File.basename(f).split[0]
           reports << [service,f] if group.include?(service)
         end
