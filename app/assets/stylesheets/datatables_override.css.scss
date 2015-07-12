@@ -1,0 +1,61 @@
+@import "variables";
+
+//
+// Colour customisation
+//
+// `!default` allows overriding variables that are defined before @import
+ 
+// Border between the header (and footer) and the table body
+$table-header-border: 1px solid $main-color-medium !default;
+ 
+// Border of rows / cells
+$table-body-border: 1px solid $main-color-medium !default;
+ 
+// Row background colour (hover, striping etc are all based on this colour and
+// calculated automatically)
+$table-row-background: $main-color-bg !default;
+ 
+// Row colour, when selected (tr.selected)
+$table-row-selected: $main-color-bg !default;
+ 
+// Text colour of the interaction control elements (info, filter, paging etc)
+$table-control-color: $main-color-dark !default;
+ 
+// Highlight colour of the paging button for the current page
+$table-paging-button-active: $main-color-light !default;
+ 
+// Hover colour of paging buttons on mouse over
+$table-paging-button-hover: $main-color-mdark !default;
+ 
+// Colour to use when shading
+$table-shade: black !default;
+
+// Page length options
+.dataTables_length {
+    float: left;
+    margin-left:       0.5em;
+    
+    select {
+      height:           1.5em;
+      padding:          0em;
+      margin:           0em;
+      background:       $main-color-bg;
+    }
+}
+
+// Filtering input
+.dataTables_filter {
+    float: right;
+    text-align: left;
+    
+    input {
+      height:           1.5em;
+      width:            10.5em !important;
+      padding:          0em;
+      background:       $main-color-bg;
+    }
+}
+
+.dataTables_info {
+    margin-left: 0.5em;
+}

@@ -7,9 +7,22 @@
   <div class="header-cells right"><%= link_new(User)%></div>
 </div>
 
-<table width="100%">
+<table id="users" class="table table-striped">
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Creator</th>
+      <th>Approver</th>
+      <th>Processor</th>
+      <th>Admin</th>
+    </tr>
+  </thead>
+  <tbody>
   <% @users.each do |user| %>
-    <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+    <tr>
       <td><b><%= link_to(user.code, user) %></b></td>
       <td><%= user.name %></td>
       <td><%= user.email %></td>
@@ -20,4 +33,5 @@
       <td><%= admin(user) %></td>
     </tr>
   <% end %>
+  </tbody>
 </table>

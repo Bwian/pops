@@ -8,6 +8,10 @@ module ExoHelper
   
   # These exo_ methods could probably be DRYed
   
+  def exo_id(models)
+    "'#{models[0].class.name.downcase.pluralize}'".html_safe
+  end
+  
   def exo_status(model)
     "'##{model.class.name.underscore}_status'".html_safe
   end

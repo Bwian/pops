@@ -7,19 +7,27 @@
   <div class="header-cells right"><%= link_new(TbrService)%></div>
 </div>
 
-<table width="100%">
-  <th>Service</th>
-  <th>Manager</th>
-  <th>User</th>
-  <th>Name</th>
-  <th>Comment</th>
+<table id="tbrservices" class="table table-striped">
+  <thead>
+    <tr>
+      <th>Service</th>
+      <th>Manager</th>
+      <th>User</th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+  <tbody>
   <% @tbr_services.each do |service| %>    
-    <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+    <tr>
       <td><b><%= link_to(format_phone_number(service.code), service) %></b></td>
       <td><%= service.manager_code %></td>
       <td><%= service.user_code %></td>
       <td><%= service.name %></td>
+      <td><%= service.service_type %></td>
       <td><%= service.comment %></td>
     </tr>
   <% end %>
+  </tbody>
 </table>

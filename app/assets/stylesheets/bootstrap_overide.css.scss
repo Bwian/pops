@@ -202,3 +202,37 @@ fieldset[disabled] .btn-primary.active {
   outline: 5px auto $main-color-medium;
   outline-offset: -2px;
 }
+
+.pagination > li > a {
+  color: $main-color;
+}
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  background-color: $main-color;
+  border-color: $main-color;
+}
+
+.pagination > .disabled > span,
+.pagination > .disabled > a,
+.pagination > .disabled > a:hover,
+.pagination > .disabled > a:focus {
+  color: $main-color-light;
+}
+
+.pagination > li > a:hover,
+.pagination > li > span:hover,
+.pagination > li > a:focus,
+.pagination > li > span:focus {
+  color:            $main-color;
+  background-color: $main-color-light;
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > th {
+  background-color: $main-color-bg;
+}

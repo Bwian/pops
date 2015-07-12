@@ -7,15 +7,20 @@
   <div class="header-cells right"><%= link_refresh %></div>
 </div>
 
-<table width="100%">
-  <th>ID</th>
-  <th>Name</th>
-  <% @class.new.attribute_list.each_key do |field| %>
-    <th><%= field.titleize %></th>
-  <% end %>
-  <th style="text-align:right">Status</th>
+<table id="<%= @models[0].class.name.downcase.pluralize %>" class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <% @class.new.attribute_list.each_key do |field| %>
+        <th><%= field.titleize %></th>
+      <% end %>
+      <th style="text-align:right">Status</th>
+    </tr>
+  </thead>
+  <tbody>
   <% @models.each do |model| %>
-    <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+    <tr>
       <td><%= link_exo(model) %></td>
       <td><%= model.name %></td>
       <% model.attribute_list.each_key do |field| %>
@@ -24,5 +29,6 @@
       <td align="right"><%= model.formatted_status %></td>
     </tr>
   <% end %>
+  </tbody>
 </table>
 

@@ -71,3 +71,6 @@ gem 'tbr'
 
 # Reverse file reading
 gem 'elif'
+
+# Datatables for maintenance forms
+gem 'jquery-datatables-rails', '~> 3.3.0'
