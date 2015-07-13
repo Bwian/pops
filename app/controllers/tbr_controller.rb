@@ -1,5 +1,7 @@
 class TbrController < ApplicationController
   
+  include SelectizeHelper
+  
   def index
   end
   
@@ -25,21 +27,26 @@ class TbrController < ApplicationController
   end
   
   def report_select
-    @reports = build_reports(params[:months],params[:user_type])
+    @reports = json_list(build_reports(params[:months],params[:user_type]))
     respond_to do |format|
-      format.js
+      format.json { render json: @reports }
     end
   end
   
   def report
-    if params[:report] == 'email'
+    report = params[:report]
+    if report.nil? || report.empty?
+      respond_to do |format|
+        format.html { redirect_to(tbr_reports_path, alert: 'No report selected!') }
+      end
+    elsif report == 'email'
       notice = sendmail(params[:months])
       respond_to do |format|
         format.html { redirect_to(tbr_reports_path, notice: notice) }
       end
     else
-      send_file(params[:report], 
-        filename: File.basename(params[:report]),
+      send_file(report, 
+        filename: File.basename(report),
         type: "application/pdf", 
         disposition: "inline"
       ) 
@@ -114,7 +121,7 @@ class TbrController < ApplicationController
         summary = Dir.glob("Service*.pdf").map(&File.method(:realpath))[0]
         if summary
           reports << ['Summary',summary]
-          reports << ['Email summaries','email']
+          reports << ['Send emails','email']
         end
         
         Dir.glob('details/*.pdf').sort.map(&File.method(:realpath)).each do |f|

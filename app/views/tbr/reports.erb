@@ -3,15 +3,18 @@
 		<legend>Telstra Bill Reporting - Reports</legend>
       <div class="field">
   	    <%= label_tag :months, 'Month:' %>
-        <%= select_tag :months, options_for_select(@months), class: 'btn btn-primary btn-sm', onchange: "javascript:set_report_select()" %>
+        <%= select_tag :months, options_for_select(@months), class: 'select-narrow', onchange: "javascript:report_select()" %>
       </div>
       
       <div class="field">
   	    <%= label_tag :user_type, 'Type:' %>
-        <%= select_tag :user_type, options_for_select(@types), class: 'btn btn-primary btn-sm', onchange: "javascript:set_report_select()" %>
+        <%= select_tag :user_type, options_for_select(@types), class: 'select-narrow', onchange: "javascript:report_select()" %>
       </div>
       
-      <%= render 'report_select' %>
+      <div class="field">
+        <%= label_tag :report, 'Report:' %>
+        <%= select_tag :report, options_for_select(@reports), class: 'select-narrow', onchange: "javascript:set_form_target()" %>
+      </div>
       
       <div class="actions">
         <label>&nbsp;</label>
@@ -26,3 +29,17 @@
   		</div>
   </fieldset>
 <% end %>
+
+<script>  
+  $('#months').selectize({
+  	create: false
+  });
+  
+  $('#user_type').selectize({
+  	create: false
+  });
+  
+  $('#report').selectize({
+  	create: false
+  });
+</script>
