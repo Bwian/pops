@@ -8,15 +8,7 @@ class OrdersController < ApplicationController
   # GET /orders
   def index
     @order_filter = session[:order_filter] || OrderFilter.new(session[:user_id])
-    if @order_filter.faults.any?
-      @orders = Order.none
-    else
-      @orders = Order.where(where_parameters)
-      @orders = @orders.joins(join_user(params[:sort]))
-      @orders = @orders.order(sort_order(params[:sort]))
-      params.delete('sort')  # otherwise paginate will save the sort parameter
-      @orders = @orders.paginate(page: params[:page], per_page: 20)
-    end
+    @orders = @order_filter.faults.any? ? @orders = Order.none : @orders = Order.where(where_parameters)
   end
 
   # GET /orders/1
@@ -283,34 +275,6 @@ class OrdersController < ApplicationController
     filter_array << OrderStatus::PROCESSED if @order_filter.processed?
     
     filter_array.size > 0 ? { status: filter_array } : {}
-  end
-  
-  def join_user(column)
-    id_column?(column) ? "LEFT OUTER JOIN users ON users.id = orders.#{column}" : ""
-  end
-   
-  def sort_order(column)
-    if session[:sort_by].nil? || session[:sort_by].empty?
-      session[:sort_by]    = 'id'
-      session[:sort_order] = 'desc'
-    end
-
-    unless column.nil? || column.empty?
-      if session[:sort_by] == column
-        session[:sort_order] = session[:sort_order] == 'asc' ? 'desc' : 'asc'
-      else
-        session[:sort_by]    = column
-        session[:sort_order] = 'asc'
-      end
-    end
-    
-    sort_by = id_column?(column) ? 'users.name' : session[:sort_by]
-    "#{sort_by} #{session[:sort_order]}, created_at desc"
-  end
-  
-  def id_column?(column)
-    return false if column.nil?
-    column =~ /_id$/
   end
   
   def find_order

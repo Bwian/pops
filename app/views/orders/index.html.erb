@@ -49,39 +49,36 @@
       </div>
     </div>
     
-    <table width="100%">     
-      <th><%= order_sort_header(:id) %></th>
-      <th><%= order_sort_header(:supplier_name) %></th>
-      <th><%= order_sort_header(:invoice_no) %></th>
-      <th><%= order_header(:amount) %></th>
-      <th><%= order_sort_header(:created_at) %></th>
-      <th><%= order_sort_header(:creator_id) %></th>
-      <th><%= order_sort_header(:approved_at) %></th>
-      <th><%= order_sort_header(:approver_id) %></th>
-      <th><%= order_sort_header(:status) %></th> 
-      <% @orders.each do |order| %>
-        <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-          <td><%= link_to(order.id, order, class: "link_hilight") %></td>
-          <td><%= order.supplier_name %></td>
-          <td><%= order.invoice_no %></td>
-          <td align="right"><%= order.formatted_grandtotal %></td>
-          <td><%= format_date(order.created_at) %></td>
-          <td><%= order.creator ? order.creator.code : '' %></td>
-          <td><%= format_date(order.approved_at) %></td>
-          <td><%= order.approver ? order.approver.code : '' %></td>
-          <td><%= order.status_name %></td>
+    <table id="orders" class="table table-striped">
+      <thead>
+        <tr>     
+        <th>ID</th>
+          <th>Supplier</th>
+          <th>Invoice</th>
+          <th>Amount</th>
+          <th>Created</th>
+          <th>By</th>
+          <th>Approved</th>
+          <th>By</th>
+          <th>Status</th> 
         </tr>
-      <% end %>
+      </thead>
+      <tbody>
+        <% @orders.each do |order| %>
+          <tr>
+            <td><%= link_to(order.id, order, class: "link_hilight") %></td>
+            <td><%= order.supplier_name %></td>
+            <td><%= order.invoice_no %></td>
+            <td align="right"><%= order.formatted_grandtotal %></td>
+            <td><%= format_date(order.created_at) %></td>
+            <td><%= order.creator ? order.creator.code : '' %></td>
+            <td><%= format_date(order.approved_at) %></td>
+            <td><%= order.approver ? order.approver.code : '' %></td>
+            <td><%= order.status_name %></td>
+          </tr>
+        <% end %>
+      </tbody>
     </table>
-    
-    <% unless @orders.empty? %>
-      <div class="digg_pagination">
-        <div class="page_info">
-          <%= page_entries_info @orders %>
-        </div>
-        <%= will_paginate @notes, :container => false %>
-      </div>
-    <% end %>
     
   <% end %>
 </div>
