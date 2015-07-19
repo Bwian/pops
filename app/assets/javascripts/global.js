@@ -3,7 +3,7 @@
 // Search for entered order number
 function order_search() {
   $.ajax({
-    url:  '/orders/' + $("#order_search").val() +'/search',
+    url:  $ROOT_PATH + 'orders/' + $("#order_search").val() +'/search',
     type: "GET"
   });
 };
