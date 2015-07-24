@@ -15,15 +15,20 @@ class TbrController < ApplicationController
   end
   
   def reports   
-    Dir.chdir(ENV['tbr_root'])
-    @months = Dir.glob('20*').sort.reverse
+    begin
+      Dir.chdir(ENV['tbr_root'])
+      @months = Dir.glob('20*').sort.reverse
   
-    user = User.find(session[:user_id])
-    @types = []
-    @types << 'Administrator' if user.tbr_admin
-    @types << 'Manager' if user.tbr_manager
+      user = User.find(session[:user_id])
+      @types = []
+      @types << 'Administrator' if user.tbr_admin
+      @types << 'Manager' if user.tbr_manager
 
-    @reports = build_reports(@months[0],@types[0])
+      @reports = build_reports(@months[0],@types[0])
+    rescue
+      reset_session
+      redirect_to login_url, alert: "TBR Reports directory #{ENV['tbr_root']} not found."
+    end
   end
   
   def report_select

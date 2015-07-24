@@ -80,6 +80,8 @@ module ApplicationHelper
         allow_access = authorise_orders(user,action,model)
       when ITEMS
         allow_access = authorise_items(user,action,model)
+      when 'tbr_services'
+        allow_access = authorise_tbr_services(user,action)
       else
         allow_access = session[:admin]
     end
@@ -144,6 +146,17 @@ module ApplicationHelper
           change_draft(user,order) &&
           change_submitted(user,order) &&
           change_approved(user,order)
+      else
+        allow_access = true
+    end
+    
+    allow_access 
+  end
+  
+  def authorise_tbr_services(user,action)
+    case action
+      when NEW, EDIT, DELETE
+        allow_access = user.tbr_admin
       else
         allow_access = true
     end
