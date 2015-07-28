@@ -1,7 +1,7 @@
 # Load the Rails application.
 require File.expand_path('../application', __FILE__)
 
-CONFIG_FILE = 'config/application.yml'
+CONFIG_FILE = File.expand_path('../application.yml', __FILE__)
 
 # Initialize the Rails application.
 Pops::Application.initialize!

@@ -50,6 +50,22 @@ class OrderMailer < ActionMailer::Base
     build_mail('changed')
   end
   
+  def reminder_email(order)
+    @order = order
+    @to = order.creator
+    @from = User.new
+    @from.email = 'pops.noreply@ucare.org.au'
+    
+    build_mail('reminder')
+  end
+  
+  def reminder_summary(user,orders)
+    @to = user
+    @orders = orders
+    
+    mail(to: @to.email, from: "pops.noreply@ucare.org.au", subject: "Outstanding purchase orders")
+  end
+  
   private
   
   def build_mail(action)
