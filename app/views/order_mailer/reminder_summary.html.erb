@@ -5,12 +5,10 @@
   </head>
   <body>
     <p>Hi <%= @to.first_name%>,</p>
-		<p>Order reminders have been sent as follows:<br>
-      <ul>
-        <% @orders.each do |line| %>
-          <li><%= line %></li>
-        <% end %>
-      </ul>
+		<p>Purchase order reminders have been sent as follows:<br>
+      <% @orders.each do |line| %>
+        <br><%= line %>
+      <% end %>
     </p>
 		<p>Thanks, <br><br>The POPS Purchase Order Processing System</p>
   </body>

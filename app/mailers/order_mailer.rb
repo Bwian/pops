@@ -1,6 +1,7 @@
 class OrderMailer < ActionMailer::Base
 
   # @order, @from and @to need to be set up for use by the view
+  NO_REPLY = 'pops.noreply@ucare.org.au'
   
   before_action :set_defaults
   
@@ -50,20 +51,20 @@ class OrderMailer < ActionMailer::Base
     build_mail('changed')
   end
   
-  def reminder_email(order)
-    @order = order
-    @to = order.creator
-    @from = User.new
-    @from.email = 'pops.noreply@ucare.org.au'
-    
-    build_mail('reminder')
+  def reminder_email(user,orders)
+    @to = user
+    @drafts    = orders[OrderStatus::DRAFT] || []
+    @submitted = orders[OrderStatus::SUBMITTED] || []
+    @approved  = orders[OrderStatus::APPROVED] || []
+
+    mail(to: @to.email, from: NO_REPLY, subject: "Outstanding purchase orders")
   end
   
   def reminder_summary(user,orders)
     @to = user
     @orders = orders
     
-    mail(to: @to.email, from: "pops.noreply@ucare.org.au", subject: "Outstanding purchase orders")
+    mail(to: @to.email, from: NO_REPLY, subject: "Outstanding purchase orders summary")
   end
   
   private

@@ -5,8 +5,55 @@
   </head>
   <body>
     <p>Hi <%= @to.first_name%>,</p>
-		<p><%= link_to("Purchase Order #{@order.id}", url_for(host: @host, controller: 'orders', action: 'show', id: @order.id)) %>, created by you on <%= @order.created_at.strftime('%d/%m/%Y') %>, is still outstanding.  Could you please follow it up?  		
+		<p>Please review the following orders in POPS as they have been at the current stage for more than 30 days: 
     </p>
-		<p>Thanks, <br><br>The POPS Purchase Order Processing System</p>
+    
+    <% unless @drafts.empty? %>
+      <p>Draft - may need to be completed or deleted:
+        <ul>
+          <% @drafts.each do |order| %>
+            <li>
+              <%= link_to("order #{order.id}", url_for(host: @host, controller: 'orders', action: 'show', id: order.id)) %> 
+              created on <%= order.created_at.strftime('%d/%m/%Y') %>
+              for <%= order.supplier_name %>
+            </li>
+          <% end %>
+        </ul>
+      </p>
+    <% end %>
+    
+    <% unless @submitted.empty? %>
+      <p>Submitted - waiting for authorisation:
+        <ul>
+          <% @submitted.each do |order| %>
+            <li>
+              <%= link_to("order #{order.id}", url_for(host: @host, controller: 'orders', action: 'show', id: order.id)) %> 
+              submitted on <%= order.updated_at.strftime('%d/%m/%Y') %>
+              for <%= order.supplier_name %>
+            </li>
+          <% end %>
+        </ul>
+      </p>
+    <% end %>
+    
+    <% unless @approved.empty? %>
+      <p>Approved - waiting for an invoice to be forwarded to accounts:
+        <ul>
+          <% @approved.each do |order| %>
+            <li>
+              <%= link_to("order #{order.id}", url_for(host: @host, controller: 'orders', action: 'show', id: order.id)) %> 
+              approved on <%= order.approved_at.strftime('%d/%m/%Y') %>
+              for <%= order.supplier_name %>
+            </li>
+          <% end %>
+        </ul>
+      </p>
+    <% end %>
+    
+		<p>
+      Thanks, 
+      <br><br>The POPS Purchase Order Processing System.  
+      <br>** Please do not reply to this email address. **
+    </p>
   </body>
 </html>
