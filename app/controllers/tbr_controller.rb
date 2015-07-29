@@ -124,9 +124,15 @@ class TbrController < ApplicationController
     case type
       when 'Administrator'
         summary = Dir.glob("Service*.pdf").map(&File.method(:realpath))[0]
-        if summary
-          reports << ['Summary',summary]
-          reports << ['Send emails','email']
+        reports << ['Summary',summary] if summary
+
+        cost_centre = Dir.glob("Cost*.pdf").map(&File.method(:realpath))[0]
+        reports << ['Cost Centres',cost_centre] if cost_centre
+
+        reports << ['Send emails','email']
+        
+        Dir.glob('summaries/*.pdf').sort.map(&File.method(:realpath)).each do |f|
+          reports << [File.basename(f).split[0],f]
         end
         
         Dir.glob('details/*.pdf').sort.map(&File.method(:realpath)).each do |f|
