@@ -17,8 +17,10 @@
 <% end%>  
 
 <script>
-	if (<%= @session %> == 1) {
-    window.onload=setTimeout("location.reload(true);",10000);
+  function init() {
+    setTimeout("location.reload(true);",10000);
+    document.body.scrollTop = document.body.scrollHeight;
   }
+  window.onload=init;
 </script>
 
