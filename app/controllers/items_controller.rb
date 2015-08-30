@@ -84,7 +84,6 @@ class ItemsController < ApplicationController
   def account_select   
     item = Item.new(item_params)
     flag = params[:account_flag]
-    binding.pry
     respond_to do |format|
       format.json { render json: account_list(item,flag,true) }
     end
