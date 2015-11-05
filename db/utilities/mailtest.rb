@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'pry'
 require "#{File.dirname(__FILE__)}/../../config/environment"
 
 user = User.new

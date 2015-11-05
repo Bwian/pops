@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'pry'
 require "#{File.dirname(__FILE__)}/../../config/environment"
 
 orders = Order.where(status: ['D','S','A'], updated_at: Time.at(0)..30.days.ago)
@@ -15,10 +14,15 @@ end
 
 summary_list = []
 order_list.each do |key,list|
-  user = User.find(key)
-  mail = OrderMailer.reminder_email(user,list)
-  mail.deliver
-
+  begin
+    user = User.find(key)
+    mail = OrderMailer.reminder_email(user,list)
+    mail.deliver
+  rescue
+    user = User.new
+    user.name = "User #{key} deleted"
+  end
+  
   ol = []
   list.each_value { |l| ol.concat(l) }
   summary_list << "#{user.name} (email: #{user.email || 'no address'}):"
