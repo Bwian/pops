@@ -39,7 +39,8 @@ class SessionsController < ApplicationController
     
     user = nil
     ldap = LdapAgent.new
-
+    
+    binding.pry
 		if ldap.search(login)
     	if ldap.authenticate(ldap.dn,password)
 				user = User.find_by_code(login)
@@ -53,10 +54,14 @@ class SessionsController < ApplicationController
 					user.save
 				end
 			else
+        Rails.logger.info("Login for #{login} failed: #{ldap.notice}")
         @alert = ldap.notice unless ldap.notice =~ /49/ # Invalid Credentials
     	end
-		end
-
+    else
+      Rails.logger.info("Login for #{login} failed: #{ldap.notice}")
+      @alert = ldap.notice
+    end
+    
     user
   end
 end
