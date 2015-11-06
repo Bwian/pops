@@ -106,9 +106,9 @@ class OrdersController < ApplicationController
     respond_to do |format|
       if @order.save   
         url = @order.creator_id == session[:user_id] ? order_url : orders_url
+        message.deliver if message && message.valid?
         flash.notice = "Order #{@order.id} reset to Draft. #{get_notice(message)}"
         format.js { render :js => "window.location = '#{url}'" }
-        message.deliver if message && message.valid?
       else
         find_order
         format.js { render :edit }
@@ -125,8 +125,8 @@ class OrdersController < ApplicationController
     respond_to do |format|
       if @order.save
         save_user_notes(params)
-        format.html { redirect_to(@order, notice: "Order #{@order.id} set to Submitted.") }
         message.deliver if message && message.valid?
+        format.html { redirect_to(@order, notice: "Order #{@order.id} set to Submitted.") }
       else
         @order.to_draft
         @readonly = true
@@ -144,9 +144,9 @@ class OrdersController < ApplicationController
     respond_to do |format|
       if @order.save
         url = @order.creator_id == session[:user_id] || @order.approver_id == session[:user_id] ? order_url : orders_url
+        message.deliver if message && message.valid?
         flash.notice = "Order #{@order.id} reset to Submitted. #{get_notice(message)}"
         format.js { render :js => "window.location = '#{url}'" }
-        message.deliver if message && message.valid?
       else
         find_order
         format.js { render :edit }
@@ -162,8 +162,8 @@ class OrdersController < ApplicationController
     
     respond_to do |format|
       if @order.save
-        format.html { redirect_to(@order, notice: "Order #{@order.id} set to Approved. #{get_notice(message)}") }
         message.deliver if message && message.valid?
+        format.html { redirect_to(@order, notice: "Order #{@order.id} set to Approved. #{get_notice(message)}") }
       else
         @order.to_submitted
         @readonly = true

@@ -7,10 +7,13 @@ class OrderMessage
     @action = action
     @user = User.find(user_id)
     @body = ''
+    @mailer_running = true
     self.send("#{action}")  # Setup mailer
   end
 
   def notice
+    return "Warning! Mail service not running - no mail sent" unless @mailer_running
+    
     return "Missing user record for Order #{@order.id}" unless @to && @from
   
     return "Email not sent - no email address for #{@to.name}." unless @to.email_valid?
@@ -21,7 +24,12 @@ class OrderMessage
 
   def deliver
     mail = OrderMailer.send("#{@action}_email", @order, user: @user, to: @to, body: self.body)
-    mail.deliver
+    @mailer_running = true
+    begin
+      mail.deliver
+    rescue Errno::ECONNREFUSED
+      @mailer_running = false
+    end
   end
 
   def body
