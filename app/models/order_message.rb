@@ -37,8 +37,8 @@ class OrderMessage
   end
   
   def valid?
-    return false unless @from && @from.email
-    return false unless @to && @to.email
+    return false unless @from && @from.email.present?
+    return false unless @to && @to.email.present?
     true  
   end
   

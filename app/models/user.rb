@@ -59,9 +59,7 @@ class User < ActiveRecord::Base
   end
   
   def email_valid?
-    return false if self.email.nil?
-    return false if self.email.empty?
-    true
+    self.email.present?
   end
 
   private
