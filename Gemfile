@@ -49,8 +49,9 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
-gem 'pry', group: [:development, :test]
-gem 'pry-nav', group: [:development, :test]
+# leave in production cos if binding.pry calls are left in the code, the production environment falls over
+gem 'pry'
+gem 'pry-nav'
 
 # pdf management
 gem 'prawn', '~> 2.0'

@@ -40,7 +40,6 @@ class SessionsController < ApplicationController
     user = nil
     ldap = LdapAgent.new
     
-    binding.pry
 		if ldap.search(login)
     	if ldap.authenticate(ldap.dn,password)
 				user = User.find_by_code(login)
