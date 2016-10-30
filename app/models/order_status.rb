@@ -3,16 +3,19 @@ class OrderStatus
   DRAFT     = 'D'
   SUBMITTED = 'S'
   APPROVED  = 'A'
+  RECEIVED  = 'R'
   PROCESSED = 'P'
   
   CREATOR   = 'Creator'
   APPROVER  = 'Approver'
+  RECEIVER  = 'Receiver'
   PROCESSOR = 'Processor'
   
   STATUS = {
     DRAFT     => 'Draft',
     SUBMITTED => 'Submitted',
     APPROVED  => 'Approved',
+    RECEIVED  => 'Received',
     PROCESSED => 'Processed'
   }
 

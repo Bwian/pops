@@ -14,6 +14,10 @@ class OrderStatusTest < ActiveSupport::TestCase
     assert_equal('A', OrderStatus::APPROVED)
   end
   
+  test 'received' do
+    assert_equal('R', OrderStatus::RECEIVED)
+  end
+  
   test 'processed' do
     assert_equal('P', OrderStatus::PROCESSED)
   end
@@ -25,6 +29,10 @@ class OrderStatusTest < ActiveSupport::TestCase
   
   test 'status' do
     assert_equal('Draft', OrderStatus.status('D'))
+    assert_equal('Submitted', OrderStatus.status('S'))
+    assert_equal('Approved', OrderStatus.status('A'))
+    assert_equal('Received', OrderStatus.status('R'))
+    assert_equal('Processed', OrderStatus.status('P'))
   end
   
 end
