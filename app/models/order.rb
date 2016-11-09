@@ -7,12 +7,13 @@ class Order < ActiveRecord::Base
   belongs_to :supplier
   belongs_to :creator, :class_name => 'User' 
   belongs_to :approver, :class_name => 'User'
+  belongs_to :receiver, :class_name => 'User'
   belongs_to :processor, :class_name => 'User'
   has_many :items, :dependent => :destroy
   has_many :notes
   
   validates :supplier_id, :status, presence: true
-  validate :approver_present, :approver_not_processor, :processor_amount_exceeded
+  validate :approver_present, :approver_not_processor, :receiver_not_approver, :processor_amount_exceeded
   
   before_save :set_supplier
   
@@ -31,6 +32,10 @@ class Order < ActiveRecord::Base
   
   def approver_not_processor
     errors.add(:processor_id, "must not be the same as Approver") if !self.processor_id.nil? && self.approver_id == self.processor_id
+  end
+  
+  def receiver_not_approver
+    errors.add(:receiver_id, "must not be the same as Approver") if !self.receiver_id.nil? && self.approver_id == self.receiver_id
   end
   
   def processor_amount_exceeded
@@ -84,6 +89,14 @@ class Order < ActiveRecord::Base
     total
   end
   
+  def receipt_total
+    total = 0.0
+    self.items.each do |item|
+      total += item.receipt_total 
+    end
+    total
+  end
+  
   def formatted_gst
     sprintf('%.2f', self.gst)
   end
@@ -94,6 +107,10 @@ class Order < ActiveRecord::Base
   
   def formatted_grandtotal
     sprintf('%.2f', self.grandtotal)
+  end
+  
+  def formatted_receipt_total
+    sprintf('%.2f', self.receipt_total)
   end
     
   def to_draft
@@ -112,6 +129,15 @@ class Order < ActiveRecord::Base
     reset_approved
   end
   
+  def to_received(user_id) 
+    self.receiver_id  = user_id if status == OrderStatus::APPROVED
+    self.received_at  = Time.now
+    self.processor_id = nil
+    self.processed_at = nil
+    self.status       = OrderStatus::RECEIVED
+  end
+  
+  #TODO: check where this is used and add reset_received?
   def reset_approved
     self.processor_id = nil
     self.processed_at = nil
@@ -134,6 +160,10 @@ class Order < ActiveRecord::Base
   
   def approved?
     self.status == OrderStatus::APPROVED
+  end
+  
+  def received?
+    self.status == OrderStatus::RECEIVED
   end
   
   def processed?

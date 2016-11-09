@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150625055616) do
+ActiveRecord::Schema.define(version: 20161107144047) do
 
   create_table "accounts", force: true do |t|
     t.string  "name"
@@ -70,11 +70,14 @@ ActiveRecord::Schema.define(version: 20150625055616) do
     t.text     "delivery_address"
     t.decimal  "approved_amount"
     t.integer  "lock_version",     default: 0
+    t.integer  "receiver_id"
+    t.datetime "received_at"
   end
 
   add_index "orders", ["approver_id"], name: "index_orders_on_approver_id"
   add_index "orders", ["creator_id"], name: "index_orders_on_creator_id"
   add_index "orders", ["processor_id"], name: "index_orders_on_processor_id"
+  add_index "orders", ["receiver_id"], name: "index_orders_on_receiver_id"
   add_index "orders", ["supplier_id"], name: "index_orders_on_supplier_id"
 
   create_table "payment_terms", force: true do |t|
@@ -87,6 +90,18 @@ ActiveRecord::Schema.define(version: 20150625055616) do
     t.string "name"
     t.string "status"
   end
+
+  create_table "receipts", force: true do |t|
+    t.integer  "item_id"
+    t.string   "status",      default: "A"
+    t.decimal  "price"
+    t.integer  "receiver_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "receipts", ["item_id"], name: "index_receipts_on_item_id"
+  add_index "receipts", ["receiver_id"], name: "index_receipts_on_receiver_id"
 
   create_table "suppliers", force: true do |t|
     t.string  "name"

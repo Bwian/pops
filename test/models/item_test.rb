@@ -82,6 +82,14 @@ class ItemTest < ActiveSupport::TestCase
     assert_equal('Missing Tax Rate 99',@item1.tax_rate_short_name)
   end
   
+  test 'receipt_total' do
+    assert_in_delta(3.95,@item2.receipt_total,0.001)
+  end
+  
+  test 'formatted_receipt_total' do
+    assert_equal('3.95',@item2.formatted_receipt_total)
+  end
+  
   test 'to_json' do
     ij = @item1.to_json
     ijs = ij.to_json

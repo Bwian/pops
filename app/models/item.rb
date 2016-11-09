@@ -3,6 +3,7 @@ class Item < ActiveRecord::Base
   belongs_to :program
   belongs_to :account
   belongs_to :tax_rate
+  has_many :receipts, :dependent => :destroy
   
   default_scope { order('created_at ASC') }
   
@@ -45,6 +46,18 @@ class Item < ActiveRecord::Base
     price.nil? ? '' : sprintf('%.2f', self.price)
   end
   
+  def receipt_total
+    total = 0.0
+    self.receipts.each do |receipt|
+      total += receipt.price 
+    end
+    total
+  end
+  
+  def formatted_receipt_total
+    sprintf('%.2f', self.receipt_total)
+  end
+   
   def program_name
     self.program ? "#{self.program.name} (#{self.program_id})" : "Missing Program #{self.program_id}"
   end
@@ -63,6 +76,14 @@ class Item < ActiveRecord::Base
   
   def tax_rate_short_name
     self.tax_rate ? self.tax_rate.short_name : "Missing Tax Rate #{self.tax_rate_id}"
+  end
+  
+  def receipt_total
+    total = 0.0
+    self.receipts.each do |receipt|
+      total += receipt.price 
+    end
+    total
   end
   
   def to_json

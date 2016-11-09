@@ -6,7 +6,9 @@ class OrderTest < ActiveSupport::TestCase
     @draft     = orders(:draft)
     @submitted = orders(:submitted)
     @approved  = orders(:approved)
+    @received  = orders(:received)
     @brian     = users(:brian)
+    @sean      = users(:sean)
   end
   
   test 'supplier relationship' do
@@ -55,6 +57,10 @@ class OrderTest < ActiveSupport::TestCase
     assert_in_delta(14.94,@draft.grandtotal,0.001)
   end
   
+  test 'receipt_total' do
+    assert_in_delta(5.89,@approved.receipt_total,0.001)
+  end
+  
   test 'formatted_subtotal' do
     assert_equal('14.49',@draft.formatted_subtotal)
   end
@@ -65,6 +71,10 @@ class OrderTest < ActiveSupport::TestCase
   
   test 'formatted_grandtotal' do
     assert_equal('14.94',@draft.formatted_grandtotal)
+  end
+  
+  test 'formatted_receipt_total' do
+    assert_equal('5.89',@approved.formatted_receipt_total)
   end
   
   test 'to_draft' do
@@ -80,6 +90,11 @@ class OrderTest < ActiveSupport::TestCase
   test 'to_approved' do
     @submitted.to_approved(@brian.id)
     assert_equal(OrderStatus::APPROVED,@submitted.status)
+  end
+  
+  test 'to_received' do
+    @approved.to_received(@sean.id)
+    assert_equal(OrderStatus::RECEIVED,@approved.status)
   end
   
   test 'to_processed and reset_approved' do
@@ -107,6 +122,11 @@ class OrderTest < ActiveSupport::TestCase
   test 'approved?' do
     assert(@approved.approved?)
     assert_not(@draft.approved?)
+  end
+  
+  test 'received?' do
+    assert(@received.received?)
+    assert_not(@draft.received?)
   end
   
   test 'processed?' do
@@ -142,6 +162,13 @@ class OrderTest < ActiveSupport::TestCase
     @approved.processor_id = @approved.approver_id
     assert_not(@approved.save)
     assert(@approved.errors.messages[:processor_id])
+  end
+  
+  test 'receiver_not_approver' do
+    @approved.to_received(@brian.id)
+    @approved.receiver_id = @approved.approver_id
+    assert_not(@approved.save)
+    assert(@approved.errors.messages[:receiver_id])
   end
   
   test 'processor amount too high' do

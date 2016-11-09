@@ -1,0 +1,24 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  item: two
+  price: 2.95
+
+two:
+  item: two
+  price: 1.00
+
+three:
+  item: three
+  price: 2.95
+
+four:
+  item: three
+  price: 0.50
+  
+five:
+  item: four
+  price: 2.44
+
+
+ 

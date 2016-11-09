@@ -63,7 +63,25 @@ approved:
   processed_at:
   approved_amount: 4.95
   status: A
-  
+
+received:
+  supplier: two
+  supplier_name: 
+  invoice_no: 
+  invoice_date: 
+  payment_date: 
+  reference: 
+  creator: sean
+  created_at: 2013-11-10 21:15:18
+  approver: brian 
+  approved_at: 2013-11-10 22:15:18
+  receiver: sean 
+  received_at: 2013-11-11 12:13:14
+  processor: 
+  processed_at:
+  approved_amount: 4.95
+  status: R
+    
 processed:
   supplier: two
   supplier_name: 
