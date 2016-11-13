@@ -10,7 +10,8 @@ class OrderFilterTest < ActiveSupport::TestCase
     assert_equal(OrderStatus::PROCESSOR, @order_filter.role)
     assert_equal('0', @order_filter.draft)
     assert_equal('0', @order_filter.submitted)
-    assert_equal('1', @order_filter.approved)
+    assert_equal('0', @order_filter.approved)
+    assert_equal('1', @order_filter.received)
     assert_equal('0', @order_filter.processed)
     assert_equal(0, @order_filter.faults.size)
   end
@@ -18,7 +19,8 @@ class OrderFilterTest < ActiveSupport::TestCase
   test "booleans" do
     assert_not(@order_filter.draft?, 'Draft')
     assert_not(@order_filter.submitted?, 'Submitted')
-    assert(@order_filter.approved?, 'Approved')
+    assert_not(@order_filter.approved?, 'Approved')
+    assert(@order_filter.received?, 'Received')
     assert_not(@order_filter.processed?, 'Processed')
   end
   

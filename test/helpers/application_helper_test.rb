@@ -8,6 +8,7 @@ class ApplicationHelperTest < ActionView::TestCase
   DRAFT     = 'draft'
   SUBMIT    = 'submit'
   APPROVE   = 'approve'
+  RECEIVE   = 'receive'
   PROCESS   = 'complete'
   
   ANYONE    = 'anyone'
@@ -111,14 +112,14 @@ class ApplicationHelperTest < ActionView::TestCase
     item_not_authorised(order,:sean)
   end
   
-  test "authorised_action orders(approved) - edit delete" do 
-    order = orders(:approved)
-    order_authorised(order,:brian)
-    order_not_authorised(order,:sean)
-  end
-  
   test "authorised_action items(approved) - new edit delete" do 
     order = orders(:approved)
+    item_authorised(order,:brian)
+    item_not_authorised(order,:sean)
+  end
+  
+  test "authorised_action items(received) - new edit delete" do 
+    order = orders(:received)
     item_authorised(order,:brian)
     item_not_authorised(order,:sean)
   end
@@ -161,6 +162,11 @@ class ApplicationHelperTest < ActionView::TestCase
     assert(authorised_status_change(SUBMIT,order),assert_message(:processor,order,SUBMIT,SHOULD))
   end
   
+  test "authorised_status_change - to submitted no items" do
+    order = orders(:no_items)
+    assert_not(authorised_status_change(SUBMIT,order),'Submit should fail - no items')
+  end
+  
   test "authorised_status_change - to approved" do
     order = orders(:draft)
     assert_not(authorised_status_change(APPROVE,order),assert_message(ANYONE,order,APPROVE,SHOULDNT))
@@ -170,18 +176,21 @@ class ApplicationHelperTest < ActionView::TestCase
     assert(authorised_status_change(APPROVE,order),assert_message(:brian,order,APPROVE,SHOULD))
   end
   
+  test "authorised_status_change - to received" do
+    order = orders(:draft)
+    assert_not(authorised_status_change(RECEIVE,order),assert_message(ANYONE,order,RECEIVE,SHOULDNT))
+    
+    order = orders(:approved)
+    assert(authorised_status_change(RECEIVE,order),assert_message(ANYONE,order,RECEIVE,SHOULD))
+  end
+  
   test "authorised_status_change - to processed" do
     order = orders(:draft)
     assert_not(authorised_status_change(PROCESS,order),assert_message(ANYONE,order,PROCESS,SHOULDNT))
     
-    order = orders(:approved)
+    order = orders(:received)
     setup_user_session(:processor)
     assert(authorised_status_change(PROCESS,order),assert_message(:processor,order,PROCESS,SHOULD))
-  end
-  
-  test "authorised_status_change - to submitted no items" do
-    order = orders(:no_items)
-    assert_not(authorised_status_change(SUBMIT,order),'Submit should fail - no items')
   end
   
   private

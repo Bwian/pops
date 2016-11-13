@@ -7,6 +7,7 @@ one:
 two:
   item: two
   price: 1.00
+  status: C
 
 three:
   item: three

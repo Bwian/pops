@@ -24,6 +24,7 @@
 				<%= hidden_field :order_filter, :draft, value: "0" %>
 				<%= hidden_field :order_filter, :submitted, value: "0" %>
 				<%= hidden_field :order_filter, :approved, value: "0" %>
+        <%= hidden_field :order_filter, :received, value: "0" %>
 				<%= hidden_field :order_filter, :processed, value: "0" %>
         <div class="ck-button">
           <label>
@@ -37,6 +38,10 @@
           <label>
             <%= check_box :order_filter, :approved, onchange: "this.form.submit()", include_hidden: false %>
             <span>Approved</span>
+          </label>
+          <label>
+            <%= check_box :order_filter, :received, onchange: "this.form.submit()", include_hidden: false %>
+            <span>Received</span>
           </label>
           <label>
             <%= check_box :order_filter, :processed, onchange: "this.form.submit()", include_hidden: false %>

@@ -172,6 +172,40 @@ class OrdersController < ApplicationController
     end
   end
   
+  def reapprove
+    @order.to_approved(@order.approver_id)
+    add_notes('order',@order)
+    save_user_notes(params)
+    message = @order.sendmail(session[:user_id])
+
+    respond_to do |format|
+      if @order.save
+        url = @order.creator_id == session[:user_id] || @order.approver_id == session[:user_id] ? order_url : orders_url
+        message.deliver if message && message.valid?
+        flash.notice = "Order #{@order.id} reset to Approved. #{get_notice(message)}"
+        format.js { render :js => "window.location = '#{url}'" }
+      else
+        find_order
+        format.js { render :edit }
+      end
+    end
+  end
+  
+  def receive
+    @order.to_received(session[:user_id])
+    add_notes('order',@order) if @order.notes.any?
+    
+    respond_to do |format|
+      if @order.save
+        format.html { redirect_to(@order, notice: "Order #{@order.id} set to Received.") }
+      else
+        @order.to_approved(@order.approver_id)
+        @readonly = true
+        format.html { render :show }
+      end
+    end
+  end
+  
   # POST /orders/1/complete
   def complete
     agent = ExoAgent.new
@@ -189,7 +223,7 @@ class OrdersController < ApplicationController
       if completed
         format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Processed.") }
       else
-        @order.reset_approved
+        @order.to_received(@order.receiver_id)
         @readonly = true
         format.html { render :show }
       end
@@ -246,7 +280,9 @@ class OrdersController < ApplicationController
       :creator_id, 
       :created_at,
       :approver_id,
-      :approved_at, 
+      :approved_at,
+      :receiver_id,
+      :received_at, 
       :processor_id, 
       :processed_at,
       :delivery_address,
@@ -263,7 +299,7 @@ class OrdersController < ApplicationController
         where = filters
       else
         where = { creator_id: session[:user_id] }
-        where.merge(filters)
+          where.merge(filters)
     end
   end
   
@@ -272,6 +308,7 @@ class OrdersController < ApplicationController
     filter_array << OrderStatus::DRAFT if @order_filter.draft?
     filter_array << OrderStatus::SUBMITTED if @order_filter.submitted?
     filter_array << OrderStatus::APPROVED if @order_filter.approved?
+    filter_array << OrderStatus::RECEIVED if @order_filter.received?
     filter_array << OrderStatus::PROCESSED if @order_filter.processed?
     
     filter_array.size > 0 ? { status: filter_array } : {}

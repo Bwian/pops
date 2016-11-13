@@ -39,12 +39,14 @@ Pops::Application.routes.draw do
     resources :items, :only => [:new]
   end 
   
-  post  'orders/refresh'      => 'orders#refresh'
-  patch 'orders/:id/redraft'  => 'orders#redraft'
-  post  'orders/:id/submit'   => 'orders#submit'
-  patch 'orders/:id/resubmit' => 'orders#resubmit'
-  post  'orders/:id/approve'  => 'orders#approve'
-  post  'orders/:id/complete' => 'orders#complete'
+  post  'orders/refresh'       => 'orders#refresh'
+  patch 'orders/:id/redraft'   => 'orders#redraft'
+  post  'orders/:id/submit'    => 'orders#submit'
+  patch 'orders/:id/resubmit'  => 'orders#resubmit'
+  post  'orders/:id/approve'   => 'orders#approve'
+  patch 'orders/:id/reapprove' => 'orders#reapprove'
+  post  'orders/:id/receive'   => 'orders#receive'
+  post  'orders/:id/complete'  => 'orders#complete'
   
   resources :items, :except => [:index, :new] 
   

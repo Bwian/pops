@@ -1,5 +1,5 @@
 class OrderFilter  
-  attr_accessor :role, :draft, :submitted, :approved, :processed, :faults
+  attr_accessor :role, :draft, :submitted, :approved, :received, :processed, :faults
   
   def initialize(user_id)
     user = User.find(user_id)
@@ -19,6 +19,7 @@ class OrderFilter
       @draft     = params[:draft]
       @submitted = params[:submitted]
       @approved  = params[:approved]
+      @received  = params[:received]
       @processed = params[:processed]
     end
     
@@ -37,6 +38,10 @@ class OrderFilter
     !(@approved.nil? || @approved == '0')
   end
   
+  def received?
+    !(@received.nil? || @received == '0')
+  end
+  
   def processed?
     !(@processed.nil? || @processed == '0')
   end
@@ -44,7 +49,7 @@ class OrderFilter
   private
   
   def status_filters_set
-    draft? || submitted? || approved? || processed?
+    draft? || submitted? || approved? || received? || processed?
   end
   
   def default_filters
@@ -53,17 +58,20 @@ class OrderFilter
         @draft     = '0'
         @submitted = '1'
         @approved  = '0'
+        @received  = '0'
         @processed = '0'
       when OrderStatus::PROCESSOR 
         @draft     = '0'
         @submitted = '0'
-        @approved  = '1'
+        @approved  = '0'
+        @received  = '1'
         @processed = '0'
       else
         @role      = OrderStatus::CREATOR
         @draft     = '1'
         @submitted = '1'
         @approved  = '0'
+        @received  = '0'
         @processed = '0'
     end
   end

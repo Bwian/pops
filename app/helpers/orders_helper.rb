@@ -34,7 +34,9 @@ module OrdersHelper
       when OrderStatus::SUBMITTED
         actions = ['approve','redraft']
       when OrderStatus::APPROVED
-        actions = ['complete','resubmit']
+        actions = ['receive','resubmit']
+      when OrderStatus::RECEIVED
+        actions = ['complete','reapprove']
     end
     
     links = []
@@ -42,7 +44,7 @@ module OrdersHelper
     actions.each do |action|
       link = ""
       if authorised_status_change(action,order)
-        if action.start_with?('re')
+        if action =~ /^re[dsa]/  # All re-actions except for receive
           link = link_notes(action)
         else
           link = link_to(action_label(action), url_for(controller: 'orders', id: order.id, action: action), method: :post, class: btn_class) 
@@ -63,6 +65,8 @@ module OrdersHelper
         action = 'redraft'
       when OrderStatus::APPROVED
         action = 'resubmit'
+      when OrderStatus::RECEIVED
+        action = 'reapprove'
       else
         action = nil
     end

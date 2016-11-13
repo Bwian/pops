@@ -104,9 +104,13 @@ module ApplicationHelper
         return true if order.approved? && user.processor?
       when 'approve'
         return false if !order.submitted?
-        return true if order.approver == user
+        return true if order.approver == user    
+      when 'receive'
+        return true if order.approved?
+      when 'reapprove'
+        return true if order.received?
       when 'complete'
-        return false if !order.approved?
+        return false if !order.received?
         return true if user.processor?      
     end
     
@@ -123,12 +127,13 @@ module ApplicationHelper
     case action
       when NEW
         allow_access = user.creator
-      when EDIT, DELETE
+      when EDIT, DELETE  #TODO: change_received?
         allow_access = 
           !order.processed? && 
           change_draft(user,order) &&
           change_submitted(user,order) &&
-          change_approved(user,order)
+          change_approved(user,order) &&
+          change_received(user,order)
       else
         allow_access = true
     end
@@ -145,7 +150,8 @@ module ApplicationHelper
           !order.processed? && 
           change_draft(user,order) &&
           change_submitted(user,order) &&
-          change_approved(user,order)
+          change_approved(user,order) &&
+          change_received(user,order)
       else
         allow_access = true
     end
@@ -177,7 +183,13 @@ module ApplicationHelper
   end
   
   def change_approved(user,order)
-    return true if !order.approved?
+    return true if !order.approved? 
+    return false if !user.processor || order.approver != user 
+    true
+  end
+  
+  def change_received(user,order)
+    return true if !order.received?
     return false if !user.processor
     true
   end

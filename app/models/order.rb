@@ -13,7 +13,7 @@ class Order < ActiveRecord::Base
   has_many :notes
   
   validates :supplier_id, :status, presence: true
-  validate :approver_present, :approver_not_processor, :receiver_not_approver, :processor_amount_exceeded
+  validate :approver_present, :approver_not_processor, :processor_amount_exceeded
   
   before_save :set_supplier
   
@@ -33,11 +33,7 @@ class Order < ActiveRecord::Base
   def approver_not_processor
     errors.add(:processor_id, "must not be the same as Approver") if !self.processor_id.nil? && self.approver_id == self.processor_id
   end
-  
-  def receiver_not_approver
-    errors.add(:receiver_id, "must not be the same as Approver") if !self.receiver_id.nil? && self.approver_id == self.receiver_id
-  end
-  
+
   def processor_amount_exceeded
     errors.add(:approved_amount, "has been exceeded by more than 10%.  Please resubmit for approval") if processed? && !processed_amount_ok? 
   end
@@ -49,6 +45,7 @@ class Order < ActiveRecord::Base
   def atby
     notes = [ "created #{build_atby(self.created_at,self.creator)}" ]
     notes << "approved #{build_atby(self.approved_at,self.approver)}" if self.approved_at
+    notes << "received #{build_atby(self.received_at,self.receiver)}" if self.received_at
     notes << "processed #{build_atby(self.processed_at,self.processor)}" if self.processed_at  
     notes
   end
@@ -186,8 +183,10 @@ class Order < ActiveRecord::Base
     oj["payment_date"]    = build_date(self.payment_date)
     oj["creator"]         = build_user(self.creator_id)
     oj["approver"]        = build_user(self.approver_id)
+    oj["receiver"]        = build_user(self.receiver_id)
     oj["processor"]       = build_user(self.processor_id)
     oj["approved_at"]     = build_datetime(self.approved_at)
+    oj["received_at"]     = build_datetime(self.received_at)
     oj["processed_at"]    = build_datetime(self.processed_at)
     oj = oj.delete_if { |key,value| key =~ /_id$/ }
     oj.delete("updated_at")
@@ -224,7 +223,7 @@ class Order < ActiveRecord::Base
   end
   
   def add_notes?
-    self.notes.any? || self.status == OrderStatus::SUBMITTED || self.status == OrderStatus::APPROVED
+    self.notes.any? || self.status == OrderStatus::SUBMITTED || self.status == OrderStatus::APPROVED || self.status == OrderStatus::RECEIVED
   end
   
   def formatted_notes
