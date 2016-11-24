@@ -24,7 +24,7 @@ Pops::Application.routes.draw do
   resources :payment_terms, :except => [:create, :delete, :show]
   resources :programs,      :except => [:create, :delete, :show]    
   resources :suppliers,     :except => [:create, :delete, :show]
-  resources :tax_rates,     :except => [:create, :delete, :show]  
+  resources :tax_rates,     :except => [:create, :delete, :show]
   resources :users
   resources :deliveries
   resources :tbr_services
@@ -36,7 +36,7 @@ Pops::Application.routes.draw do
   get  'orders/:id/search'   => 'orders#search'
   
   resources :orders do
-    resources :items, :only => [:new]
+    resources :items,    :only => [:new]
   end 
   
   post  'orders/refresh'       => 'orders#refresh'
@@ -45,10 +45,10 @@ Pops::Application.routes.draw do
   patch 'orders/:id/resubmit'  => 'orders#resubmit'
   post  'orders/:id/approve'   => 'orders#approve'
   patch 'orders/:id/reapprove' => 'orders#reapprove'
-  post  'orders/:id/receive'   => 'orders#receive'
   post  'orders/:id/complete'  => 'orders#complete'
   
-  resources :items, :except => [:index, :new] 
+  resources :items,    :except => [:index, :new] 
+  resources :receipts, :only   => [:create, :new]
   
   # AJAX routes
   

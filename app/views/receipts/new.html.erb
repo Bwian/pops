@@ -1,0 +1,75 @@
+<div class="admin_form">
+
+<%= form_for(@order) do |f| %>
+  <fieldset>
+    <legend><%= legend("Receipts", @readonly) %></legend>
+
+    <% if @order.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@order.errors.count, "error") %> prohibited this item from being saved:</h2>
+        <ul>
+          <% @order.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+	     
+    <%= f.hidden_field :id, value: @order.id %>
+    
+    <div>
+      <p class="atby">
+        <% @order.atby.each do |note| %>
+          <%= note %><br/>
+        <% end %>
+      </p>
+    </div>
+    
+    <div class="field">
+      <%= f.label :id, 'Order:' %>
+      <div class="po-header">&nbsp;<%= @order.id %> - <%= @order.status_name %></div>
+    </div>
+    
+    <div class="field">
+      <%= f.label :id, 'Supplier:' %>
+      <div class="text">&nbsp;<%= @order.supplier_desc %></div>
+    </div>
+	  
+    <div class="field">
+      <%= f.label :receipts, 'Receipts:' %>
+      <% if @order.items.any? %>
+        <div class="itemlist">
+          <table width="50%">
+            <th>Description</th>
+            <th style="text-align: right">New</th>
+            <th style="text-align: right">Received</th>
+            <th style="text-align: right">Price</th>
+            <% @order.items.each do |item| %>
+              <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">         
+                <td><%= item.description %></td> 
+                <td align="right"><%= text_field_tag "receipts[#{item.id}]", receipt_amount(item), size: 3, readonly: false %></td>
+                <td align="right"><%= item.formatted_receipt_total %></td>
+                <td align="right"><%= item.formatted_price %></td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      <% end %>
+    </div>
+    
+    <div class="actions">
+      <label>&nbsp;</label>
+      <%= link_to('OK', url_for(controller: 'receipts', id: @order.id, action: :create), method: :post, class: "btn btn-success btn-sm") %> 
+      <%= link_model(@order) %>
+    </div>
+	
+		<div>
+			<label>&nbsp;</label>
+			<% flash.each do |name, msg| %>
+				<%= content_tag :span, msg, class: "#{name} action-flash" %>
+			<% end %>
+		</div>
+
+  </fieldset>
+<% end %>
+</div>

@@ -44,10 +44,13 @@ module OrdersHelper
     actions.each do |action|
       link = ""
       if authorised_status_change(action,order)
-        if action =~ /^re[dsa]/  # All re-actions except for receive
-          link = link_notes(action)
-        else
-          link = link_to(action_label(action), url_for(controller: 'orders', id: order.id, action: action), method: :post, class: btn_class) 
+        case action
+          when 'redraft','resubmit','reapprove'
+            link = link_notes(action)
+          when 'receive'
+            link = link_to(action_label(action), url_for(controller: 'receipts', id: order.id, action: :new), class: btn_class) 
+          else
+            link = link_to(action_label(action), url_for(controller: 'orders', id: order.id, action: action), method: :post, class: btn_class) 
         end
       end
       links << link

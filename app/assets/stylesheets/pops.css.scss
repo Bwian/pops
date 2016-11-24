@@ -82,7 +82,7 @@ td {
 }
 
 th {
-  background:       $main-color-light;
+  background:       $main-color-medium;
 }
 
 #error_explanation {
@@ -236,6 +236,7 @@ th {
 
 .itemlist {
   margin-top:       0.5em;
+  padding-top:      0.3em;
   width:            100%;
   display:          block;
 }
@@ -243,6 +244,8 @@ th {
 .itemlist th {
   margin-bottom:    0;
   padding-bottom:   0;
+  padding-left:     0.5em;
+  padding-right:    0.5em;
 }
 
 .subtotals {
