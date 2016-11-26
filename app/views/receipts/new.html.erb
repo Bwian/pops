@@ -1,6 +1,6 @@
 <div class="admin_form">
 
-<%= form_for(@order) do |f| %>
+<%= form_for(@receipts) do |f| %>
   <fieldset>
     <legend><%= legend("Receipts", @readonly) %></legend>
 
@@ -59,7 +59,8 @@
     
     <div class="actions">
       <label>&nbsp;</label>
-      <%= link_to('OK', url_for(controller: 'receipts', id: @order.id, action: :create), method: :post, class: "btn btn-success btn-sm") %> 
+      <!--<%= f.submit 'OK', class: "btn btn-success btn-sm" %>-->
+      submit_tag 'OK',  class: "btn btn-success btn-sm"
       <%= link_model(@order) %>
     </div>
 	
