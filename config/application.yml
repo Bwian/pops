@@ -24,6 +24,7 @@ defaults: &defaults
 development:
   <<: *defaults
   ldap_enabled:        false
+  exo_disabled:        true
   order_watermark:     '* Test Only *'
   
 test:  # Don't change these because the test suite needs them

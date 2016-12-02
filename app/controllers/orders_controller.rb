@@ -191,21 +191,6 @@ class OrdersController < ApplicationController
     end
   end
   
-  def receive
-    @order.to_received(session[:user_id])
-    add_notes('order',@order) if @order.notes.any?
-    
-    respond_to do |format|
-      if @order.save
-        format.html { redirect_to(@order, notice: "Order #{@order.id} set to Received.") }
-      else
-        @order.to_approved(@order.approver_id)
-        @readonly = true
-        format.html { render :show }
-      end
-    end
-  end
-  
   # POST /orders/1/complete
   def complete
     agent = ExoAgent.new
@@ -216,12 +201,13 @@ class OrdersController < ApplicationController
       save_notes(@order.id,"Processing failed - #{agent.notice}")
       completed = false
     else
+      save_notes(@order.id,agent.notice) unless agent.notice.empty?  # if exo_disabled
       completed = @order.save
     end
     
     respond_to do |format|
       if completed
-        format.html { redirect_to(orders_url, notice: "Order #{@order.id} set to Processed.") }
+        format.html { redirect_to(orders_url, notice: "#{agent.notice} Order #{@order.id} set to Processed.") }
       else
         @order.to_received(@order.receiver_id)
         @readonly = true

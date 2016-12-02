@@ -106,8 +106,11 @@ module ApplicationHelper
         return false if !order.submitted?
         return true if order.approver == user    
       when 'receive'
+        return false if order.approver == user
         return true if order.approved?
+        return true if order.received? && order.grandtotal > order.receipt_total
       when 'reapprove'
+        return false if order.approver != user && !user.processor
         return true if order.received?
       when 'complete'
         return false if !order.received?

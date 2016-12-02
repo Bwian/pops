@@ -32,7 +32,8 @@ class ExoAgent
     @database      = ENV['sql_server_db']
     @login_timeout = (ENV['sql_server_timeout'] || 1).to_i
     @user          = ENV['sql_server_login']
-    @password      = ENV['sql_server_password'] 
+    @password      = ENV['sql_server_password']
+    @exo_disabled  = ENV['exo_disabled']
   end
   
   def extract(table)
@@ -52,9 +53,15 @@ class ExoAgent
     rows
   end
   
-  def complete(order)
-    return false unless connect
+  def complete(order)    
+    if @exo_disabled
+      @notice = "EXO connection disabled in configuration.  No data transferred."
+      return true
+    end
     
+    return false unless connect
+     
+    #TODO: use active receipt totals instead of order and item totals  
     invoice_id = insert('ACS_Create_CrInv_Hdr_Record',
       order.supplier_id,
       quote(order.invoice_date.to_s), # or today ???

@@ -37,6 +37,7 @@ module OrdersHelper
         actions = ['receive','resubmit']
       when OrderStatus::RECEIVED
         actions = ['complete','reapprove']
+        actions << 'receive' if order.grandtotal > order.receipt_total
     end
     
     links = []

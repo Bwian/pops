@@ -124,6 +124,10 @@ class Order < ActiveRecord::Base
     self.approved_at  = Time.now
     self.approved_amount = self.grandtotal
     reset_approved
+    #TODO: wrap this in transaction with order.save
+    self.items.each do |item|
+      Receipt.delete_all(item_id: item.id, status: Receipt::ACTIVE)
+    end
   end
   
   def to_received(user_id) 
@@ -145,6 +149,14 @@ class Order < ActiveRecord::Base
     self.processor_id = user_id
     self.processed_at = Time.now
     self.status       = OrderStatus::PROCESSED
+    #TODO: wrap this in transaction with order.save
+    self.items.each do |item|
+      item.receipts.each do |receipt|
+        receipt.status = Receipt::COMPLETE
+        receipt.save
+        binding.pry
+      end
+    end
   end
   
   def draft?
