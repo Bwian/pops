@@ -45,7 +45,7 @@ Pops::Application.routes.draw do
   patch 'orders/:id/resubmit'  => 'orders#resubmit'
   post  'orders/:id/approve'   => 'orders#approve'
   patch 'orders/:id/reapprove' => 'orders#reapprove'
-  post  'orders/:id/complete'  => 'orders#complete'
+  patch 'orders/:id/complete'  => 'orders#complete'
   
   resources :items,    :except => [:index, :new] 
   resources :receipts, :only   => [:create, :new]

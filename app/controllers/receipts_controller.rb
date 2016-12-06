@@ -6,6 +6,7 @@ class ReceiptsController < ApplicationController
   
   def new
     @order = Order.find(params[:id])
+    save_json('order',@order)
   end
   
   def create

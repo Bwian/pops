@@ -179,7 +179,7 @@ class OrdersController < ApplicationController
     message = @order.sendmail(session[:user_id])
 
     respond_to do |format|
-      if @order.save
+      if @order.save_approved
         url = @order.creator_id == session[:user_id] || @order.approver_id == session[:user_id] ? order_url : orders_url
         message.deliver if message && message.valid?
         flash.notice = "Order #{@order.id} reset to Approved. #{get_notice(message)}"
@@ -202,16 +202,16 @@ class OrdersController < ApplicationController
       completed = false
     else
       save_notes(@order.id,agent.notice) unless agent.notice.empty?  # if exo_disabled
-      completed = @order.save
+      completed = @order.save_processed
     end
     
     respond_to do |format|
       if completed
-        format.html { redirect_to(orders_url, notice: "#{agent.notice} Order #{@order.id} set to Processed.") }
+        format.js { render :js => "window.location = '#{orders_url}'" }
       else
         @order.to_received(@order.receiver_id)
         @readonly = true
-        format.html { render :show }
+        format.js { render :show }
       end
     end
   end

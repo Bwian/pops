@@ -40,14 +40,17 @@
               autofocus: true } %>
 	    </div>
     </div>
+    
     <div id="supplier" class="field">
       <%= f.label :supplier_name, 'Supplier Name:' %>
       <%= f.text_field :supplier_name, :maxlength => 60, readonly: @readonly %>
     </div>
+    
     <div class="field">
       <%= f.label :invoice_no, 'Invoice Number:' %>
       <%= f.text_field :invoice_no, :maxlength => 20, readonly: @readonly %>
     </div>
+    
     <div class="field">
       <%= f.label :invoice_date, 'Invoice Date:' %>
       <%= f.date_select :invoice_date, {}, 
@@ -60,6 +63,7 @@
       <%= f.label :reference, 'Reference:' %>
       <%= f.text_field :reference, :maxlength => 20, readonly: @readonly %>
     </div>
+    
 	  <div class="field">
 	    <%= f.label :approver_id, 'Approver:' %>
 	    <div class="select-narrow">
@@ -68,15 +72,35 @@
             { disabled: @readonly || @order.approved? } %>
 	    </div>
     </div>
+    
 	  <div class="field">
 	    <%= label_tag :delivery_id, 'Deliver to:' %>
 	    <%= select_tag :delivery_id, options_for_select(Delivery.selection), 
             { include_blank: true, disabled: @readonly, class: "btn btn-primary btn-sm delivery", onchange: "javascript: set_delivery_address()" } %>
 	  </div>
+    
     <div class="field">
       <%= label_tag '' %>
       <%= f.text_area :delivery_address, rows: 5, readonly: @readonly, class: "delivery" %>
     </div>
+    
+    <% if @order.received? && @order.receipt_total < @order.grandtotal %>
+      <div class="field">
+        <%= hidden_field_tag :reapprove, value: "yes" %>
+        <%= label_tag 'Reset to Approved after processing?:' %>
+        <div class="ck-button yn-button">
+          <label>
+            <%= radio_button_tag :reapprove, 'yes', true, include_hidden: false %>
+            <span>Yes</span>
+          </label>
+          <label>
+            <%= radio_button_tag :reapprove, 'no', false, include_hidden: false  %>
+            <span>No</span>
+          </label>
+        </div>
+      </div>
+    <% end %>
+    
     <div class="actions">
       <label>&nbsp;</label>
       <% order_actions(@order,@readonly).each do |link| %>
