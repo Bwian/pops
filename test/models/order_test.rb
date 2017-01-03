@@ -61,6 +61,10 @@ class OrderTest < ActiveSupport::TestCase
     assert_in_delta(5.89,@approved.receipt_total,0.001)
   end
   
+  test 'outstanding_total' do
+    assert_in_delta(4.01,@approved.outstanding_total,0.001)
+  end
+  
   test 'formatted_subtotal' do
     assert_equal('14.49',@draft.formatted_subtotal)
   end
@@ -75,6 +79,10 @@ class OrderTest < ActiveSupport::TestCase
   
   test 'formatted_receipt_total' do
     assert_equal('5.89',@approved.formatted_receipt_total)
+  end
+  
+  test 'formatted_outstanding_total' do
+    assert_equal('4.01',@approved.formatted_outstanding_total)
   end
   
   test 'to_draft' do

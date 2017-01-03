@@ -21,5 +21,13 @@ class Receipt < ActiveRecord::Base
     item = Item.find(self.item_id)
     remaining_price = item.price - item.receipt_total
     errors.add(:price, "for #{item.description} (#{price}) cannot exceed $#{remaining_price}") if price > remaining_price
-  end            
+  end 
+  
+  def formatted_price
+    price.nil? ? '' : sprintf('%.2f', self.price)
+  end
+  
+  def formatted_date
+    "#{self.created_at.strftime('%d/%m/%Y')} - #{self.created_at.strftime('%H:%M')}"
+  end           
 end

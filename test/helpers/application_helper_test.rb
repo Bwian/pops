@@ -181,6 +181,7 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_not(authorised_status_change(RECEIVE,order),assert_message(ANYONE,order,RECEIVE,SHOULDNT))
     
     order = orders(:approved)
+    setup_user_session(:sean)
     assert(authorised_status_change(RECEIVE,order),assert_message(ANYONE,order,RECEIVE,SHOULD))
   end
   

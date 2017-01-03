@@ -86,12 +86,16 @@ class Item < ActiveRecord::Base
     total
   end
   
+  def receipt_array
+    
+  end
+  
   def to_json
     json = self.as_json
-    json['price']       = self.formatted_price
-    json['program']     = "#{self.program_name} (#{self.program_id})"
-    json['account']     = "#{self.account_name} (#{self.account_id})"
-    json['tax_rate']     = "#{self.tax_rate_name} (#{self.tax_rate_id})"    
+    json['price']    = self.formatted_price
+    json['program']  = "#{self.program_name} (#{self.program_id})"
+    json['account']  = "#{self.account_name} (#{self.account_id})"
+    json['tax_rate'] = "#{self.tax_rate_name} (#{self.tax_rate_id})"    
     json.delete('program_id')
     json.delete('account_id')
     json.delete('tax_rate_id')

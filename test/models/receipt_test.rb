@@ -26,9 +26,16 @@ class ReceiptTest < ActiveSupport::TestCase
     assert(@new.errors.messages[:price])
   end
   
+  test 'formatted_date' do  
+    assert(receipts(:one).formatted_date =~ /\d{2}\/\d{2}\/\d{4} - \d{2}:\d{2}/)
+  end
+  
+  private
+  
   def new_receipt
     @new.item = @item1
     @new.price = 1.00
     @new.receiver = @user
   end
+  
 end

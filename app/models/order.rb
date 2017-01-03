@@ -13,7 +13,7 @@ class Order < ActiveRecord::Base
   has_many :notes
   
   validates :supplier_id, :status, presence: true
-  validate :approver_present, :approver_not_processor, :processor_amount_exceeded
+  validate :approver_present, :approver_not_processor, :approver_not_receiver, :processor_amount_exceeded
   
   before_save :set_supplier
   
@@ -32,6 +32,10 @@ class Order < ActiveRecord::Base
   
   def approver_not_processor
     errors.add(:processor_id, "must not be the same as Approver") if !self.processor_id.nil? && self.approver_id == self.processor_id
+  end
+
+  def approver_not_receiver
+    errors.add(:receiver_id, "must not be the same as Approver") if !self.receiver_id.nil? && self.approver_id == self.receiver_id
   end
 
   def processor_amount_exceeded
@@ -92,6 +96,14 @@ class Order < ActiveRecord::Base
       total += item.receipt_total 
     end
     total
+  end
+  
+  def outstanding_total
+    grandtotal - receipt_total
+  end
+  
+  def formatted_outstanding_total
+    sprintf('%.2f', self.outstanding_total)
   end
   
   def formatted_gst

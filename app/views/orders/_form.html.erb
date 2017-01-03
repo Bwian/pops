@@ -46,10 +46,12 @@
       <%= f.text_field :supplier_name, :maxlength => 60, readonly: @readonly %>
     </div>
     
-    <div class="field">
-      <%= f.label :invoice_no, 'Invoice Number:' %>
-      <%= f.text_field :invoice_no, :maxlength => 20, readonly: @readonly %>
-    </div>
+    <% unless processing?(@order,@readonly) %>
+      <div class="field">
+        <%= f.label :invoice_no, 'Invoice Number:' %>
+        <%= f.text_field :invoice_no, :maxlength => 20, readonly: @readonly %>
+      </div>
+    <% end %>
     
     <div class="field">
       <%= f.label :invoice_date, 'Invoice Date:' %>
@@ -84,7 +86,7 @@
       <%= f.text_area :delivery_address, rows: 5, readonly: @readonly, class: "delivery" %>
     </div>
     
-    <% if @order.received? && @order.receipt_total < @order.grandtotal %>
+    <% if processing?(@order,@readonly) && @order.received? && @order.receipt_total < @order.grandtotal %>
       <div class="field">
         <%= hidden_field_tag :reapprove, value: "yes" %>
         <%= label_tag 'Reset to Approved after processing?:' %>
@@ -98,6 +100,13 @@
             <span>No</span>
           </label>
         </div>
+      </div>
+    <% end %>
+    
+    <% if processing?(@order,@readonly) %>
+      <div class="field">
+        <%= f.label :invoice_no, 'Invoice Number:' %>
+        <%= f.text_field :invoice_no, maxlength: 20 %>
       </div>
     <% end %>
     
@@ -143,6 +152,9 @@
         <th>Account</th>
         <th>Description</th>
         <th style="text-align: center">GST</th>
+        <th style="text-align: right">Received</th>
+        <th>by</th>
+        <th>at</th>
         <th style="text-align: right">Total</th>
         <% @order.items.each do |item| %>
           <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
@@ -150,24 +162,53 @@
             <td><%= item.account_name %></td>
             <td><%= link_item(item) %></td> 
             <td align="center"><%= item.tax_rate_short_name %></td>
+            <% if item.receipts.count == 0 %>
+              <td colspan="3"></td>
+            <% else %>
+              <td style="text-align: right"><%= item.receipts.first.formatted_price %></td>
+              <td><%= item.receipts.first.receiver.name %></td>
+              <td><%= item.receipts.first.formatted_date %></td>
+            <% end %>
             <td align="right"><%= item.formatted_subtotal %></td>
           </tr>
+          <% if item.receipts.count > 1 %>
+            <% item.receipts.drop(1).each do |receipt|%>
+              <tr class="<%= current_cycle %>">
+                <td colspan="4"></td>
+                <td style="text-align: right"><%= receipt.formatted_price %></td>
+                <td><%= receipt.receiver.name %></td>
+                <td colspan="2"><%= receipt.formatted_date %></td>
+              </tr>
+            <% end %>
+          <% end %>
         <% end %>
         <tr>
-          <td colspan="3"></td>
+          <td colspan="6"></td>
           <td class="subtotals">Subtotal:</td>
           <td class="subtotals"><%= @order.formatted_subtotal %></td>
         </tr>
         <tr>
-          <td colspan="3"></td>
+          <td colspan="6"></td>
           <td class="gst">GST:</td>
           <td class="gst"><%= @order.formatted_gst %></td>
         </tr>
         <tr>
-          <td colspan="3"></td>
+          <td colspan="6"></td>
           <td class="totals">Total:</td>
           <td class="totals"><%= @order.formatted_grandtotal %></td>
         </tr>
+        <% if @order.receipt_total > 0.0 %>
+          <tr>
+            <td colspan="6"></td>
+            <td class="gst">Received:</td>
+            <td class="gst">-<%= @order.formatted_receipt_total %></td>
+          </tr>
+          <tr>
+            <td colspan="6"></td>
+            <td class="totals">Total Outstanding:</td>
+            <td class="totals"><%= @order.formatted_outstanding_total %></td>
+          </tr>
+        <% end %>
       </table>
     </div>
   <% end %>

@@ -89,6 +89,10 @@ module OrdersHelper
     button_tag(action.capitalize, data: {toggle: 'modal', target: '#notes'}, class: ApplicationHelper::LINK_STYLE)   
   end
   
+  def processing?(order,readonly)
+    order.received? && authorised_status_change('complete',order) && readonly
+  end
+  
   def order_actions(order,readonly)
     actions = []
     if readonly
