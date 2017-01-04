@@ -185,6 +185,12 @@ class OrderTest < ActiveSupport::TestCase
     assert(@approved.errors.messages[:approved_amount])
   end
   
+  test 'approval limit exceeded' do
+    @submitted.to_approved(@brian.id)
+    assert_not(@submitted.save)
+    assert(@submitted.errors.messages[:approved_amount])
+  end
+  
   test 'dirty and send' do
     # example of testing for changed models and attributes
     assert_not(@draft.changed?)

@@ -33,4 +33,12 @@ four:
   description: Second Approved Item
   price: 4.95
   
+five:
+  order: submitted
+  program_id: 5
+  account_id: 5
+  tax_rate_id: 33 
+  description: First Submitted Item
+  price: 1200.00
+  
  

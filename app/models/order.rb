@@ -13,7 +13,7 @@ class Order < ActiveRecord::Base
   has_many :notes
   
   validates :supplier_id, :status, presence: true
-  validate :approver_present, :approver_not_processor, :approver_not_receiver, :processor_amount_exceeded
+  validate :approver_present, :approver_not_processor, :approver_not_receiver, :processor_amount_exceeded, :approver_amount_exceeded, :submit_amount_exceeded
   
   before_save :set_supplier
   
@@ -40,6 +40,14 @@ class Order < ActiveRecord::Base
 
   def processor_amount_exceeded
     errors.add(:approved_amount, "has been exceeded by more than 10%.  Please resubmit for approval") if processed? && !processed_amount_ok? 
+  end
+  
+  def approver_amount_exceeded
+    errors.add(:approved_amount, "exceeds your approval limit") if approved? && !approved_amount_ok? 
+  end
+  
+  def submit_amount_exceeded
+    errors.add(:approver_id, "limit exceeded.  Please choose another approver.") if submitted? && !submitted_amount_ok? 
   end
     
   def status_name
@@ -218,6 +226,16 @@ class Order < ActiveRecord::Base
   
   def processed_amount_ok?
     self.approved_amount? ? self.approved_amount * 1.1 >= self.grandtotal : false
+  end
+  
+  def approved_amount_ok?
+    approval_limit = self.approver.approval_limit
+    approval_limit.nil? || self.approved_amount <= approval_limit
+  end
+  
+  def submitted_amount_ok?
+    approval_limit = self.approver.approval_limit
+    approval_limit.nil? || self.grandtotal <= approval_limit
   end
   
   def to_json

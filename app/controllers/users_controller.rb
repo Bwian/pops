@@ -86,7 +86,8 @@ class UsersController < ApplicationController
       :processor, 
       :admin, 
       :tbr_admin, 
-      :tbr_manager
+      :tbr_manager,
+      :approval_limit
     )
   end
   

@@ -85,6 +85,11 @@
       </div>
     </div>
     
+    <div class="field">
+      <%= f.label :approval_limit, 'Approval Limit:' %>
+      <%= f.text_field :approval_limit, :size => 10, readonly: @readonly %>
+    </div>
+    
     <div class="actions">
       <label>&nbsp;</label>
   		<% if @readonly %>
