@@ -5,16 +5,7 @@
     
     <%= f.hidden_field :lock_version %>
     
-    <% if @order.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
-        <ul>
-          <% @order.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
+    <%= render 'errors' %>
 	
     <% if @order.id %>    
       <div>
@@ -47,17 +38,8 @@
     </div>
     
     <% unless processing?(@order,@readonly) %>
-      <div class="field">
-        <%= f.label :invoice_no, 'Invoice Number:' %>
-        <%= f.text_field :invoice_no, :maxlength => 20, readonly: @readonly %>
-      </div>
+       <%= render partial: 'invoice_and_date', locals: {readonly_flag: @readonly} %>
     <% end %>
-    
-    <div class="field">
-      <%= f.label :invoice_date, 'Invoice Date:' %>
-      <%= f.date_select :invoice_date, {}, 
-            { disabled: @readonly, class: "btn btn-primary btn-sm", onchange: "javascript:set_payment_date()" } %>
-    </div>
     
     <%= render 'payment_date' %>
     
@@ -86,7 +68,7 @@
       <%= f.text_area :delivery_address, rows: 5, readonly: @readonly, class: "delivery" %>
     </div>
     
-    <% if processing?(@order,@readonly) && @order.received? && @order.receipt_total < @order.grandtotal %>
+    <% if processing?(@order,@readonly) && @order.receipt_total < @order.grandtotal %>
       <div class="field">
         <%= hidden_field_tag :reapprove, value: "yes" %>
         <%= label_tag 'Reset to Approved after processing?:' %>
@@ -104,10 +86,7 @@
     <% end %>
     
     <% if processing?(@order,@readonly) %>
-      <div class="field">
-        <%= f.label :invoice_no, 'Invoice Number:' %>
-        <%= f.text_field :invoice_no, maxlength: 20 %>
-      </div>
+      <%= render partial: 'invoice_and_date', locals: { readonly_flag: false } %>
     <% end %>
     
     <div class="actions">

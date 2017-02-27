@@ -20,6 +20,14 @@ function submit_it(action) {
   });
 };
 
+function update_it(action) {
+  $.ajax({
+    url:  $('form').attr('action') + '/' + action,
+    type: "PATCH",
+    data: $('form').serialize()
+  });
+};
+
 function show_actions(flag) {
   if (flag) {
     $("#action_dropdown").show();

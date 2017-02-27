@@ -51,7 +51,7 @@ module OrdersHelper
           when 'receive'
             link = link_to(action_label(action), url_for(controller: 'receipts', id: order.id, action: :new), class: btn_class) 
           when 'complete'
-            link = button_tag('Process', type: 'button', onclick: "javascript:submit_it('complete')".html_safe, class: btn_class)
+            link = button_tag('Process', type: 'button', onclick: "javascript:update_it('complete')".html_safe, class: btn_class)
           else 
             link = link_to(action_label(action), url_for(controller: 'orders', id: order.id, action: action), method: :post, class: btn_class)
           end

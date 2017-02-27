@@ -1,5 +1,7 @@
 class Order < ActiveRecord::Base
   
+  attr_accessor :period_start, :period_end
+  
   FROM  = 0
   TO    = 1
   ID    = 'id'
@@ -13,9 +15,20 @@ class Order < ActiveRecord::Base
   has_many :notes
   
   validates :supplier_id, :status, presence: true
-  validate :approver_present, :approver_not_processor, :approver_not_receiver, :processor_amount_exceeded, :approver_amount_exceeded, :submit_amount_exceeded
+  validate :approver_present, 
+    :approver_not_processor, 
+    :approver_not_receiver, 
+    :processor_amount_exceeded, 
+    :approver_amount_exceeded, 
+    :submit_amount_exceeded,
+    :invoice_date_in_range
   
   before_save :set_supplier
+  
+  def set_period(session)
+    @period_start = session[:period_start]
+    @period_end = session[:period_end]
+  end
   
   def save
     begin
@@ -48,6 +61,13 @@ class Order < ActiveRecord::Base
   
   def submit_amount_exceeded
     errors.add(:approver_id, "limit exceeded.  Please choose another approver.") if submitted? && !submitted_amount_ok? 
+  end
+  
+  def invoice_date_in_range
+    if processed?
+      errors.add(:invoice_date, "cannot be checked - period dates not set.") if self.period_start.nil? || self.period_end.nil?  
+      errors.add(:invoice_date, "must be within the range #{self.period_start.strftime('%d/%m/%Y')} to #{self.period_end.strftime('%d/%m/%Y')}") if !valid_invoice_date?
+    end
   end
     
   def status_name
@@ -154,7 +174,6 @@ class Order < ActiveRecord::Base
     self.status       = OrderStatus::RECEIVED
   end
   
-  #TODO: check where this is used and add reset_received?
   def reset_approved
     self.processor_id = nil
     self.processed_at = nil
@@ -168,7 +187,7 @@ class Order < ActiveRecord::Base
   end
   
   def save_processed
-    self.transaction do
+    Order.transaction do
       begin
         self.items.each do |item|
           item.receipts.each do |receipt|
@@ -236,6 +255,11 @@ class Order < ActiveRecord::Base
   def submitted_amount_ok?
     approval_limit = self.approver.approval_limit
     approval_limit.nil? || self.grandtotal <= approval_limit
+  end
+  
+  def valid_invoice_date?
+    return false if self.period_start.nil? || self.period_end.nil? || self.invoice_date.nil?
+    self.invoice_date.between?(self.period_start,self.period_end)
   end
   
   def to_json

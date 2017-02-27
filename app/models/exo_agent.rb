@@ -37,20 +37,11 @@ class ExoAgent
   end
   
   def extract(table)
-    return nil unless connect
-    
-    results = @connection.execute(build_select(table))
-    fields = @tables[table.name]
-    rows = []
-    results.each(:symbolize_keys => true) do |r|
-      row = {}
-      r.each do |key,value|
-        row[fields[key]] = value
-      end
-      rows << row
-    end
-    @connection.close
-    rows
+    query(build_select(table),@tables[table.name])
+  end
+  
+  def select(query_clause,fields)
+    query(query_clause,fields)
   end
   
   def complete(order)    
@@ -112,7 +103,6 @@ class ExoAgent
     "select #{s.strip.gsub(' ',',')} from [#{@names[table_name]}]"
   end
 
-  
   def valid?
     [:host,:port,:user,:password,:database].each do |vbl|
       unless self.instance_variable_get("@#{vbl.to_s}")
@@ -160,6 +150,22 @@ class ExoAgent
     @notice = "Insert failed: #{exec}" unless seqno
     
     return seqno
+  end
+  
+  def query(query_clause,fields)
+    return nil unless connect
+    
+    results = @connection.execute(query_clause)
+    rows = []
+    results.each(:symbolize_keys => true) do |r|
+      row = {}
+      r.each do |key,value|
+        row[fields[key]] = value
+      end
+      rows << row
+    end
+    @connection.close
+    rows
   end
   
   def quote(vbl)

@@ -17,6 +17,7 @@ class SessionsController < ApplicationController
       session[:admin] = user.admin
       session[:order_filter] = OrderFilter.new(user.id)
       update_timeout
+      set_eops
       redirect_to return_to, notice: @notice
     else
       redirect_to login_url, alert: @alert
@@ -62,5 +63,22 @@ class SessionsController < ApplicationController
     end
     
     user
+  end
+  
+  def set_eops
+    agent = ExoAgent.new
+    
+    row_start = agent.select("select min(STARTDATE) as SD from [PERIOD_STATUS] where LEDGER = 'C' and LOCKED = 'N'",{ SD: :start_date })
+    row_end = agent.select("select max(STOPDATE) as ED from [PERIOD_STATUS] where LEDGER = 'C' and LOCKED = 'N'",{ ED: :end_date })
+    
+    if (row_start.present? && row_end.present?)
+      session[:period_start] = row_start[0][:start_date]
+      session[:period_end] = row_end[0][:end_date]
+      @notice += "Open period set from EXO to #{session[:period_start]} to #{session[:period_end]}. "
+    else
+      session[:period_start] = Date.today.day <10 ? Date.today.beginning_of_month - 1.month : Date.today.beginning_of_month
+      session[:period_end] = Date.today.end_of_month 
+      @notice += "Unable to access EXO.  Open period set to #{session[:period_start]} to #{session[:period_end]}. "
+    end
   end
 end

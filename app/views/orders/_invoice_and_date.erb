@@ -1,0 +1,17 @@
+<div id="invoice_no" class="field">
+  <%= label :order, :invoice_no, 'Invoice Number:' %>
+  <%= text_field :order, :invoice_no, maxlength: 20, disabled: readonly_flag %>
+</div>
+
+<div id="invoice_date" class="field">
+  <%= label :order, :invoice_date, 'Invoice Date:' %>
+  <%= date_select :order, :invoice_date, {}, 
+        { class: "btn btn-primary btn-sm", onchange: "javascript:set_payment_date()", disabled: readonly_flag } %>
+</div>
+
+<% if !@order.valid_invoice_date? %>
+  <div class="field">
+    <%= label_tag '' %>
+    <%= content_tag :span, "Invoice date outside current period", class: "error action-flash" %>
+  </div>
+<% end %>

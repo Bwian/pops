@@ -27,6 +27,7 @@ class OrdersController < ApplicationController
   def edit
   end
   
+  # GET /orders/1/search
   def search
     if Order.exists?(params[:id])
       @order = Order.find(params[:id])
@@ -96,7 +97,7 @@ class OrdersController < ApplicationController
     end
   end
   
-  # POST /orders/1/draft
+  # PATCH /orders/1/redraft
   def redraft
     @order.to_draft
     add_notes('order',@order)
@@ -135,6 +136,7 @@ class OrdersController < ApplicationController
     end
   end
   
+  # PATCH /orders/1/resubmit
   def resubmit
     @order.to_submitted
     add_notes('order',@order)
@@ -172,6 +174,7 @@ class OrdersController < ApplicationController
     end
   end
   
+  # PATCH /orders/1/reapprove
   def reapprove
     @order.to_approved(@order.approver_id)
     add_notes('order',@order)
@@ -191,32 +194,39 @@ class OrdersController < ApplicationController
     end
   end
   
-  # POST /orders/1/complete
+  # PATCH /orders/1/complete
   def complete
     agent = ExoAgent.new
+    completed = @order.update_attributes(order_params)
     @order.to_processed(session[:user_id])
-    completed = true
-    if @order.valid? && !agent.complete(@order)
-      @order.errors.add(:processing_failed," - #{agent.notice}")
-      save_notes(@order.id,"Processing failed - #{agent.notice}")
-      completed = false
-    else
-      save_notes(@order.id,agent.notice) unless agent.notice.empty?  # if exo_disabled
-      completed = @order.save_processed
+    
+    if completed
+      if agent.complete(@order)
+        save_notes(@order.id,agent.notice) unless agent.notice.empty?  # if exo_disabled
+        completed = @order.save_processed
+      else
+        @order.errors.add(:processing_failed," - #{agent.notice}")
+        save_notes(@order.id,"Processing failed - #{agent.notice}")
+        completed = false
+      end
     end
     
     respond_to do |format|
       if completed
-        format.js { render :js => "window.location = '#{orders_url}'" }
+        save_user_notes(params)
+        add_notes('order',@order)
+        flash.notice = "#{agent.notice} Order #{@order.id} set to Processed."
+        format.js { render js: "window.location = '#{orders_url}'" }
       else
         @order.to_received(@order.receiver_id)
-        @readonly = true
-        format.js { render :show }
+        @readonly = true  
+        flash.notice = "#{agent.notice} Order #{@order.id} NOT Processed."
+        format.js
       end
     end
   end
   
-  # POST /orders/refresh
+  # GET /orders/refresh
   def refresh
     order_filter = session[:order_filter] || OrderFilter.new(session[:user_id])
     order_filter.update(params[:order_filter])
@@ -238,6 +248,7 @@ class OrdersController < ApplicationController
       disposition: "inline")
   end
   
+  # PATCH orders/1/payment_date
   def payment_date
     @order = Order.new(order_params)
     @order.set_payment_date
@@ -246,6 +257,7 @@ class OrdersController < ApplicationController
     end
   end
   
+  # PATCH orders/1/delivery
   def delivery
     @delivery = params[:delivery_id].empty? ? Delivery.new : Delivery.find(params[:delivery_id])
     respond_to do |format|
@@ -302,6 +314,7 @@ class OrdersController < ApplicationController
   
   def find_order
     @order = Order.find(params[:id])
+    @order.set_period(session)
   end
   
   def get_notice(message)
