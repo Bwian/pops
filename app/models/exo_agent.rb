@@ -51,8 +51,7 @@ class ExoAgent
     end
     
     return false unless connect
-     
-    #TODO: use active receipt totals instead of order and item totals  
+       
     invoice_id = insert('ACS_Create_CrInv_Hdr_Record',
       order.supplier_id,
       quote(order.invoice_date.to_s), # or today ???
@@ -72,20 +71,23 @@ class ExoAgent
     return false if !invoice_id
     
     order.items.each do |item|
-      return false if !insert('ACS_Create_CrInv_GLLine_Record',
-      order.supplier_id,
-      quote(order.invoice_no),
-      invoice_id,
-      item.program_id,
-      item.account_id,
-      NIL, # GLSUBACC
-      quote(item.description),
-      1.0, # QUANTITY
-      item.formatted_subtotal,
-      item.tax_rate_id,
-      quote(Date.today.to_s), # or something else ???
-      NIL # LINKED_STOCKCODE
-      )
+      receipts = item.receipts.where(status: 'C')
+      receipts.each do |receipt|
+        return false if !insert('ACS_Create_CrInv_GLLine_Record',
+          order.supplier_id,
+          quote(order.invoice_no),
+          invoice_id,
+          item.program_id,
+          item.account_id,
+          NIL, # GLSUBACC
+          quote(item.description),
+          1.0, # QUANTITY
+          receipt.formatted_price,
+          item.tax_rate_id,
+          quote(Date.today.to_s), # or something else ???
+          NIL # LINKED_STOCKCODE
+        )
+      end
     end
     
     @connection.close
