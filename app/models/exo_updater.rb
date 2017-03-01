@@ -9,24 +9,26 @@ class ExoUpdater
   private
   
   def process(klass,data)
-    insert_count = 0
     found_count = 0
+    insert_count = 0
+    update_count = 0
     data.each do |record|
-      next if klass.exists?(record[:id])
-      found_count += 1
-      model = klass.new
+      model = klass.find_by_id(record[:id]) || klass.new
       record.each do |key,value|
         model.send("#{key}=",value)
       end
-      model.status = 'N'
-      insert_count += 1 if model.save
+      if model.changed?
+        found_count += 1
+        model.status = 'N'
+        model.new_record? ? insert_count += 1 if model.save : update_count += 1 if model.save
+      end
     end
     
     if data.size == 0
       @notice = 'No Exo records found!'
     else
       @notice = "#{data.size} Exo records processed - "
-      @notice += found_count == 0 ? 'No new records found.' : "#{insert_count} new records inserted of #{found_count} found."
+      @notice += found_count == 0 ? 'No new records found.' : "#{update_count} records updated and #{insert_count} new records inserted of #{found_count} found."
     end
   end
   
