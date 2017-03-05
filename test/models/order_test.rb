@@ -3,10 +3,10 @@ require 'test_helper'
 class OrderTest < ActiveSupport::TestCase
 
   setup do
-    @draft     = orders(:draft)
-    @submitted = orders(:submitted)
-    @approved  = orders(:approved)
-    @received  = orders(:received)
+    @draft     = setup_order(:draft)
+    @submitted = setup_order(:submitted)
+    @approved  = setup_order(:approved)
+    @received  = setup_order(:received)
     @brian     = users(:brian)
     @sean      = users(:sean)
   end
@@ -246,6 +246,24 @@ class OrderTest < ActiveSupport::TestCase
     assert_equal(Date.new(2014,1,10),@submitted.payment_date)
   end
   
+  test 'set_periods' do
+    assert_equal(Date.today.beginning_of_month - 1.month, @draft.period_start)
+    assert_equal(Date.today.end_of_month, @draft.period_end)
+  end
+  
+  test 'invoice_date_in_range - no period set' do
+    order = orders(:received)
+    order.to_processed(@brian.id)
+    assert_not(order.save)
+    assert(order.errors.messages[:invoice_date])
+  end
+  
+  test 'invoice_date_in_range - date out of range' do
+    @received.to_processed(@brian.id)
+    assert_not(@received.save)
+    assert(@received.errors.messages[:invoice_date])
+  end
+  
   test 'optimistic locking' do
     o1 = Order.find(@draft.id)
     o2 = Order.find(@draft.id)
@@ -254,5 +272,16 @@ class OrderTest < ActiveSupport::TestCase
     o2.reference = 'changed o2'
     assert_not(o2.save)
     assert(o2.errors.messages[:locking_error])
+  end
+  
+  private
+  
+  def setup_order(fixture)
+    order = orders(fixture)
+    session = {}
+    session[:period_start] = Date.today.beginning_of_month - 1.month
+    session[:period_end] = Date.today.end_of_month
+    order.set_period(session)
+    order
   end
 end

@@ -20,7 +20,11 @@ class ExoUpdater
       if model.changed?
         found_count += 1
         model.status = 'N'
-        model.new_record? ? insert_count += 1 if model.save : update_count += 1 if model.save
+        if model.new_record?
+          insert_count += 1 if model.save 
+        else
+          update_count += 1 if model.save
+        end
       end
     end
     

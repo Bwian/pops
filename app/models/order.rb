@@ -253,7 +253,7 @@ class Order < ActiveRecord::Base
   end
   
   def submitted_amount_ok?
-    approval_limit = self.approver.approval_limit
+    approval_limit = self.approver ? self.approver.approval_limit : nil
     approval_limit.nil? || self.grandtotal <= approval_limit
   end
   
