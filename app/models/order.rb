@@ -258,6 +258,7 @@ class Order < ActiveRecord::Base
   end
   
   def valid_invoice_date?
+    return true if self.id.nil?
     return false if self.period_start.nil? || self.period_end.nil? || self.invoice_date.nil?
     self.invoice_date.between?(self.period_start,self.period_end)
   end

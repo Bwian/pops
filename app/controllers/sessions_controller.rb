@@ -72,13 +72,13 @@ class SessionsController < ApplicationController
     row_end = agent.select("select max(STOPDATE) as ED from [PERIOD_STATUS] where LEDGER = 'C' and LOCKED = 'N'",{ ED: :end_date })
     
     if (row_start.present? && row_end.present?)
-      session[:period_start] = row_start[0][:start_date]
-      session[:period_end] = row_end[0][:end_date]
-      @notice += "Open period set from EXO to #{session[:period_start]} to #{session[:period_end]}. "
+      session[:period_start] = row_start[0][:start_date].to_date
+      session[:period_end] = row_end[0][:end_date].to_date
+      @notice += "Open period set from EXO to #{session[:period_start].strftime('%d %b %Y')} to #{session[:period_end].strftime('%d %b %Y')}. "
     else
       session[:period_start] = Date.today.day <10 ? Date.today.beginning_of_month - 1.month : Date.today.beginning_of_month
       session[:period_end] = Date.today.end_of_month 
-      @notice += "Unable to access EXO.  Open period set to #{session[:period_start]} to #{session[:period_end]}. "
+      @notice += "Unable to access EXO.  Open period set to #{session[:period_start].strftime('%d %b %Y')} to #{session[:period_end].strftime('%d %b %Y')}. "
     end
   end
 end
