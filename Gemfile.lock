@@ -67,7 +67,7 @@ GEM
     minitest (5.7.0)
     multi_json (1.11.2)
     mysql2 (0.3.19)
-    net-ldap (0.11)
+    net-ldap (0.16.0)
     pdf-core (0.6.0)
     prawn (2.0.2)
       pdf-core (~> 0.6.0)
